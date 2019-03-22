@@ -14,7 +14,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		setHeight("100%");
 		setWidth("100%");
 		
-		
+
 		User u = new User();
 		
 		Label label = new Label("Welcome to LearnMySQL: " + u.person.getName());
@@ -27,7 +27,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 			removeAllComponents();
 			addComponent(new practiceUI());
 		});
-			
+
 		
 		Panel historyPanel = new Panel("History Panel");
 		historyPanel.setContent(new HistoryTab());
@@ -37,6 +37,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		layout.setComponentAlignment(label, Alignment.TOP_CENTER);
 		layout.setComponentAlignment(Learn, Alignment.MIDDLE_LEFT);
 		layout.setComponentAlignment(Test, Alignment.MIDDLE_LEFT);
+
 		
 		
 		addComponents(layout,historyPanel);

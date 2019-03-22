@@ -6,11 +6,13 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.UserError;
+
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
+
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -26,6 +28,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @Theme("mytheme")
 public class MyUI extends UI {
+
 	//Label label = new Label("");
 	
     @Override
@@ -44,6 +47,28 @@ public class MyUI extends UI {
         password.setCaption("Password");
         
         login.setClickShortcut(KeyCode.ENTER);
+	
+    
+        setContent(layout);
+        
+        login.addClickListener(e -> {
+        
+        String user = username.getValue();
+        String pass = password.getValue();
+        
+        LoginTool lt = new LoginTool(user,pass);
+        if(lt.verifyStudentDetails()) {
+        	   setContent(new welcomeUI());
+        	   
+       }else if(!lt.verifyStudentDetails()) {
+    	  label.setValue("Wrong Username or Password!");
+    	  layout.addComponent(label);
+    	  layout.setComponentAlignment(label, Alignment.MIDDLE_CENTER);
+       }
+        
+        }); 
+        
+
         
         
         layout.addComponents(wel,username, password,login);
@@ -53,6 +78,7 @@ public class MyUI extends UI {
         layout.setComponentAlignment(login, Alignment.MIDDLE_CENTER);
             
         setContent(layout);
+
         
         login.addClickListener(e -> {
         
@@ -87,6 +113,7 @@ public class MyUI extends UI {
            }
         }
         });
+
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

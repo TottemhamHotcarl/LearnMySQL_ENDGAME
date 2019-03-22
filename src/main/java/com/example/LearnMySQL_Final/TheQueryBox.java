@@ -33,6 +33,7 @@ public class TheQueryBox   extends VerticalLayout implements View {
 			addComponent(new saveUI());
 		});
 		
+
 	    Label outcome = new Label("");
 		outcome.setHeight("100%");
 		outcome.setWidth("100%");
@@ -45,6 +46,7 @@ public class TheQueryBox   extends VerticalLayout implements View {
 		
 			
 		
+
 	}
 	
 	

@@ -11,6 +11,7 @@ import com.vaadin.ui.VerticalLayout;
 public class HistoryTab  extends VerticalLayout implements View {
 
 	public HistoryTab() {
+
 		setWidth("100%");
 		setHeight("100%");
 		
