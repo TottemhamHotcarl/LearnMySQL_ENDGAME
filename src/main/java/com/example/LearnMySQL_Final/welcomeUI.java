@@ -1,5 +1,7 @@
 package com.example.LearnMySQL_Final;
 
+import org.junit.Ignore;
+
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
