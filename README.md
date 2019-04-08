@@ -5,8 +5,7 @@ Template for a simple Vaadin application that only requires a Servlet 3.0 contai
 
 ### Status
 [![Build Status](https://travis-ci.org/TottemhamHotcarl/LearnMySQL_ENDGAME.png)](https://travis-ci.org/TottemhamHotcarl/LearnMySQL_ENDGAME)
-[![Coverage Status](https://coveralls.io/repos/github/TottemhamHotcarl/LearnMySQL_ENDGAME/badge.svg?branch=master)](https://coveralls.io/github/TottemhamHotcarl/LearnMySQL_ENDGAME?branch=master) 
-
+[![Coverage Status](https://coveralls.io/repos/github/TottemhamHotcarl/LearnMySQL_ENDGAME/badge.svg?branch=master)](https://coveralls.io/github/TottemhamHotcarl/LearnMySQL_ENDGAME?branch=master)
 
 Workflow
 ========
