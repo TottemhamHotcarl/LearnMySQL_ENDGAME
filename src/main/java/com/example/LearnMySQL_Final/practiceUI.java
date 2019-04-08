@@ -23,8 +23,5 @@ public class practiceUI extends HorizontalLayout implements View{
 		addComponents(QueryBox,historyPanel);
 		setComponentAlignment( historyPanel, Alignment.TOP_RIGHT);
 		
-		
-		
-		
 	}
 }

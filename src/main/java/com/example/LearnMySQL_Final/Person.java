@@ -7,6 +7,24 @@ public class Person {
 	public static final String STAFF = "2";
 	String name;
 	String firstname; 
+	String lastname;
+	String email;
+	String id;
+	String access;
+	
+	public Person() {
+		
+	}
+	
+	public Person(String name, String first, String last,String email, String id, String access) {
+		this.name = name;
+		this.firstname = first;
+		this.lastname = last;
+		this.email = email;
+		this.id = id;
+		this.access = access;
+	}
+	
 	
 	public String getFirstname() {
 		return firstname;
@@ -24,10 +42,12 @@ public class Person {
 		this.lastname = lastname;
 	}
 
-	String lastname;
-	String email;
-	String id;
-	String access;
+	
+	
+	
+	
+	
+	
 
 	public String getName() {
 		return name;
