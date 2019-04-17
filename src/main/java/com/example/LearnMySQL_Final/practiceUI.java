@@ -6,8 +6,9 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
 
-public class practiceUI extends HorizontalLayout implements View{
+public class practiceUI extends VerticalLayout implements View{
 
 	public practiceUI() {
 		setHeight("100%");
@@ -17,7 +18,10 @@ public class practiceUI extends HorizontalLayout implements View{
 		Button QueryBox = new Button("The Query Box");
 		QueryBox.addClickListener(e -> {
 			removeAllComponents();
-			addComponent(new queryBoxUI());
+			Panel p = new TheQueryBox("");
+			addComponent(p);
+			
+		
 		});
 		
 		addComponents(QueryBox,historyPanel);
