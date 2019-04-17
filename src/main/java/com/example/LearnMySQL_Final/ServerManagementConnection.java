@@ -22,7 +22,7 @@ public class ServerManagementConnection {
 		
 		try {
 			Statement stmt=con.createStatement();  
-		
+			
 			ResultSet rs=stmt.executeQuery("select * from STUDENT WHERE STUDENT_NO = " + Student_no);  
 			
 			if(rs.isBeforeFirst()) {

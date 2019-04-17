@@ -1,6 +1,8 @@
 package com.example.LearnMySQL_Final;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Alignment;
@@ -16,6 +18,8 @@ import com.vaadin.ui.VerticalLayout;
 public class TheQueryBox   extends VerticalLayout implements View {
 	
 	public TheQueryBox() {
+		User u = new User();
+		Person p = u.person;
 		removeAllComponents();
 		setHeight("100%");
 		setWidth("100%");
@@ -37,7 +41,10 @@ public class TheQueryBox   extends VerticalLayout implements View {
 			removeAllComponents();
 			addComponent(new saveUI());
 		});
-		HorizontalLayout tableLayout = new HorizontalLayout();
+		
+		
+		
+		VerticalLayout tableLayout = new VerticalLayout();
 		execute.addClickListener(e->{
 			String querys = area.getValue();
 			String[] query = querys.split(";");
@@ -45,34 +52,50 @@ public class TheQueryBox   extends VerticalLayout implements View {
 			tableLayout.removeAllComponents();
 			for(int i =  0; i < query.length;i++) {
 				String currQuery = query[i];
-				if(!currQuery.toUpperCase().contains("USES")) {
+				
 					if(!currQuery.toUpperCase().contains("SELECT")) {
-						User u = new User();
-						Person p = u.person;
+						
 						StudentQueryHelper sqh = new StudentQueryHelper(p);
 						String S = sqh.queryUpdateRun(currQuery);
+						ServerManagementConnection smc = new ServerManagementConnection();
+						smc.addStudentHistoryQuery(p, currQuery, "PiZZA");
 						output = output + currQuery +":" + "\n";
 						output = output + S + "\n";
 					}
 					else if(currQuery.toUpperCase().contains("SELECT")) {
-						User u = new User();
-						Person p = u.person;
 						StudentQueryHelper sqh = new StudentQueryHelper(p);
-						triplet t = sqh.querySelectRun(currQuery);
-						if(!t.queryOk) {
-							output = output + currQuery +":" + "\n";
-							output = output + t.error + "\n";
+						triplet trp = sqh.querySelectRun(currQuery);
+						if(trp.queryOk) {
+							LayoutHelper lh = new LayoutHelper();
+							try {
+								tableLayout.addComponent(lh.ResultSetToGrid(trp.rs));
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
-						else {
-							ResultSet rs = t.rs;
-							removeAllComponents();
-							addComponent(new TableUI(rs));
+						else if(!trp.queryOk) {
+							System.out.println(trp.error);
+							output = output + currQuery +":" + "\n";
+							output = output + trp.error + "\n";
 						}
 					}
 					
 					
+					
+					
 					outputArea.setValue(output);
-				}
+					
+					
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			}
 		});
 		

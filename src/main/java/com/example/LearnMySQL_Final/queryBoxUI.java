@@ -24,6 +24,8 @@ public class queryBoxUI extends HorizontalLayout implements View {
 		setComponentAlignment( historyPanel, Alignment.TOP_RIGHT);
 		setExpandRatio(queryPanel, .6f);
 		setExpandRatio(historyPanel, .4f);
+		queryPanel.getContent().setSizeUndefined();
+
 	}
 } 
 

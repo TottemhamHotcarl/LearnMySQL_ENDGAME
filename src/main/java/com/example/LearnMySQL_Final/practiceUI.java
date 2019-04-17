@@ -17,7 +17,11 @@ public class practiceUI extends HorizontalLayout implements View{
 		Button QueryBox = new Button("The Query Box");
 		QueryBox.addClickListener(e -> {
 			removeAllComponents();
-			addComponent(new queryBoxUI());
+			Panel p = new Panel("");
+			p.setContent(new TheQueryBox());
+			p.setHeight("100%");
+			p.getContent().setHeightUndefined();
+			addComponent(p);
 		});
 		
 		addComponents(QueryBox,historyPanel);
