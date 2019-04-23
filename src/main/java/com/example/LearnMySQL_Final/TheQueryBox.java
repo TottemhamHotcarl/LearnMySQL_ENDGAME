@@ -11,6 +11,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 
 public class TheQueryBox   extends VerticalLayout implements View {
@@ -30,7 +31,13 @@ public class TheQueryBox   extends VerticalLayout implements View {
 		Button execute = new Button("Execute");
 		Button save = new Button("Save");
 		
-	
+		FileUploader receiver = new FileUploader(area);
+		Upload upload = new Upload("Please upload file here", null);
+		upload.setReceiver(receiver);
+		upload.addSucceededListener(receiver);
+		upload.setImmediateMode(false);
+		upload.setButtonCaption("Upload now");
+		
 		save.addClickListener(e -> {
 			String Query = area.getValue();
 			saveQuery sq = new saveQuery(Query);
@@ -80,8 +87,10 @@ public class TheQueryBox   extends VerticalLayout implements View {
 
 		execute.setWidth("100%");
 		save.setWidth("100%");
+	
 		layout.addComponents(execute,save);
 		layout.setExpandRatio(execute, .5f);
+		layout.addComponents(upload);
 		layout.setExpandRatio(save, .5f);
 		layout.setSizeFull();
 		addComponents(area,layout,outputArea,tableLayout);

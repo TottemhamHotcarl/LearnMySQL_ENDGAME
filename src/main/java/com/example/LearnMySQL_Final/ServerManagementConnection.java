@@ -73,15 +73,11 @@ public class ServerManagementConnection {
 			if(rs == 1) {
 				
 				stmt=con.createStatement();
-				
-				String query3 = "CREATE USER 'd" + Student_no+"'@localhost IDENTIFIED BY 'd" + Student_no +"'";
-				String query2 = "CREATE USER 'd" + Student_no+"'@'%' IDENTIFIED BY 'd" + Student_no +"'";
-				String query4 = "GRANT ALL PRIVILEGES ON " + "d" + Student_no +".* TO " + "'d" + Student_no + "'@'localhost'";
-				String query5 = "GRANT ALL PRIVILEGES ON " + "d" + Student_no +".* TO " + "'d" + Student_no + "'@'%'"; 
+				String query2 = "CREATE USER 'd" + Student_no+"'@10.199.27.14 IDENTIFIED BY'd" + Student_no +"'";
+				String query3 = "CREATE USER 'd" + Student_no+"'@localhost IDENTIFIED BY'd" + Student_no +"'";
+				String query4 = "GRANT ALL PRIVILEGES ON " + "d" + Student_no +".* TO" + "'d" + Student_no + "'@'localhost'";
+				String query5 = "GRANT ALL PRIVILEGES ON " + "d" + Student_no +".* TO" + "'d" + Student_no + "'@'10.199.27.14'"; 
 				System.out.println(query2);
-				System.out.println(query3);
-				System.out.println(query4);
-				System.out.println(query5);
 				stmt.executeUpdate(query2);
 				stmt.executeUpdate(query3);
 				stmt.executeUpdate(query4);

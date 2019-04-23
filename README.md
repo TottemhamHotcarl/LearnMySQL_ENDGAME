@@ -1,9 +1,7 @@
 LearnMySQL_Final
 ==============
 
-### Status
-[![Build Status](https://travis-ci.org/TottemhamHotcarl/LearnMySQL_ENDGAME.png)](https://travis-ci.org/TottemhamHotcarl/LearnMySQL_ENDGAME)
-<a href='https://coveralls.io/github/TottemhamHotcarl/LearnMySQL_ENDGAME?branch=master'><img src='https://coveralls.io/repos/github/TottemhamHotcarl/LearnMySQL_ENDGAME/badge.png?branch=master' alt='Coverage Status' /></a>
+Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
 
 
 Workflow

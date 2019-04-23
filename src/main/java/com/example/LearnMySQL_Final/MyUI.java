@@ -15,8 +15,11 @@ import com.vaadin.ui.Label;
 
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
+import com.vaadin.ui.ProgressBar;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Upload;
+import com.vaadin.ui.Upload.SucceededListener;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -27,16 +30,29 @@ import com.vaadin.ui.VerticalLayout;
  * overridden to add component to the user interface and initialize non-component functionality.
  */
 @Theme("mytheme")
-public class MyUI extends UI {
+public class MyUI extends UI{
 
 	//Label label = new Label("");
+
 	
     @Override
     protected void init(VaadinRequest vaadinRequest) {
     	final VerticalLayout layout = new VerticalLayout();
     	
+    	/*FileUploader receiver = new FileUploader();
     	
-    
+    	ProgressBar progressBar=new ProgressBar();
+    	progressBar.setVisible(false);
+    	progressBar.setIndeterminate(true);
+    	progressBar.setCaption("Uploading....");
+    	
+    	Upload upload =new Upload("Upload file here", receiver);
+    	upload.setImmediateMode(false);
+    	upload.setButtonCaption("Upload Now");
+    	upload.addProgressListener(null);
+    	*/
+    	
+    	
     	Label wel = new Label("Welcome to LearnMySQL");
     	Label label = new Label("");
     	label.setId("Error");
@@ -73,6 +89,7 @@ public class MyUI extends UI {
         String pass = password.getValue();
         
         boolean everythingOkay = true;
+        
         if(user.length() == 0) {
         	username.setComponentError(new UserError("Enter username"));
         	everythingOkay = false;

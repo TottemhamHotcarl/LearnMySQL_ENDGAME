@@ -17,7 +17,6 @@ public class StudentQueryHelper {
 				con=DriverManager.getConnection(  
 				"jdbc:mysql://146.141.21.143:3306/" +user ,user ,user);  
 			}catch(Exception e){
-				System.out.println("Pizza");
 				System.out.println(e);
 				}
 	
