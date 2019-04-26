@@ -91,7 +91,7 @@ public class StaffLdap {
 	                person.setLastname(attrs.get("sn").get(0).toString());  
 	                person.setName(name);
 	                person.setEmail(attrs.get("mail").get(0).toString());
-	                person.setAccessLevel(Person.STUDENT);
+	                person.setAccessLevel(Person.STAFF);
 	            } else {
 	                return null;
 	            }
