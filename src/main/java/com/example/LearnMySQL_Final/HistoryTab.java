@@ -2,94 +2,146 @@ package com.example.LearnMySQL_Final;
 
 
 
+import java.awt.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class HistoryTab  extends VerticalLayout implements View {
+public class HistoryTab  extends Panel implements View {
 
+	VerticalLayout content;
+	Button del;
+	Button sel;
+	HorizontalLayout hl;
+	LayoutHelper lh;
+	 Button search;
+	 public static Button SaveTabButton = new Button("SAVE TAB");
+	public static Button refresh;
 	public HistoryTab() {
-
-		setWidth("100%");
+		 content = new VerticalLayout();
+		content.setWidth("100%");
+		content.setHeight("100%");
 		setHeight("100%");
-		TextArea his = new TextArea();
-		final HorizontalLayout hl = new HorizontalLayout();
+		del=new Button("Delete selected");
+        sel=new Button("Add to query box");
+	
+		 hl = new HorizontalLayout();
 		TextField searchBox = new TextField();
-		Button search = new Button("search");
-		hl.addComponents(searchBox,search);
-		addComponent(hl);
+		search = new Button("search");
+		refresh = new Button("refresh");
+		search.setId("search");
 		
+		SaveTabButton.addClickListener(e->{
+			saveTab();
+		});
+		
+		
+		
+		
+		hl.addComponents(searchBox,search,refresh,SaveTabButton);
+		content.addComponent(hl);
+		lh = new LayoutHelper();
 		User u = new User();
 		Person p = u.person;
 		
 		ServerManagementConnection smc = new ServerManagementConnection();
 		triplet t = smc.getStudentHistoryQuery(p);
 		if(t.queryOk) {
-			
-			ResultSet rs = t.rs;
-			ArrayList<History> ls = new ArrayList<History>();
-			
-			his.setReadOnly(true);
-			String out = "";
-				try {
-					while(rs.next()) {
-						out = out + rs.getString("HISTORY_QUERY") +": "+"\n" + rs.getString("HISTORY_QUERY_NAME") + "\n";
-					}
-					his.setValue(out);
-					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+			update(t);
 			}
-		his.setWidth("100%");
-		his.setHeight("100%");
 		
-		
-		search.addClickListener(e->{
-			his.setValue("");
+			search.addClickListener(e->{
 			String searchText = searchBox.getValue();
 			triplet t2 = smc.getStudentHistoryQueryWithSearch(p, searchText);
 			if(t2.queryOk) {
 				
-				ResultSet rs = t2.rs;
-				ArrayList<History> ls = new ArrayList<History>();
-				
-				his.setReadOnly(true);
-				String out = "";
-					try {
-						while(rs.next()) {
-							out = out + rs.getString("HISTORY_QUERY_NAME") +": "+"\n" + rs.getString("HISTORY_QUERY") + "\n";
-						}
-						his.setValue(out);
-						
-					} catch (Exception e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
+				update(t2);
 					
 				}
 			
 		});
 		
+		refresh.addClickListener(e->{
+			searchBox.setValue("");
+			triplet t5 = smc.getStudentHistoryQuery(p);
+			if(t.queryOk) {
+				update(t5);
+				}
+			
+				search.addClickListener(e3->{
+				String searchText = searchBox.getValue();
+				triplet t2 = smc.getStudentHistoryQueryWithSearch(p, searchText);
+				if(t2.queryOk) {
+					
+					update(t2);
+						
+					}
+				
+			});
+		});
+			
 		
-		addComponent(his);
-		
-		
+		setContent(content);
+
+		getContent().setHeightUndefined();
 		
 		
 		
 		}
 	
+	
+	public void update(triplet t) {
+		ResultSet rs = t.rs;
+		Grid<HistoryObject> grid = lh.ResultSetToHIstoryGrid(rs);
+		content.removeAllComponents();
+		content.addComponent(hl);
+		content.addComponent(grid);
+		
+		 grid.addItemClickListener(e ->{
+	        	content.addComponent(del);
+	        	content.addComponent(sel);
+	        	
+	        	HistoryObject ho = e.getItem();
+	        	System.out.println(ho.getQuery());
+	        	del.addClickListener(e1->{
+	        		System.out.println(ho.getHistoryID());
+	        		ServerManagementConnection smc2 = new ServerManagementConnection();
+	        		smc2.deleteHistory(ho.getHistoryID());
+	        		//searchBox.setValue("");
+	        		search.click();
+	        	});
+	        	sel.addClickListener(e3->{
+	        		TheQueryBox.addToQueryBox(ho.getQuery());
+	        	});
+	        	
+		 });
+	}
+	
+	
+	public void saveTab() {
+		content.removeAllComponents();
+		content.addComponent(hl);
+		ServerManagementConnection smc =new ServerManagementConnection();
+		lh = new LayoutHelper();
+		User u = new User();
+		Person p = u.person;
+		triplet t = smc.getStudentSavedQuery(p);
+		if(t.queryOk) {
+			
+			content.addComponent(lh.ResultSetToSavedGrid(t.rs));
+		}
+		
+	}
 		
 		
 	
