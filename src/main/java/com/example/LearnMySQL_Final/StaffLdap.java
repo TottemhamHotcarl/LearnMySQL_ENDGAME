@@ -28,7 +28,7 @@ public class StaffLdap {
 	        try {
 	            Hashtable<String, String> env = new Hashtable<>();
 	            env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-	            env.put(Context.PROVIDER_URL, "ldap://ds.wits.ac.za");
+	            env.put(Context.PROVIDER_URL, "ldap://ds.wits.ac.za/;ldap://146.141.128.150");
 	            //
 	            env.put(Context.SECURITY_AUTHENTICATION, "simple");
 
