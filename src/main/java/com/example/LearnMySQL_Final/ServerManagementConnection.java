@@ -103,6 +103,7 @@ public class ServerManagementConnection {
 	
 	public triplet getStudentHistoryQuery(Person p) {
 		ResultSet rs =null;
+
 		try {
 			Statement stmt=con.createStatement();
 			String Student_no = p.getId();
@@ -138,11 +139,49 @@ public class ServerManagementConnection {
 	}
 	
 	public boolean addStudentHistoryQuery(Person p, String query) {
+
 		try {
 			Statement stmt=con.createStatement();
 			String Student_no = p.getId();
 			
 			
+
+			String query2 = "SELECT HISTORY_QUERY,HISTORY_DATE,HISTORY_TIME,HISTORY_ID FROM STUDENT_HISTORY WHERE STUDENT_NO =" + Student_no;
+		
+			rs = stmt.executeQuery(query2);
+			
+			return new triplet(true, rs, "");
+		}catch (Exception e) {
+			System.out.println(e);
+			return new triplet(false,rs,e.toString());
+					}
+	}
+	
+	public triplet getStudentHistoryQueryWithSearch(Person p,String search) {
+		ResultSet rs =null;
+		try {
+			Statement stmt=con.createStatement();
+			String Student_no = p.getId();
+			
+			
+			String query2 = "SELECT HISTORY_QUERY,HISTORY_DATE,HISTORY_TIME,HISTORY_ID FROM STUDENT_HISTORY WHERE STUDENT_NO =" + Student_no + " and HISTORY_QUERY LIKE '%" +search +"%'";
+			System.out.println(query2);
+			rs = stmt.executeQuery(query2);
+			
+			return new triplet(true, rs, "");
+		}catch (Exception e) {
+			System.out.println(e);
+			return new triplet(false,rs,e.toString());
+					}
+	}
+	
+	public boolean addStudentHistoryQuery(Person p, String query) {
+		try {
+			Statement stmt=con.createStatement();
+			String Student_no = p.getId();
+			
+			
+
 			String query2 = "INSERT INTO STUDENT_HISTORY (STUDENT_NO, HISTORY_QUERY,HISTORY_DATE,HISTORY_TIME)" + "VALUES(?,?,?,?)";
 			PreparedStatement preparedStmt = con.prepareStatement(query2);
 			LocalDate now=LocalDate.now();
@@ -165,9 +204,28 @@ public class ServerManagementConnection {
 					}
 	}
 	
-	
-	
+
 	public boolean deleteHistory(String HistoryID) {
+		try {
+			Statement stmt=con.createStatement();
+			String Query = "DELETE FROM STUDENT_HISTORY WHERE HISTORY_ID = " + HistoryID;
+			System.out.println(Query);
+			int rs = stmt.executeUpdate(Query);
+			if(rs == 1) {
+				return true;
+			}
+			return true;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+	}
+	
+	public boolean addStudentSavedQuery(Person p, String queryName,String query) {
 		try {
 			Statement stmt=con.createStatement();
 			String Query = "DELETE FROM STUDENT_HISTORY WHERE HISTORY_ID = " + HistoryID;
@@ -198,6 +256,7 @@ public class ServerManagementConnection {
 			}
 			return true;
 			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -222,6 +281,7 @@ public class ServerManagementConnection {
         	String time=t.toString();
 			
 			
+
 			preparedStmt.setString (1, Student_no);
 		      preparedStmt.setString (2, queryName);
 		      preparedStmt.setString  (3, query);
@@ -241,8 +301,10 @@ public class ServerManagementConnection {
 			String Student_no = p.getId();
 			
 			
+
 			String query2 = "SELECT SAVED_QUERY, SAVED_QUERY_NAME, STUDENT_NO,SAVED_QUERY_ID FROM SAVED_QUERY WHERE STUDENT_NO =" + Student_no;
 			System.out.println(query2);
+
 			rs = stmt.executeQuery(query2);
 			
 			return new triplet(true, rs, "");

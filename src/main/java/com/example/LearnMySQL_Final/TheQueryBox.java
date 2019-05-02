@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
 import com.vaadin.server.Page;
 import com.vaadin.ui.Alignment;
@@ -24,6 +25,9 @@ public class TheQueryBox   extends Panel implements View {
 	VerticalLayout content = new VerticalLayout();
 	static TextArea area;
 	LayoutHelper lh = new LayoutHelper();
+
+	public static Button back;
+
 	Person p;
 	public TheQueryBox(String s) {
 		queryBox(s);
@@ -49,7 +53,9 @@ public class TheQueryBox   extends Panel implements View {
 	
 	public void queryBox(String s) {
 		content.removeAllComponents();
-		
+
+		back = new Button("Back");
+
 		area = new TextArea("The Query Box");
 		area.setValue(s);
 		area.setWidth("100%");
@@ -61,6 +67,15 @@ public class TheQueryBox   extends Panel implements View {
 		
 		Button execute = new Button("Execute");
 		Button save = new Button("Save");
+
+		Button clear= new Button("Clear");
+		
+		
+		execute.setClickShortcut(KeyCode.F1);
+		save.setClickShortcut(KeyCode.F2);
+		clear.setClickShortcut(KeyCode.F3);
+		back.setClickShortcut(KeyCode.ESCAPE);
+
 		//Button uploadFile = new Button("UPLOAD FILE");
 		FileUploader receiver= new FileUploader(area);
 		Upload upload= new Upload("Upload file Here",null);
@@ -68,17 +83,25 @@ public class TheQueryBox   extends Panel implements View {
 		upload.addSucceededListener(receiver);
 		upload.setImmediateMode(false);
 		upload.setButtonCaption("Upload now");
+
 		
 		save.addClickListener(e -> {
 			String Query = area.getValue();
 			saveQuery sq = new saveQuery(Query);
 			saveUI();
+
+
 		});
 		
 		
 		
 		VerticalLayout tableLayout = new VerticalLayout();
 		
+		clear.addClickListener(e->{
+			area.setValue("");
+		});
+		
+
 		execute.addClickListener(e->{
 			String querys = area.getValue();
 			String[] query = querys.split(";");
@@ -193,9 +216,13 @@ public class TheQueryBox   extends Panel implements View {
 
 		execute.setWidth("100%");
 		save.setWidth("100%");
-		layout.addComponents(execute,save);
+		clear.setWidth("100%");
+		back.setWidth("100%");
+		layout.addComponents(execute,save,clear,back);
 		layout.setExpandRatio(execute, .5f);
 		layout.setExpandRatio(save, .5f);
+		layout.setExpandRatio(clear,.5f);
+		layout.setExpandRatio(back,.5f);
 		layout.setSizeFull();
 		tableLayout.setWidth("100%");
 		tableLayout.setSizeFull();

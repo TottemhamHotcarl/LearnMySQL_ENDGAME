@@ -12,6 +12,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
@@ -21,6 +22,7 @@ import com.vaadin.ui.VerticalLayout;
 public class HistoryTab  extends Panel implements View {
 
 	VerticalLayout content;
+
 	Button del,del1;
 	Button sel;
 	HorizontalLayout hl;
@@ -33,7 +35,9 @@ public class HistoryTab  extends Panel implements View {
 		content.setWidth("100%");
 		content.setHeight("100%");
 		setHeight("100%");
+
 		del1=new Button("Delete Row");
+
 		del=new Button("Delete selected");
         sel=new Button("Add to query box");
 	
@@ -46,10 +50,7 @@ public class HistoryTab  extends Panel implements View {
 		SaveTabButton.addClickListener(e->{
 			saveTab();
 		});
-		
-		
-		
-		
+
 		hl.addComponents(searchBox,search,refresh,SaveTabButton);
 		content.addComponent(hl);
 		lh = new LayoutHelper();
@@ -92,6 +93,7 @@ public class HistoryTab  extends Panel implements View {
 			});
 		});
 			
+
 		
 		setContent(content);
 
@@ -134,6 +136,10 @@ public class HistoryTab  extends Panel implements View {
 		
 		content.removeAllComponents();
 		content.addComponent(hl);
+
+		
+		
+
 		
 		
 		ServerManagementConnection smc =new ServerManagementConnection();
@@ -146,6 +152,7 @@ public class HistoryTab  extends Panel implements View {
 		if(t.queryOk) {
 			content.addComponent(grid);
 		}
+
 		
 		grid.addItemClickListener(e ->{
 			savedObject ho = e.getItem();
@@ -165,7 +172,10 @@ public class HistoryTab  extends Panel implements View {
         	});
         
 		});
-		
+
+		setContent(content);
+
+		getContent().setHeightUndefined();
 	}
 		
 		

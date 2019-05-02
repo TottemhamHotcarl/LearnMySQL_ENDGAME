@@ -17,9 +17,14 @@ public class practiceUI extends HorizontalLayout implements View{
 		Panel historyPanel = new HistoryTab();
 		Button QueryBox = new Button("The Query Box");
 		HorizontalLayout hl = new HorizontalLayout();
+
+		Button back= new Button("Back");
 		
-		
-		
+		back.addClickListener(e->{
+			removeAllComponents();
+			addComponent(new welcomeUI());
+		});
+
 		
 		
 		
@@ -36,6 +41,12 @@ public class practiceUI extends HorizontalLayout implements View{
 			hl.setExpandRatio(p, .60f);
 			hl.setExpandRatio(p2, .40f);
 			addComponent(hl);
+
+			TheQueryBox.back.addClickListener(e4->{
+				removeAllComponents();
+				addComponent(new welcomeUI());
+			});
+
 
 		
 		});

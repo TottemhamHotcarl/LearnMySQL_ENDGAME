@@ -105,6 +105,7 @@ public class LayoutHelper {
 		try {
 			while(rs2.next()) {
 				savedObject ho = new savedObject(rs2.getString("SAVED_QUERY"), rs2.getString("SAVED_QUERY_NAME"), rs2.getString("STUDENT_NO"));
+
 				ho.setSavedQuery(rs2.getString("SAVED_QUERY_ID"));
 				ls.add(ho);
 				

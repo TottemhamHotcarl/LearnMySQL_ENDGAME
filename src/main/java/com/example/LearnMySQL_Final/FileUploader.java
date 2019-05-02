@@ -54,7 +54,9 @@ public class FileUploader implements Receiver,SucceededListener{
 			fos=new FileOutputStream(file);
 		}catch(IOException e) {
 			e.printStackTrace();
-			inputArea.setValue("exception: something has gone wrong with upload.");
+
+			inputArea.setValue("exception: something has gone wrong with upload.Please check if you selected a file.");
+
 			return null;
 		}
 		return fos;
