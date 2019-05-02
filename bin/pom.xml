@@ -6,7 +6,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>LearnMySQL_Final</artifactId>
 	<packaging>war</packaging>
-	<version>1.3-SNAPSHOT</version>
+	<version>1.4-SNAPSHOT</version>
 	<name>LearnMySQL_Final</name>
 
 	<prerequisites>
