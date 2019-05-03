@@ -21,6 +21,20 @@ public class ServerManagementConnection {
 			}
 	}
 	
+
+	
+	public void finalize(){
+		System.out.println("END");
+		try {
+			con.close();
+		}
+		catch(SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	
+
 	public boolean isFirstTime(String Student_no) {
 		
 		try {
@@ -128,7 +142,9 @@ public class ServerManagementConnection {
 			
 			
 			String query2 = "SELECT HISTORY_QUERY,HISTORY_DATE,HISTORY_TIME,HISTORY_ID FROM STUDENT_HISTORY WHERE STUDENT_NO =" + Student_no + " and HISTORY_QUERY LIKE '%" +search +"%'";
-			System.out.println(query2);
+
+			//System.out.println(query2);
+
 			rs = stmt.executeQuery(query2);
 			
 			return new triplet(true, rs, "");
@@ -252,7 +268,9 @@ public class ServerManagementConnection {
 			
 
 			String query2 = "SELECT SAVED_QUERY, SAVED_QUERY_NAME, STUDENT_NO,SAVED_QUERY_ID FROM SAVED_QUERY WHERE STUDENT_NO =" + Student_no;
-			System.out.println(query2);
+
+			//System.out.println(query2);
+
 
 			rs = stmt.executeQuery(query2);
 			
@@ -264,4 +282,26 @@ public class ServerManagementConnection {
 	}
 	
 	
+
+	public triplet getStudentSavedQueryWithSearch(Person p,String search) {
+		ResultSet rs =null;
+		try {
+			Statement stmt=con.createStatement();
+			String Student_no = p.getId();
+			
+			
+			String query2 = "SELECT SAVED_QUERY, SAVED_QUERY_NAME, STUDENT_NO, SAVED_QUERY_ID FROM SAVED_QUERY WHERE STUDENT_NO = " + Student_no +  " and SAVED_QUERY LIKE '%" +search +"%'";
+			System.out.println(query2);
+			rs = stmt.executeQuery(query2);
+			
+			return new triplet(true, rs, "");
+		}catch (Exception e) {
+			System.out.println(e);
+			return new triplet(false,rs,e.toString());
+					}
+	}
+	
+	
+	
+
 }

@@ -91,6 +91,7 @@ public class TheQueryBox   extends Panel implements View {
 			saveUI();
 
 
+
 		});
 		
 		
@@ -101,6 +102,7 @@ public class TheQueryBox   extends Panel implements View {
 			area.setValue("");
 		});
 		
+
 
 		execute.addClickListener(e->{
 			String querys = area.getValue();
@@ -118,7 +120,10 @@ public class TheQueryBox   extends Panel implements View {
 				HistoryTab.refresh.click();
 				
 				TextField outputtemp = lh.GetOutputHeading(currQuery);
-					if(currQuery.toUpperCase().contains("SELECT")) {
+
+				
+					if(currQuery.toUpperCase().contains("SELECT") || currQuery.toUpperCase().contains("DESC")) {
+
 						StudentQueryHelper sqh = new StudentQueryHelper(p);
 						triplet trp = sqh.querySelectRun(currQuery);
 						
@@ -181,9 +186,7 @@ public class TheQueryBox   extends Panel implements View {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-												
-						
-						
+
 					}
 					
 					else if(!currQuery.toUpperCase().contains("SELECT")) {

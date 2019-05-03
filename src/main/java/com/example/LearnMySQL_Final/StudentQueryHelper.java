@@ -61,7 +61,7 @@ public class StudentQueryHelper {
 		
 		public triplet querySelectRun(String query) {
 			ResultSet rs = null;
-			if(query.toUpperCase().contains("SELECT")) {
+			
 				try {
 					Statement stmt=con.createStatement();
 					 rs = stmt.executeQuery(query);
@@ -72,8 +72,7 @@ public class StudentQueryHelper {
 					return new triplet(false, rs, e.getMessage().toString());
 				} 
 				
-			}
-			return new triplet(false,rs, "Something went wrong");
+			
 			
 		}
 		

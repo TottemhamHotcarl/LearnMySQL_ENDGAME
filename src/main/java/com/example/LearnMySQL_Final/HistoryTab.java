@@ -23,6 +23,7 @@ public class HistoryTab  extends Panel implements View {
 
 	VerticalLayout content;
 
+
 	Button del,del1;
 	Button sel;
 	HorizontalLayout hl;
@@ -30,81 +31,95 @@ public class HistoryTab  extends Panel implements View {
 	 Button search;
 	 public static Button SaveTabButton = new Button("SAVE TAB");
 	public static Button refresh;
+	 TextField searchBox;
+	 ServerManagementConnection smc =new ServerManagementConnection();
+	 
+	
 	public HistoryTab() {
 		 content = new VerticalLayout();
-		content.setWidth("100%");
-		content.setHeight("100%");
-		setHeight("100%");
+			content.setWidth("100%");
+			content.setHeight("100%");
+			setHeight("100%");
 
-		del1=new Button("Delete Row");
+			del1=new Button("Delete Row");
 
-		del=new Button("Delete selected");
-        sel=new Button("Add to query box");
-	
-		 hl = new HorizontalLayout();
-		TextField searchBox = new TextField();
-		search = new Button("search");
-		refresh = new Button("refresh");
-		search.setId("search");
+			del=new Button("Delete selected");
+	        sel=new Button("Add to query box");
 		
+			 hl = new HorizontalLayout();
+			 
+			 searchBox = new TextField();
+				search = new Button("search");
+				refresh = new Button("refresh");
+				search.setId("search");
+				
+				
+
+				hl.addComponents(searchBox,search,refresh,SaveTabButton);
+		
+		HistoryTabInit();
+		
+	}
+	
+	
+	public void HistoryTabInit() {
+		
+		
+		content.removeAllComponents();
+		
+		SaveTabButton.setCaption("SAVED TAB");
 		SaveTabButton.addClickListener(e->{
 			saveTab();
 		});
+		
+		
 
-		hl.addComponents(searchBox,search,refresh,SaveTabButton);
 		content.addComponent(hl);
 		lh = new LayoutHelper();
 		User u = new User();
 		Person p = u.person;
 		
-		ServerManagementConnection smc = new ServerManagementConnection();
+		
 		triplet t = smc.getStudentHistoryQuery(p);
 		if(t.queryOk) {
-			update(t);
-			}
+
+			updateHistory(t);
+		}
+
 		
 			search.addClickListener(e->{
 			String searchText = searchBox.getValue();
 			triplet t2 = smc.getStudentHistoryQueryWithSearch(p, searchText);
 			if(t2.queryOk) {
 				
-				update(t2);
+
+				updateHistory(t2);
+
 					
 				}
 			
 		});
 		
 		refresh.addClickListener(e->{
-			searchBox.setValue("");
-			triplet t5 = smc.getStudentHistoryQuery(p);
-			if(t.queryOk) {
-				update(t5);
-				}
-			
-				search.addClickListener(e3->{
-				String searchText = searchBox.getValue();
-				triplet t2 = smc.getStudentHistoryQueryWithSearch(p, searchText);
-				if(t2.queryOk) {
-					
-					update(t2);
-						
-					}
-				
-			});
+
+			HistoryTabInit();
 		});
 			
+	
+
 
 		
 		setContent(content);
 
 		getContent().setHeightUndefined();
+
 		
 		
 		
 		}
 	
 	
-	public void update(triplet t) {
+	public void updateHistory(triplet t) {
 		ResultSet rs = t.rs;
 		Grid<HistoryObject> grid = lh.ResultSetToHIstoryGrid(rs);
 		content.removeAllComponents();
@@ -118,13 +133,12 @@ public class HistoryTab  extends Panel implements View {
 	        	HistoryObject ho = e.getItem();
 	        	del.addClickListener(e1->{
 	        		System.out.println(ho.getHistoryID());
-	        		ServerManagementConnection smc2 = new ServerManagementConnection();
-	        		smc2.deleteHistory(ho.getHistoryID());
+	        		smc.deleteHistory(ho.getHistoryID());
 	        		search.click();
 	        	});
 	        	sel.addClickListener(e3->{
 	        		//setting the Query box to empty
-	        		TheQueryBox.area.setValue("");
+	        		//TheQueryBox.area.setValue("");
 	        		TheQueryBox.addToQueryBox(ho.getQuery());
 	        	});
 	        	
@@ -133,50 +147,82 @@ public class HistoryTab  extends Panel implements View {
 	
 	
 	public void saveTab() {
+
 		
 		content.removeAllComponents();
+		SaveTabButton.setCaption("HISTORY TAB");
+		
+
+		SaveTabButton.addClickListener(e->{
+			SaveTabButton.setCaption("SAVE TAB");
+			HistoryTabInit();
+		});
+		
+
 		content.addComponent(hl);
 
 		
-		
-
-		
-		
-		ServerManagementConnection smc =new ServerManagementConnection();
-		lh = new LayoutHelper();
 		User u = new User();
 		Person p = u.person;
 		triplet t = smc.getStudentSavedQuery(p);
-		Grid<savedObject> grid = lh.ResultSetToSavedGrid(t.rs);
+		//Grid<savedObject> grid = lh.ResultSetToSavedGrid(t.rs);
 		
-		if(t.queryOk) {
-			content.addComponent(grid);
-		}
 
+		if(t.queryOk) {
+			updateSave(t);
+		}
 		
-		grid.addItemClickListener(e ->{
-			savedObject ho = e.getItem();
-	    	System.out.println(ho.getQuery());
-        	content.addComponent(del1);
-        	content.addComponent(sel);
-        	
-        	del1.addClickListener(e2->{
-        		System.out.println(ho.getSavedQueryID());
-        		ServerManagementConnection smc2 = new ServerManagementConnection();
-        		smc2.deleteSaved_Query(ho.getSavedQueryID());
-        		SaveTabButton.click();
-        	});
-        	sel.addClickListener(e3->{
-        		TheQueryBox.area.setValue("");
-        		TheQueryBox.addToQueryBox(ho.getQuery());
-        	});
-        
+		search.addClickListener(e->{
+			String searchText = searchBox.getValue();
+			triplet t2 = smc.getStudentSavedQueryWithSearch(p, searchText);
+			if(t2.queryOk) {
+				
+				updateSave(t2);
+					
+				}
+			
 		});
+		
+		refresh.addClickListener(e->{
+			saveTab();
+		});
+		
+		
+
 
 		setContent(content);
 
 		getContent().setHeightUndefined();
 	}
+
+	
+	
+	public void updateSave(triplet t) {
+		ResultSet rs = t.rs;
+		Grid<savedObject> grid = lh.ResultSetToSavedGrid(rs);
+		content.removeAllComponents();
+		content.addComponent(hl);
+		content.addComponent(grid);
+		
+		 grid.addItemClickListener(e ->{
+	        	savedObject ho = e.getItem();
+		    	System.out.println(ho.getQuery());
+	        	content.addComponent(del1);
+	        	content.addComponent(sel);
+	        	
+	        	del1.addClickListener(e2->{
+	        		System.out.println(ho.getSavedQueryID());
+	        		smc.deleteSaved_Query(ho.getSavedQueryID());
+	        		SaveTabButton.click();
+	        	});
+	        	sel.addClickListener(e3->{
+	        		//TheQueryBox.area.setValue("");
+	        		TheQueryBox.addToQueryBox(ho.getQuery());
+	        	});
+	        
+			});
+	}
+
 		
 		
 	

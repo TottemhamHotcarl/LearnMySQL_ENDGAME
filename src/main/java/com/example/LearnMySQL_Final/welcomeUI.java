@@ -25,6 +25,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		
 		Button localInfo = new Button("Terminal Info");
 		
+
 		Button short_cut_keys= new  Button("Shortcuts");
 		
 		
@@ -52,6 +53,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 				addComponent(new welcomeUI());
 			});
 
+
 		});
 		
 		localInfo.addClickListener(e4->{
@@ -59,6 +61,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 			addComponent(new InfoUI());
 		});
 		
+
 		
 		InfoUI.backUI.addClickListener(e5->{
 			removeAllComponents();
@@ -68,19 +71,24 @@ public class welcomeUI extends HorizontalLayout implements View{
 			removeAllComponents();
 			addComponent(new welcomeUI());
 		});
-		
-		
-		
+
 		Panel historyPanel = new Panel("History Panel");
 		historyPanel.setContent(new HistoryTab());
+		
+		layout.addComponents(label,queryBox,localInfo);
+		layout.setComponentAlignment(queryBox , Alignment.MIDDLE_LEFT);
+		layout.setComponentAlignment(label, Alignment.TOP_CENTER);
+		
+
+		Panel historyPanel = new Panel("History Panel");
+		historyPanel.setContent(new HistoryTab());
+
 		
 		layout.addComponents(label,queryBox,localInfo,short_cut_keys);
 		layout.setComponentAlignment(queryBox , Alignment.MIDDLE_LEFT);
 		layout.setComponentAlignment(label, Alignment.TOP_CENTER);
 		
 
-		
-		
 		addComponents(layout,historyPanel);
 		
 		
