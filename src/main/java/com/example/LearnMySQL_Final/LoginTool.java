@@ -15,6 +15,8 @@ public class LoginTool {
 		Ldap  ldap = Ldap.connect("students", username, password);
 		Person u = ldap.getUser(username);
 		if(username.equals("admin") && password.equals( "admin")) {
+			p = new Person("admin","admin", "admin","admin", "admin", "1");
+			User me = new User(p);
 			return true;
 		}
 		else if(u == null) {

@@ -12,5 +12,7 @@ public class triplet {
 		this.rs = rs;
 		this.error = error;
 	}
+	
+	
 
 }
