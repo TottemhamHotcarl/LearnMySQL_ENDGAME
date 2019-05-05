@@ -45,7 +45,7 @@ public class Sprint2Test {
 	@Test public void The_Query_Box_Valid_Update_Query_Test() {
 		String t = sqh.queryUpdateRun("INSERT INTO TEST VALUES(2, 'hi')");
 		System.out.println(t);
-		assertTrue(t.equals("Query OK, 0 rows affected"));
+		assertTrue(t.equals("Query OK, 1 rows affected"));
 	}
 	
 	@Test public void The_Query_Box_InValid_Update_Query_Test() {
