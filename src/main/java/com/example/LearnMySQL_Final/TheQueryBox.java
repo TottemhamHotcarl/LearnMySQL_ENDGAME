@@ -27,6 +27,10 @@ public class TheQueryBox   extends Panel implements View {
 	LayoutHelper lh = new LayoutHelper();
 
 	public static Button back;
+	
+	ServerManagementConnection smc  = new ServerManagementConnection();
+	StudentQueryHelper sqh;
+	
 
 	Person p;
 	/**
@@ -44,8 +48,23 @@ public class TheQueryBox   extends Panel implements View {
 		getContent().setHeightUndefined();
 		User u = new User();
 		 p = u.person;
+		sqh = new StudentQueryHelper(p);
+
+	}
+	
+	public TheQueryBox(String s, String ip) {
+		smc = new ServerManagementConnection(ip);
+		queryBox(s);
+		content.setHeight("100%");
+		content.setWidth("100%");
+		content.setSizeFull();
+		setContent(content);
 		
-		 
+		setHeight("100%");
+		getContent().setHeightUndefined();
+		User u = new User();
+		 p = u.person;
+		 sqh = new StudentQueryHelper(p);
 
 	}
 	
@@ -123,7 +142,7 @@ public class TheQueryBox   extends Panel implements View {
 					continue;
 				}
 				
-				ServerManagementConnection smc = new ServerManagementConnection();
+				
 				smc.addStudentHistoryQuery(p, currQuery);
 				HistoryTab.refresh.click();
 				
@@ -132,7 +151,7 @@ public class TheQueryBox   extends Panel implements View {
 				
 					if(currQuery.toUpperCase().contains("SELECT") || currQuery.toUpperCase().contains("DESC")) {
 
-						StudentQueryHelper sqh = new StudentQueryHelper(p);
+						
 						triplet trp = sqh.querySelectRun(currQuery);
 						
 						if(trp.queryOk) {

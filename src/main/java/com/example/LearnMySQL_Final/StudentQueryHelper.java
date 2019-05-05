@@ -42,6 +42,25 @@ public class StudentQueryHelper {
 			}
 		}
 		
+		// Constructor for testing with Travis-CI
+		public StudentQueryHelper(Person p, String ip) {
+			if(!p.getId().equals("admin")) {
+				String user = "d" + p.getId();
+				try{  
+					Class.forName("com.mysql.jdbc.Driver");  
+					con=DriverManager.getConnection(  
+					"jdbc:mysql://" + ip + ":3306/" +"Test" ,"root" ,"");  
+				}catch(Exception e){
+					System.out.println("Pizza");
+					System.out.println(e);
+					}
+			}
+			
+		}
+		
+		
+		
+		
 		public String queryUpdateRun(String query) {
 			if(!query.toUpperCase().contains("SELECT")) {
 				try {
