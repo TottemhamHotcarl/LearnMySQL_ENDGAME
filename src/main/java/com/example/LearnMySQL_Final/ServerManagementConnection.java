@@ -26,7 +26,7 @@ public class ServerManagementConnection {
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
 			con=DriverManager.getConnection(  
-			"jdbc:mysql://" + ip+":3306/SERVER","carl","carl");  
+			"jdbc:mysql://" + ip+":3306/SERVER","root","");  
 		}catch(Exception e){
 			System.out.println(e);
 			}
