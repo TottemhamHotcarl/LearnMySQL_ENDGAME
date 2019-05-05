@@ -44,6 +44,7 @@ public class Sprint2Test {
 	
 	@Test public void The_Query_Box_Valid_Update_Query_Test() {
 		triplet t = sqh.querySelectRun("CREATE TABLE TEST4(COLUMN_1 INT(6))");
+		System.out.println(t.queryOk + t.error);
 		assertTrue(t.queryOk);
 	}
 	
