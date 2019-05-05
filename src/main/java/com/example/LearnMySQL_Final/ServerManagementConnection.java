@@ -21,6 +21,18 @@ public class ServerManagementConnection {
 			}
 	}
 	
+	
+	public ServerManagementConnection(String ip) {
+		try{  
+			Class.forName("com.mysql.jdbc.Driver");  
+			con=DriverManager.getConnection(  
+			"jdbc:mysql://" + ip+":3306/SERVER","carl","carl");  
+		}catch(Exception e){
+			System.out.println(e);
+			}
+	}
+	
+	
 
 	
 	public void finalize(){
