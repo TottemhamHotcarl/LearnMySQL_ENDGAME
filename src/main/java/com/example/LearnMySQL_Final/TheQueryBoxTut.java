@@ -19,21 +19,17 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 
-public class TheQueryBox   extends Panel implements View {
+public class TheQueryBoxTut   extends Panel implements View {
 	
 	
 	VerticalLayout content = new VerticalLayout();
-	static TextArea area;
+	TextArea area;
 	LayoutHelper lh = new LayoutHelper();
 
 	public static Button back;
 
 	Person p;
-	/**
-	 * Creates the panel for the query box
-	 * @param s : Box title
-	 */
-	public TheQueryBox(String s) {
+	public TheQueryBoxTut(String s) {
 		queryBox(s);
 		content.setHeight("100%");
 		content.setWidth("100%");
@@ -55,10 +51,6 @@ public class TheQueryBox   extends Panel implements View {
 	
 	
 	
-	/**
-	 * Creates the query box
-	 * @param s : The title
-	 */
 	public void queryBox(String s) {
 		content.removeAllComponents();
 
@@ -292,19 +284,7 @@ public class TheQueryBox   extends Panel implements View {
 	}
 	
 	
-public static void addToQueryBox(String x) {
-		String temp = area.getValue();
-		System.out.println(temp);
-		if(!temp.isEmpty()) {
-			temp = temp + "\n" + x + ";";
-			area.setValue(temp);
-		}
-		else {
-			temp = temp  + x + ";";
-			area.setValue(temp);
-		}
-		
-	}
+
 
 	
 	
