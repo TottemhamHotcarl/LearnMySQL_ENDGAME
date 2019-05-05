@@ -43,7 +43,7 @@ public class Sprint2Test {
 	StudentQueryHelper sqh = new StudentQueryHelper(p, "127.0.0.1");
 	
 	@Test public void The_Query_Box_Valid_Update_Query_Test() {
-		triplet t = sqh.querySelectRun("CREATE TABLE TEST4(COLUMN_1 INT(6))");
+		triplet t = sqh.querySelectRun("INSERT INTO TEST VALUES(2, 'hi')");
 		System.out.println(t.queryOk + t.error);
 		assertTrue(t.queryOk);
 	}
