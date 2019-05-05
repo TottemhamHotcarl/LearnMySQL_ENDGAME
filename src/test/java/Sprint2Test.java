@@ -43,15 +43,17 @@ public class Sprint2Test {
 	StudentQueryHelper sqh = new StudentQueryHelper(p, "127.0.0.1");
 	
 	@Test public void The_Query_Box_Valid_Update_Query_Test() {
-		triplet t = sqh.querySelectRun("INSERT INTO TEST VALUES(2, 'hi')");
-		System.out.println(t.queryOk + t.error);
-		assertTrue(t.queryOk);
+		String t = sqh.queryUpdateRun("INSERT INTO TEST VALUES(2, 'hi')");
+		assertTrue(t.equals("Query OK, 0 rows affected"));
 	}
 	
 	@Test public void The_Query_Box_InValid_Update_Query_Test() {
-		triplet t = sqh.querySelectRun("CREATE TEST4 (COLUMN_1 INT(6))");
-		assertTrue(!t.queryOk);
+		String t = sqh.queryUpdateRun("CREATE TEST4 (COLUMN_1 INT(6))");
+		System.out.println(t);
+		assertTrue(t.equals("ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TEST4 (COLUMN_1 INT(6))' at line 1"));
 	}
+	
+	
 	
 	
 	
