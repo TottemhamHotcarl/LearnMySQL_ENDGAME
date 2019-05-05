@@ -23,9 +23,16 @@ public class Sprint1Test {
 		assertFalse(b);
 	}
 	@Test public void Student_Login_Interface_Add_To_Databases() {
-		boolean b= smc.addStudentToStudentTableInDatabase(testPerson);
-		assertTrue(b);
+		if(smc.isFirstTime("1")) {
+			boolean b= smc.addStudentToStudentTableInDatabase(testPerson);
+			assertTrue(b);
+		}
+		else if(smc.isFirstTime("2")) {
+			boolean b= smc.addStudentToStudentTableInDatabase(testPerson2);
+			assertTrue(b);
+		}
+		
+		
 	}
-	
 
 }
