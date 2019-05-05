@@ -49,7 +49,7 @@ public class StudentQueryHelper {
 				try{  
 					Class.forName("com.mysql.jdbc.Driver");  
 					con=DriverManager.getConnection(  
-					"jdbc:mysql://" + ip + ":3306/" +"Test" ,"root" ,"");  
+					"jdbc:mysql://" + ip + ":3306/" +"TEST" ,"root" ,"");  
 				}catch(Exception e){
 					System.out.println("Pizza");
 					System.out.println(e);
