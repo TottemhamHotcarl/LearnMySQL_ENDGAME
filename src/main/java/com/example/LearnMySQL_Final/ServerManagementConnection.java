@@ -21,7 +21,6 @@ public class ServerManagementConnection {
 			}
 	}
 	
-	
 	public ServerManagementConnection(String ip) {
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
@@ -31,7 +30,6 @@ public class ServerManagementConnection {
 			System.out.println(e);
 			}
 	}
-	
 	
 
 	
