@@ -3,6 +3,8 @@ jdk: oraclejdk8
 services:
   - mysql
 before_install:
+  - sudo apt-get install libmysql-java
+  - export CLASSPATH=$CLASSPATH:/usr/share/java/mysql-connector-java.jar
   - mysql -e 'CREATE DATABASE SERVER;'
   - mysql -e 'use SERVER';
   - mysql -e 'use SERVER; CREATE TABLE STUDENT (STUDENT_NO varchar(10) NOT NULL,STUDENT_NAME varchar(100) DEFAULT NULL,STUDENT_EMAIL varchar(100) DEFAULT NULL,STUDENT_DATABASE varchar(30) DEFAULT NULL,PRIMARY KEY (STUDENT_NO),UNIQUE KEY STUDENT_DATABASE (STUDENT_DATABASE));'
