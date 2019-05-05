@@ -176,6 +176,12 @@
             </goals>
         </execution>
     </executions>
+	<excludes>
+            <exclude>**/*Ldap</exclude>
+            <exclude>**/*VersionFSHierarchyMaker</exclude>
+        </excludes>
+		
+		
 </plugin>
 			
 			
