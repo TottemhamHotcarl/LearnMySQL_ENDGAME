@@ -166,7 +166,15 @@
                 <goal>prepare-agent</goal>
             </goals>
         </execution>
+        
     </executions>
+    <configuration>
+        <excludes>
+            <exclude>**/*Ldap</exclude>
+        </excludes>
+    </configuration>
+    
+    
 </plugin>
 			
 			
