@@ -5,8 +5,10 @@ import java.sql.SQLException;
 
 import org.junit.*;
 
+import com.example.LearnMySQL_Final.History;
 import com.example.LearnMySQL_Final.HistoryObject;
 import com.example.LearnMySQL_Final.Person;
+import com.example.LearnMySQL_Final.QueryObject;
 import com.example.LearnMySQL_Final.ServerManagementConnection;
 import com.example.LearnMySQL_Final.StudentQueryHelper;
 import com.example.LearnMySQL_Final.saveQuery;
@@ -85,28 +87,61 @@ public class Sprint3Test {
 	
 	//Saved Object Test
 	
-		@Test public void History_Object_Const_Test() {
+		@Test public void savedObject_Const_Test() {
 			savedObject ho = new savedObject("SELECT * FROM NOW", "SPECIAL SELECT", "1606558");
 			assertTrue(ho.getQuery().equals("SELECT * FROM NOW"));
 		}
 		
 		savedObject homain = new savedObject("SELECT * FROM NOW", "SPECIAL SELECT", "1606558");
 		
-		@Test public void History_Object_getQuery_Test() {
+		@Test public void savedObject_getQuery_Test() {
 			assertTrue(homain.getQuery().equals("SELECT * FROM NOW"));
 		}
 		
-		@Test public void History_Object_getQueryName_Test() {
+		@Test public void savedObject_getQueryName_Test() {
 			assertTrue(homain.getQueryName().equals("SPECIAL SELECT"));
 		}
 		
 		
-		@Test public void History_Object_setID_Test() {
+		@Test public void savedObject_setID_Test() {
 			homain.setSavedQuery("1");
 			assertTrue(homain.getSavedQueryID().equals("1"));
 		}
 	
 	
-	
+		// test for savedQuery
+		
+		@Test public void savedQuery_const_Test() {
+			saveQuery sq = new saveQuery("TEST");
+			assertTrue(sq.returnQuery().equals("TEST"));
+		}
+		
+		//test for QueryObject
+		
+		@Test public void QueryObject_Const_Test() {
+			QueryObject ho = new QueryObject("SELECT * FROM NOW", "1998-01-12", "12:01:90","23");
+			assertTrue(ho.getQuery().equals("SELECT * FROM NOW"));
+		}
+		
+		QueryObject homain2 = new QueryObject("SELECT * FROM NOW", "1998-01-12", "12:01:90","23");
+		
+		@Test public void QueryObject_getQuery_Test() {
+			assertTrue(homain2.getQuery().equals("SELECT * FROM NOW"));
+		}
+		
+		@Test public void QueryObject_getDate_Test() {
+			assertTrue(homain2.getDate().equals("1998-01-12"));
+		}
+		
+		@Test public void QueryObject_getTime_Test() {
+			assertTrue(homain2.getTime().equals("12:01:90"));
+		}
+		
+		@Test public void QueryObject_setID_Test() {
+			assertTrue(homain2.getQueryName().equals("23"));
+		}
+		
+		
+		
 	
 }

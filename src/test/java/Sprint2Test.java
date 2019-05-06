@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.junit.*;
 
+import com.example.LearnMySQL_Final.History;
 import com.example.LearnMySQL_Final.HistoryObject;
 import com.example.LearnMySQL_Final.Person;
 import com.example.LearnMySQL_Final.ServerManagementConnection;
@@ -84,6 +85,12 @@ public class Sprint2Test {
 		homain.setHistoryID("1");
 		assertTrue(homain.getHistoryID().equals("1"));
 	}
+	
+	@Test public void History_Test() {
+		History h = new History("TEST", "TESTNAME");
+		assertTrue(h.QUERY.equals("TEST"));
+	}
+	
 	
 	
 	
