@@ -47,7 +47,7 @@ public class StudentQueryHelper {
 			if(!p.getId().equals("admin")) {
 				String user = "d" + p.getId();
 				try{  
-					Class.forName("com.mysql.jdbc.Driver");  
+					//Class.forName("com.mysql.jdbc.Driver");  
 					con=DriverManager.getConnection(  
 					"jdbc:mysql://" + ip + ":3306/" +"TEST" ,"root" ,"");  
 				}catch(Exception e){
