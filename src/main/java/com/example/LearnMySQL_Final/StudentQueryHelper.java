@@ -21,7 +21,7 @@ public class StudentQueryHelper {
 			if(!p.getId().equals("admin")) {
 				String user = "d" + p.getId();
 				try{  
-					Class.forName("com.mysql.jdbc.Driver");  
+					//Class.forName("com.mysql.jdbc.Driver");  
 					con=DriverManager.getConnection(  
 					"jdbc:mysql://146.141.21.143:3306/" +user ,user ,user);  
 				}catch(Exception e){
@@ -32,7 +32,7 @@ public class StudentQueryHelper {
 			else if(p.getId().equals("admin")) {
 				String user = "carl";
 				try{  
-					Class.forName("com.mysql.jdbc.Driver");  
+					//Class.forName("com.mysql.jdbc.Driver");  
 					con=DriverManager.getConnection(  
 					"jdbc:mysql://146.141.21.143:3306/" +"SERVER" ,user ,user);  
 				}catch(Exception e){
