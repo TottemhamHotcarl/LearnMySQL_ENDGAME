@@ -42,13 +42,7 @@
 			</dependency>
 			
 			
-			<dependency>
-    	<groupId>mysql</groupId>
-    	<artifactId>mysql-connector-java</artifactId>
-    	<version>5.1.6</version>
-    	<type>jar</type>
-    	<scope>compile</scope>
-    		</dependency>
+		
 			
 			
 			
@@ -67,6 +61,16 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+			<dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>8.0.16</version>
+       
+			</dependency>
+		
+		
+		
+		
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-server</artifactId>
@@ -157,14 +161,14 @@
 	    <artifactId>coveralls-maven-plugin</artifactId>
 	    <version>4.3.0</version>
 	    <configuration>
-	        <repoToken>ZfutZQ9zTmTJM3jwBETDApB6oLLBAxRbJ</repoToken>
+		    <repoToken>ZfutZQ9zTmTJM3jwBETDApB6oLLBAxRbJ</repoToken>
 	    </configuration>
 	</plugin>
 	
 	<plugin>
     <groupId>org.jacoco</groupId>
     <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.7.6.201602180812</version>
+    <version>0.8.1</version>
     <executions>
         <execution>
             <id>prepare-agent</id>
@@ -173,6 +177,10 @@
             </goals>
         </execution>
     </executions>
+	 <configuration>
+    </configuration>
+		
+		
 </plugin>
 			
 			
