@@ -161,11 +161,7 @@
 	    <artifactId>coveralls-maven-plugin</artifactId>
 	    <version>4.3.0</version>
 	    <configuration>
-	        <repoToken>ZfutZQ9zTmTJM3jwBETDApB6oLLBAxRbJ</repoToken>
-                <excludes>
-                   <exclude>**/*jdbc</exclude>
-			<exclude>**/*VersionFSHierarchyMaker*</exclude>
-                </excludes>
+		    <repoToken>ZfutZQ9zTmTJM3jwBETDApB6oLLBAxRbJ</repoToken>
 	    </configuration>
 	</plugin>
 	
@@ -182,9 +178,6 @@
         </execution>
     </executions>
 	 <configuration>
-        <excludes>
-            <exclude>**/*jdbc*</exclude>
-        </excludes>
     </configuration>
 		
 		
