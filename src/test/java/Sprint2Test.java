@@ -1,5 +1,8 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.sql.SQLException;
+
 import org.junit.*;
 
 import com.example.LearnMySQL_Final.Person;
@@ -54,29 +57,9 @@ public class Sprint2Test {
 		assertTrue(t.equals("You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TEST4 (COLUMN_1 INT(6))' at line 1"));
 	}
 	
-	@Test public void The_Query_Box_Valid_Select_Query_Test() {
-		triplet t = sqh.querySelectRun("SELECT * FROM TEST");
-		System.out.println(t);
-		try {
-			assertTrue(t.queryOk && t.rs.next() == true);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			assertFalse(false);
-		}
-	}
 	
-	@Test public void The_Query_Box_InValid_Select_Query_Test() {
-		triplet t = sqh.querySelectRun("SELECT * FROM TEST");
-		System.out.println(t);
-		try {
-			assertTrue(!t.queryOk && t.rs.next() == false);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			assertFalse(false);
-		}
-	}
+	
+	
 	
 	
 	
