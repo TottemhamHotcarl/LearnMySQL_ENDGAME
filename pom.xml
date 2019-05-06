@@ -179,7 +179,6 @@
 	 <configuration>
         <excludes>
             <exclude>**/*Ldap*</exclude>
-            <exclude>**/*VersionFSHierarchyMaker*</exclude>
         </excludes>
     </configuration>
 		
