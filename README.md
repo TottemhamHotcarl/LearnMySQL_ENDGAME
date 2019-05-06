@@ -30,7 +30,7 @@ Debugging client side code
   - run "mvn vaadin:run-codeserver" on a separate console while the application is running
   - activate Super Dev Mode in the debug window of the application.
 
-Developing a theme using the runtime compiler
+Developing a theme using the runtime compiler.
 -------------------------
 
 When developing the theme, Vaadin can be configured to compile the SASS based
