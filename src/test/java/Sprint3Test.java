@@ -60,7 +60,7 @@ public class Sprint3Test {
 		triplet t = sqh.querySelectRun("SELECT * FR TEST");
 		System.out.println(t.queryOk);
 		try {
-			assertTrue(!t.queryOk && t.rs.next() == false);
+			assertTrue(!t.queryOk);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
