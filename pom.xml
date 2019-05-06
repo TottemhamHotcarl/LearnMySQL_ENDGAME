@@ -125,8 +125,9 @@
 				     <instrumentation>
 			         	 <excludes>
 
-                           			 <exclude>**/Ldap.class</exclude>
+                           			 <exclude>**/*Ldap.class</exclude>
 						 <exclude>**/*UI.class</exclude>
+						 <exclude>**/*Tab.class</exclude>
 
                       			  </excludes>
 			         </instrumentation>
