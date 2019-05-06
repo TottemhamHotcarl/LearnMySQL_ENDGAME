@@ -164,6 +164,7 @@
 	        <repoToken>ZfutZQ9zTmTJM3jwBETDApB6oLLBAxRbJ</repoToken>
                 <excludes>
                    <exclude>**/*jdbc</exclude>
+			<exclude>**/*VersionFSHierarchyMaker*</exclude>
                 </excludes>
 	    </configuration>
 	</plugin>
