@@ -23,7 +23,7 @@ public class Sprint1Test {
 		boolean b= smc.isFirstTime("1606443");
 		assertFalse(b);
 	}
-	@Test public void Student_Login_Interface_Add_To_Databases() {
+	/*@Test public void Student_Login_Interface_Add_To_Databases() {
 		if(smc.isFirstTime("1")) {
 			boolean b= smc.addStudentToStudentTableInDatabase(testPerson);
 			assertTrue(b);
@@ -34,7 +34,7 @@ public class Sprint1Test {
 		}
 		
 		
-	}
+	}*/
 	
 
 }
