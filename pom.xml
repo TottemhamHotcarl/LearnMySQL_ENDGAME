@@ -162,6 +162,9 @@
 	    <version>4.3.0</version>
 	    <configuration>
 	        <repoToken>ZfutZQ9zTmTJM3jwBETDApB6oLLBAxRbJ</repoToken>
+                <excludes>
+                   <exclude>**/*jdbc*</exclude>
+                </excludes>
 	    </configuration>
 	</plugin>
 	
