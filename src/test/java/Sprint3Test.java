@@ -57,15 +57,9 @@ public class Sprint3Test {
 	}
 	
 	@Test public void The_Query_Box_InValid_Select_Query_Test() {
-		triplet t = sqh.querySelectRun("SELECT * FR TEST");
+		triplet t = sqh.querySelectRun("SELECT * FM TEST");
 		System.out.println(t.queryOk);
-		try {
-			assertTrue(!t.queryOk);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			assertFalse(true);
-		}
+		assertTrue(!t.queryOk);
 	}
 	
 	
