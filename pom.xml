@@ -179,7 +179,7 @@
     </executions>
 	 <configuration>
         <excludes>
-            <exclude>**/*Ldap*</exclude>
+            <exclude>**/*jdbc*</exclude>
         </excludes>
     </configuration>
 		
