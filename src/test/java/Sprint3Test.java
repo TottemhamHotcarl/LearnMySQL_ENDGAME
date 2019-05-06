@@ -20,25 +20,26 @@ public class Sprint3Test {
 	Person p = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606558","1");
 	
 	
-	@Test public void History_Tab_Get_History_Valid_Test() {
-		triplet t = smc.getStudentHistoryQuery(p);
+	//Saved Query
+	@Test public void Saved_Tab_Get_SAVED_QUERY_Valid_Test() {
+		triplet t = smc.getStudentSavedQuery(p);
 		assertTrue(t.queryOk);
 	}
 	
-	@Test public void History_Tab_Get_History_With_Search_Valid_Test() {
-		triplet t = smc.getStudentHistoryQueryWithSearch(p, "*");
+	@Test public void Saved_Tab_Get_Saved_Query_With_Search_Valid_Test() {
+		triplet t = smc.getStudentSavedQueryWithSearch(p, "*");
 		assertTrue(t.queryOk);
 	}
 	
 	
 	
-	@Test public void History_Tab_Add_History_Valid_Test() {
-		boolean t = smc.addStudentHistoryQuery(p, "Test");
+	@Test public void Saved_Tab_Add_Saved_Query_Valid_Test() {
+		boolean t = smc.addStudentSavedQuery(p, "TEST_NAME","Test");
 		assertTrue(t);
 	}
 	
-	@Test public void History_Tab_Add_History_Delete_Test() {
-		boolean t = smc.deleteHistory("1");
+	@Test public void Saved_Tab_Saved_Query_Delete_Test() {
+		boolean t = smc.deleteSaved_Query("1");
 		assertTrue(t);
 	}
 	
@@ -46,7 +47,7 @@ public class Sprint3Test {
 	//Test for select
 	@Test public void The_Query_Box_Valid_Select_Query_Test() {
 		triplet t = sqh.querySelectRun("SELECT * FROM TEST");
-		System.out.println(t.queryOk);
+		System.out.println(t);
 		try {
 			assertTrue(t.queryOk && t.rs.next() == true);
 		} catch (SQLException e) {

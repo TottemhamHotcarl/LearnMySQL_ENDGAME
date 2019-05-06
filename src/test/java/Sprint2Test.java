@@ -36,7 +36,7 @@ public class Sprint2Test {
 		assertTrue(t);
 	}
 	
-	@Test public void History_Tab_Add_History_Delete_Test() {
+	@Test public void History_Tab_History_Delete_Test() {
 		boolean t = smc.deleteHistory("1");
 		assertTrue(t);
 	}
