@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.junit.*;
 
+import com.example.LearnMySQL_Final.HistoryObject;
 import com.example.LearnMySQL_Final.Person;
 import com.example.LearnMySQL_Final.ServerManagementConnection;
 import com.example.LearnMySQL_Final.StudentQueryHelper;
@@ -58,8 +59,31 @@ public class Sprint2Test {
 	}
 	
 	
+	//History Object Test
 	
+	@Test public void History_Object_Const_Test() {
+		HistoryObject ho = new HistoryObject("SELECT * FROM NOW", "1998-01-12", "12:01:90");
+		assertTrue(ho.getQuery().equals("SELECT * FROM NOW"));
+	}
 	
+	HistoryObject homain = new HistoryObject("SELECT * FROM NOW", "1998-01-12", "12:01:90");
+	
+	@Test public void History_Object_getQuery_Test() {
+		assertTrue(homain.getQuery().equals("SELECT * FROM NOW"));
+	}
+	
+	@Test public void History_Object_getDate_Test() {
+		assertTrue(homain.getDate().equals("1998-01-12"));
+	}
+	
+	@Test public void History_Object_getTime_Test() {
+		assertTrue(homain.getTime().equals("12:01:90"));
+	}
+	
+	@Test public void History_Object_setID_Test() {
+		homain.setHistoryID("1");
+		assertTrue(homain.getHistoryID().equals("1"));
+	}
 	
 	
 	

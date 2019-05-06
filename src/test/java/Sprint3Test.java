@@ -5,9 +5,12 @@ import java.sql.SQLException;
 
 import org.junit.*;
 
+import com.example.LearnMySQL_Final.HistoryObject;
 import com.example.LearnMySQL_Final.Person;
 import com.example.LearnMySQL_Final.ServerManagementConnection;
 import com.example.LearnMySQL_Final.StudentQueryHelper;
+import com.example.LearnMySQL_Final.saveQuery;
+import com.example.LearnMySQL_Final.savedObject;
 import com.example.LearnMySQL_Final.triplet;
 import com.vaadin.ui.Grid;
 
@@ -79,6 +82,29 @@ public class Sprint3Test {
 		
 	}
 	
+	
+	//Saved Object Test
+	
+		@Test public void History_Object_Const_Test() {
+			savedObject ho = new savedObject("SELECT * FROM NOW", "SPECIAL SELECT", "1606558");
+			assertTrue(ho.getQuery().equals("SELECT * FROM NOW"));
+		}
+		
+		savedObject homain = new savedObject("SELECT * FROM NOW", "SPECIAL SELECT", "1606558");
+		
+		@Test public void History_Object_getQuery_Test() {
+			assertTrue(homain.getQuery().equals("SELECT * FROM NOW"));
+		}
+		
+		@Test public void History_Object_getQueryName_Test() {
+			assertTrue(homain.getQueryName().equals("SPECIAL SELECT"));
+		}
+		
+		
+		@Test public void History_Object_setID_Test() {
+			homain.setSavedQuery("1");
+			assertTrue(homain.getSavedQueryID().equals("1"));
+		}
 	
 	
 	
