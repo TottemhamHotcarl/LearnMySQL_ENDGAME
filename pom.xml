@@ -130,6 +130,7 @@
 						 <exclude>**/*UI.class</exclude>
 						 <exclude>**/*Tab.class</exclude>
 						  <exclude>**/*Box*.class</exclude>
+						   <exclude>**/*Helper.class</exclude>
 
 
                         </excludes>
