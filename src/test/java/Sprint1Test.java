@@ -7,8 +7,7 @@ import com.example.LearnMySQL_Final.Person;
 import com.example.LearnMySQL_Final.ServerManagementConnection;
 
 public class Sprint1Test {
-	
-	
+
 	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
 	Person p = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606558","1");
 	Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
