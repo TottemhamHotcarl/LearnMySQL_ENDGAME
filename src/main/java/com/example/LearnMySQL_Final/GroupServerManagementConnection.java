@@ -48,17 +48,22 @@ public class GroupServerManagementConnection {
 			String Student_no = p.getId();
 			String database = "d" + Student_no;
 			
-			String query = "INSERT INTO GROUPS (GROUP_ADMIN, GROUP_NAME,GROUP_DATABASE)" + "VALUES(?,?,?)";
+
+			String query = "INSERT INTO GROUPS (GROUP_ADMIN, GROUP_NAME, GROUP_DATABASE)" + "VALUES(?,?,?)";
+
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setString (1, Student_no);
 		      preparedStmt.setString (2, Group_name);
 		      preparedStmt.setString   (3, database);
+
 			int rs = preparedStmt.executeUpdate();
 			
 			System.out.println(rs);
 			return true;
 		}catch (Exception e) {
-			System.out.println(e);
+
+			System.out.println("wow"+e);
+
 			return false;
 					}
 	}
@@ -148,4 +153,26 @@ public class GroupServerManagementConnection {
 	}
 	
 	
+
+public boolean removeMember(String Student_no) {
+		
+		try {
+			Statement stmt=con.createStatement();
+			
+			String query = "DELETE FROM STUDENT_GROUP WHERE STUDENT_NO =" + Student_no;
+			System.out.println(query);
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			int rs = preparedStmt.executeUpdate();
+			
+			System.out.println(rs);
+			return true;
+		}catch (Exception e) {
+			System.out.println(e);
+			return false;
+					}
+
+	}
+	
+	
+
 }

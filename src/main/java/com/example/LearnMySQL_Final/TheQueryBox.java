@@ -1,12 +1,15 @@
 package com.example.LearnMySQL_Final;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
@@ -18,6 +21,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 public class TheQueryBox   extends Panel implements View {
 	
@@ -75,6 +79,28 @@ public class TheQueryBox   extends Panel implements View {
 
 	}
 	
+	/**
+	 * This the construstor for the group querybox
+	 * @param s
+	 * @param ip
+	 * @param database
+	 */
+	public TheQueryBox(String s, String ip,String database) {
+		smc = new ServerManagementConnection();
+		queryBox(s);
+		content.setHeight("100%");
+		content.setWidth("100%");
+		content.setSizeFull();
+		setContent(content);
+		
+		setHeight("100%");
+		getContent().setHeightUndefined();
+		User u = new User();
+		 p = u.person;
+		 sqh = new StudentQueryHelper(database);
+
+	}
+	
 	
 	
 	
@@ -87,8 +113,20 @@ public class TheQueryBox   extends Panel implements View {
 	 */
 	public void queryBox(String s) {
 		content.removeAllComponents();
-
+		
 		back = new Button("Back");
+		// Find the application directory
+		String basepath = VaadinService.getCurrent()
+		                  .getBaseDirectory().getAbsolutePath();
+
+		// Image as a file resource
+		FileResource resource = new FileResource(new File(basepath +
+		                        "/WEB-INF/images/back.png"));
+		
+
+		
+		back.setStyleName(ValoTheme.BUTTON_LINK);
+		back.setIcon(resource);
 
 		
 		area.setValue(s);
@@ -165,7 +203,7 @@ public class TheQueryBox   extends Panel implements View {
 				TextField outputtemp = lh.GetOutputHeading(currQuery);
 
 				
-					if(currQuery.toUpperCase().contains("SELECT") || currQuery.toUpperCase().contains("DESC")) {
+					if(currQuery.toUpperCase().contains("SELECT")) {
 
 						
 						triplet trp = sqh.querySelectRun(currQuery);
@@ -216,6 +254,59 @@ public class TheQueryBox   extends Panel implements View {
 						}
 					}
 					
+
+					else if(currQuery.toUpperCase().contains("DESC")) {
+
+						
+						triplet trp = sqh.querySelectRun(currQuery);
+						
+						if(trp.queryOk) {
+							
+							try {
+								Grid g = lh.ResultSetToGridForDesc(trp.rs);
+								if(g != null) {
+									g.setWidth("100%");
+									VerticalLayout vltemp = new VerticalLayout();
+									vltemp.addComponents(outputtemp,g);
+									tableLayout.addComponent(vltemp);
+								}
+								else {
+									VerticalLayout vltemp = new VerticalLayout();
+									TextArea outputtemp2 = new TextArea();
+									outputtemp2.setReadOnly(true);
+									outputtemp2.setWidth("100%");
+									outputtemp2.setHeightUndefined();
+									outputtemp2.setValue("Empty set");
+									vltemp.addComponents(outputtemp,outputtemp2);
+									tableLayout.addComponent(vltemp);
+									
+								}
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+						}
+						else if(!trp.queryOk) {
+							VerticalLayout vltemp = new VerticalLayout();
+							
+							TextArea outputtemp2 = new TextArea();
+							outputtemp2.setReadOnly(true);
+							outputtemp2.setWidth("100%");
+							outputtemp2.setHeightUndefined();
+							outputtemp2.setValue(trp.error);
+													
+							
+							vltemp.addComponents(outputtemp,outputtemp2);
+							tableLayout.addComponent(vltemp);
+							
+							
+							
+							
+						}
+					}
+					
+
 					else if(check[0].toUpperCase().contains("SHOW") && check[1].toUpperCase().contains("TABLES") ) {
 						VerticalLayout vltemp = new VerticalLayout();
 						
@@ -263,17 +354,17 @@ public class TheQueryBox   extends Panel implements View {
 		execute.setWidth("100%");
 		save.setWidth("100%");
 		clear.setWidth("100%");
-		back.setWidth("100%");
-		layout.addComponents(execute,save,clear,back);
+		back.setWidth("20%");
+		layout.addComponents(execute,save,clear);
 		layout.setExpandRatio(execute, .5f);
 		layout.setExpandRatio(save, .5f);
 		layout.setExpandRatio(clear,.5f);
-		layout.setExpandRatio(back,.5f);
+		//layout.setExpandRatio(back,.5f);
 		layout.setSizeFull();
 		tableLayout.setWidth("100%");
 		tableLayout.setSizeFull();
 		upload.setWidth("100%");
-		content.addComponents(area,layout,upload,tableLayout);
+		content.addComponents(back,area,layout,upload,tableLayout);
 		/*setExpandRatio(area, .4f);
 		setExpandRatio(layout, .1f);
 		setExpandRatio(outputArea, .4f);*/

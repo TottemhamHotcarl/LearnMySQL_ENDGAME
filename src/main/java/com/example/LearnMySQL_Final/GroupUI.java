@@ -1,9 +1,16 @@
 package com.example.LearnMySQL_Final;
 
+
+import java.io.File;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 
 import com.vaadin.navigator.View;
+
+import com.vaadin.server.FileResource;
+import com.vaadin.server.VaadinService;
+
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalSplitPanel;
@@ -13,6 +20,9 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+
+import com.vaadin.ui.themes.ValoTheme;
+
 
 public class GroupUI  extends Panel implements View{
 	
@@ -26,6 +36,7 @@ public class GroupUI  extends Panel implements View{
 	Person p = u.person;
 	GroupObject go = new GroupObject();
 	
+
 	public GroupUI() {
 		// setting up a panel
 		gsmc = new GroupServerManagementConnection();
@@ -38,7 +49,22 @@ public class GroupUI  extends Panel implements View{
 			setHeight("100%");
 			getContent().setHeightUndefined();
 			
-			 
+
+			// Find the application directory
+			String basepath = VaadinService.getCurrent()
+			                  .getBaseDirectory().getAbsolutePath();
+
+			// Image as a file resource
+			FileResource resource = new FileResource(new File(basepath +
+			                        "/WEB-INF/images/back.png"));
+			
+
+			
+			back.setStyleName(ValoTheme.BUTTON_LINK);
+			back.setIcon(resource); 
+			
+			
+
 			 groupUIInit();
 			 
 		
@@ -70,6 +96,7 @@ public class GroupUI  extends Panel implements View{
 			l.setValue("Welcome " + groupName);
 			Button addMember = new Button("Add Members");
 			Button viewMembers = new Button("View Members");
+
 			Button GroupQueryBox = new Button("Group Query Box");
 			addMember.addClickListener(e4->{
 				addMember();
@@ -84,7 +111,10 @@ public class GroupUI  extends Panel implements View{
 			});
 			
 			
-			content.addComponents(l,addMember,viewMembers,GroupQueryBox,back);
+
+			
+			content.addComponents(back,l,addMember,viewMembers,GroupQueryBox);
+
 		 }
 		
 		
@@ -191,20 +221,24 @@ public class GroupUI  extends Panel implements View{
 		
 		
 		HorizontalSplitPanel hsp = new HorizontalSplitPanel();
-		hsp.addComponent(new TheQueryBox(TheQueryBox.area.getValue()));
+
+		hsp.addComponent(new TheQueryBox(TheQueryBox.area.getValue(),"", go.getDatabase()));
+
 		hsp.addComponent(new HistoryTab());
 		
 		
 		content.addComponent(hsp);
 		//setContent(new TheGroupQueryBox("",go.getDatabase()));
 		
-		TheGroupQueryBox.back.addClickListener(e43->{
+
+		TheQueryBox.back.addClickListener(e423->{
+			content.removeAllComponents();
 			groupUIInit();
 		});
 		
 		
 		}
-		
+
 	
 	
 	

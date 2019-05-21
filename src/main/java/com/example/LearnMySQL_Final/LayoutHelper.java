@@ -66,6 +66,44 @@ public class LayoutHelper {
         return null;
 	}
 	
+
+	
+	public Grid<DescObject> ResultSetToGridForDesc(ResultSet rs) throws SQLException {
+		ArrayList<DescObject> ls = new ArrayList<DescObject>();
+		
+		try {
+			while(rs.next()) {
+				DescObject DescObject = new DescObject(rs.getString("Field"), rs.getString("type"), rs.getString("null") , rs.getString("key"),rs.getString("Default"), rs.getString("extra"));
+				ls.add(DescObject);
+	
+			}
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		Grid<DescObject> grid = new Grid<>();
+		 grid.setWidth("100%");
+		 grid.setHeightUndefined();
+		 
+	        
+	        grid.addColumn(DescObject::getField).setCaption("Field");
+	        grid.addColumn(DescObject::gettype).setCaption("Type");
+			 grid.addColumn(DescObject::getnull).setCaption("Null");
+			 grid.addColumn(DescObject::getkey).setCaption("Key");
+			 grid.addColumn(DescObject::getdefault).setCaption("Default");
+			 grid.addColumn(DescObject::getextra).setCaption("Extra");
+			 
+			 grid.setItems(ls);
+			
+			 
+			 return (grid);
+		
+	}
+	
+	
+	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Grid<HistoryObject> ResultSetToHIstoryGrid(ResultSet rs2){
 		ArrayList<HistoryObject> ls = new ArrayList<HistoryObject>();

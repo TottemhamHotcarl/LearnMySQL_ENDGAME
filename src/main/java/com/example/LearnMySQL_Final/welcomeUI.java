@@ -1,14 +1,20 @@
 package com.example.LearnMySQL_Final;
 
 
+import java.io.File;
+
 import com.vaadin.navigator.View;
+import com.vaadin.server.FileResource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 public class welcomeUI extends HorizontalLayout implements View{
 	public welcomeUI() {
@@ -32,13 +38,22 @@ public class welcomeUI extends HorizontalLayout implements View{
 		
 		Button Copy_his= new Button("Copy history to clipboard");
 		
+
 		Button SavedQuery= new Button("Copy Saved Query to clipboard");
 		
+
 		Button Groups = new Button("Groups");
 		
 		
-		HorizontalLayout hl = new HorizontalLayout();
+		// Find the application directory
+				String basepath = VaadinService.getCurrent()
+				                  .getBaseDirectory().getAbsolutePath();
+
+		// Image as a file resource
+		FileResource resource = new FileResource(new File(basepath +
+		                        "/WEB-INF/images/SQL_HELP_FILE.pdf"));
 		
+
 		Copy_his.addClickListener(e->{
 			removeAllComponents();
 			addComponent(new Export_history_UI());
@@ -50,6 +65,16 @@ public class welcomeUI extends HorizontalLayout implements View{
 		});
 		
 		
+
+		Link link =  new Link("Link to the SQL Help Files", resource);
+				
+				
+		
+		
+		
+		HorizontalLayout hl = new HorizontalLayout();
+	
+
 		Help_Docs.addClickListener(e->{
 			removeAllComponents();
 			addComponent(new SQL_help());
@@ -105,11 +130,6 @@ public class welcomeUI extends HorizontalLayout implements View{
 		
 		
 		
-		TutTestUI.backUI.addClickListener(e32->{
-			removeAllComponents();
-			addComponent(new welcomeUI());
-		});
-		
 		Groups.addClickListener(e27->{
 			removeAllComponents();
 			addComponent(new GroupUI());
@@ -131,7 +151,9 @@ public class welcomeUI extends HorizontalLayout implements View{
 		Panel historyPanel1 = new HistoryTab();
 
 		
-		layout.addComponents(label,localInfo,short_cut_keys,queryBox,Help_Docs,Groups,Copy_his,SavedQuery);
+
+		layout.addComponents(label,queryBox,localInfo,short_cut_keys,Help_Docs,Groups,link,Copy_his,SavedQuery);
+
 
 		layout.setComponentAlignment(queryBox , Alignment.MIDDLE_LEFT);
 		layout.setComponentAlignment(label, Alignment.TOP_CENTER);
