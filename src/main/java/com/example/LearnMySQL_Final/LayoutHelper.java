@@ -8,7 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud.Order.Direction;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.TextField;
 
 public class LayoutHelper {
@@ -63,6 +66,43 @@ public class LayoutHelper {
         return null;
 	}
 	
+	
+	public Grid<DescObject> ResultSetToGridForDesc(ResultSet rs) throws SQLException {
+		ArrayList<DescObject> ls = new ArrayList<DescObject>();
+		
+		try {
+			while(rs.next()) {
+				DescObject DescObject = new DescObject(rs.getString("Field"), rs.getString("type"), rs.getString("null") , rs.getString("key"),rs.getString("Default"), rs.getString("extra"));
+				ls.add(DescObject);
+	
+			}
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		Grid<DescObject> grid = new Grid<>();
+		 grid.setWidth("100%");
+		 grid.setHeightUndefined();
+		 
+	        
+	        grid.addColumn(DescObject::getField).setCaption("Field");
+	        grid.addColumn(DescObject::gettype).setCaption("Type");
+			 grid.addColumn(DescObject::getnull).setCaption("Null");
+			 grid.addColumn(DescObject::getkey).setCaption("Key");
+			 grid.addColumn(DescObject::getdefault).setCaption("Default");
+			 grid.addColumn(DescObject::getextra).setCaption("Extra");
+			 
+			 grid.setItems(ls);
+			
+			 
+			 return (grid);
+		
+	}
+	
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Grid<HistoryObject> ResultSetToHIstoryGrid(ResultSet rs2){
 		ArrayList<HistoryObject> ls = new ArrayList<HistoryObject>();
 		try {
@@ -85,11 +125,22 @@ public class LayoutHelper {
 		 
 	        grid.setCaption("HISTORY TABLE");
 	        grid.addColumn(HistoryObject::getQuery).setCaption("HISTORY_QUERY");
-	        grid.addColumn(HistoryObject::getDate).setCaption("HISTORY_DATE");
-			 grid.addColumn(HistoryObject::getTime).setCaption("HISTORY_TIME");
+	        grid.addColumn(HistoryObject::getDate).setCaption("HISTORY_DATE").setId("Date");
+			 grid.addColumn(HistoryObject::getTime).setCaption("HISTORY_TIME").setId("Time");;
+			 grid.sort("Date", SortDirection.DESCENDING);
+			 //grid.sort("Time",SortDirection.DESCENDING);
 			 grid.setItems(ls);
+			
+			 
 			 return (grid);
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	public TextField GetOutputHeading(String currQuery) {
 		TextField outputtemp = new TextField();
