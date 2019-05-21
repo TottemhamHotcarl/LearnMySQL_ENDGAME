@@ -30,12 +30,18 @@ public class welcomeUI extends HorizontalLayout implements View{
 		
 		Button short_cut_keys= new  Button("Shortcuts");
 		
+		Button Copy_his= new Button("Copy history to clipboard");
 		
 		Button Groups = new Button("Groups");
 		
 		
 		HorizontalLayout hl = new HorizontalLayout();
-	
+		
+		Copy_his.addClickListener(e->{
+			removeAllComponents();
+			addComponent(new Export_history_UI());
+		});
+		
 		Help_Docs.addClickListener(e->{
 			removeAllComponents();
 			addComponent(new SQL_help());
@@ -72,6 +78,10 @@ public class welcomeUI extends HorizontalLayout implements View{
 
 		
 		InfoUI.backUI.addClickListener(e5->{
+			removeAllComponents();
+			addComponent(new welcomeUI());
+		});
+		Export_history_UI.backUI.addClickListener(e6->{
 			removeAllComponents();
 			addComponent(new welcomeUI());
 		});
@@ -113,7 +123,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		Panel historyPanel1 = new HistoryTab();
 
 		
-		layout.addComponents(label,queryBox,localInfo,short_cut_keys,Help_Docs,Groups);
+		layout.addComponents(label,queryBox,localInfo,short_cut_keys,Help_Docs,Groups,Copy_his);
 
 		layout.setComponentAlignment(queryBox , Alignment.MIDDLE_LEFT);
 		layout.setComponentAlignment(label, Alignment.TOP_CENTER);
