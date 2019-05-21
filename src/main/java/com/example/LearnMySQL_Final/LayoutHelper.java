@@ -91,6 +91,13 @@ public class LayoutHelper {
 			 return (grid);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 	public TextField GetOutputHeading(String currQuery) {
 		TextField outputtemp = new TextField();
 		outputtemp.setReadOnly(true);

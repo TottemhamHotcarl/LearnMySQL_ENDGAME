@@ -30,7 +30,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		Button short_cut_keys= new  Button("Shortcuts");
 		
 		
-		Button tutTest = new Button("Tut Test");
+		Button Groups = new Button("Groups");
 		
 		
 		HorizontalLayout hl = new HorizontalLayout();
@@ -44,7 +44,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		
 		queryBox.addClickListener(e -> {
 			HorizontalSplitPanel hsp = new HorizontalSplitPanel();
-			hsp.addComponent(new TheQueryBox(""));
+			hsp.addComponent(new TheQueryBox(TheQueryBox.area.getValue()));
 			hsp.addComponent(new HistoryTab());
 			
 			removeAllComponents();
@@ -76,15 +76,23 @@ public class welcomeUI extends HorizontalLayout implements View{
 		});
 
 		
-		tutTest.addClickListener(e23->{
-			removeAllComponents();
-			addComponent(new TutTestUI());
-		});
+		
 		
 		TutTestUI.backUI.addClickListener(e32->{
 			removeAllComponents();
 			addComponent(new welcomeUI());
 		});
+		
+		Groups.addClickListener(e27->{
+			removeAllComponents();
+			addComponent(new GroupUI());
+		});
+		
+		GroupUI.back.addClickListener(e37->{
+			removeAllComponents();
+			addComponent(new welcomeUI());
+		});
+		
 		
 		
 		
@@ -96,7 +104,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		Panel historyPanel1 = new HistoryTab();
 
 		
-		layout.addComponents(label,queryBox,localInfo,short_cut_keys,tutTest);
+		layout.addComponents(label,queryBox,localInfo,short_cut_keys,Groups);
 		layout.setComponentAlignment(queryBox , Alignment.MIDDLE_LEFT);
 		layout.setComponentAlignment(label, Alignment.TOP_CENTER);
 		
