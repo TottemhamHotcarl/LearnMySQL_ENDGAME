@@ -8,7 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud.Order.Direction;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.Column;
 import com.vaadin.ui.TextField;
 
 public class LayoutHelper {
@@ -63,6 +66,7 @@ public class LayoutHelper {
         return null;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Grid<HistoryObject> ResultSetToHIstoryGrid(ResultSet rs2){
 		ArrayList<HistoryObject> ls = new ArrayList<HistoryObject>();
 		try {
@@ -85,9 +89,13 @@ public class LayoutHelper {
 		 
 	        grid.setCaption("HISTORY TABLE");
 	        grid.addColumn(HistoryObject::getQuery).setCaption("HISTORY_QUERY");
-	        grid.addColumn(HistoryObject::getDate).setCaption("HISTORY_DATE");
-			 grid.addColumn(HistoryObject::getTime).setCaption("HISTORY_TIME");
+	        grid.addColumn(HistoryObject::getDate).setCaption("HISTORY_DATE").setId("Date");
+			 grid.addColumn(HistoryObject::getTime).setCaption("HISTORY_TIME").setId("Time");;
+			 grid.sort("Date", SortDirection.DESCENDING);
+			 //grid.sort("Time",SortDirection.DESCENDING);
 			 grid.setItems(ls);
+			
+			 
 			 return (grid);
 	}
 	

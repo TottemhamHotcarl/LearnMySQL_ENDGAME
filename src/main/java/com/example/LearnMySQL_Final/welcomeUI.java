@@ -26,7 +26,8 @@ public class welcomeUI extends HorizontalLayout implements View{
 		
 		Button localInfo = new Button("Terminal Info");
 		
-
+		Button Help_Docs= new Button(" SQL Help Docs");
+		
 		Button short_cut_keys= new  Button("Shortcuts");
 		
 		
@@ -34,7 +35,11 @@ public class welcomeUI extends HorizontalLayout implements View{
 		
 		
 		HorizontalLayout hl = new HorizontalLayout();
-		
+	
+		Help_Docs.addClickListener(e->{
+			removeAllComponents();
+			addComponent(new SQL_help());
+		});
 		
 		short_cut_keys.addClickListener(e->{
 			removeAllComponents();
@@ -74,6 +79,10 @@ public class welcomeUI extends HorizontalLayout implements View{
 			removeAllComponents();
 			addComponent(new welcomeUI());
 		});
+		SQL_help.backUI.addClickListener(e5->{
+			removeAllComponents();
+			addComponent(new welcomeUI());
+		});
 
 		
 		tutTest.addClickListener(e23->{
@@ -96,7 +105,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		Panel historyPanel1 = new HistoryTab();
 
 		
-		layout.addComponents(label,queryBox,localInfo,short_cut_keys,tutTest);
+		layout.addComponents(label,queryBox,localInfo,short_cut_keys,Help_Docs,tutTest);
 		layout.setComponentAlignment(queryBox , Alignment.MIDDLE_LEFT);
 		layout.setComponentAlignment(label, Alignment.TOP_CENTER);
 		
