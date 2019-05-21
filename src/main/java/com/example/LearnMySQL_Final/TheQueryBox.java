@@ -121,8 +121,13 @@ public class TheQueryBox   extends Panel implements View {
 		
 		save.addClickListener(e -> {
 			String Query = area.getValue();
-			saveQuery sq = new saveQuery(Query);
+			if(Query.isEmpty()) {
+				Notification.show("Cannot Save an empty Query,Please write your query");
+			}
+			else{
+				saveQuery sq = new saveQuery(Query);
 			saveUI();
+			}
 
 
 
@@ -146,6 +151,7 @@ public class TheQueryBox   extends Panel implements View {
 			for(int i =  0; i < query.length;i++) {
 				String currQuery = query[i];
 				if(currQuery.isEmpty()) {
+					Notification.show("Cannot execute empty query,Please write your query");
 					continue;
 				}
 				
@@ -281,9 +287,11 @@ public class TheQueryBox   extends Panel implements View {
 	 * This create the saveUI
 	 */
 	public void saveUI() {
+		Button clear= new Button("Clear");
 		content.removeAllComponents();
 		saveQuery sq = new saveQuery();
 		String query = sq.returnQuery();
+		 
 		TextArea area = new TextArea("Do you want to save this Query?");
 		area.setWidth("100%"); area.setValue(query);
 	
