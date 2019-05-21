@@ -19,12 +19,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 
-public class TheQueryBox   extends Panel implements View {
+public class TheGroupQueryBox   extends Panel implements View {
 	
 	
 	VerticalLayout content = new VerticalLayout();
-	static TextArea area = new TextArea("The Query Box");
-	
+	static TextArea area;
 	LayoutHelper lh = new LayoutHelper();
 
 	public static Button back;
@@ -34,33 +33,15 @@ public class TheQueryBox   extends Panel implements View {
 	
 
 	Person p;
-	/**
-	 * Creates the panel for the query box
-	 * @param s : Query that appears in the querybox
-	 */
-	public TheQueryBox(String s) {
-		
-		content.setHeight("100%");
-		content.setWidth("100%");
-		content.setSizeFull();
-		setContent(content);
-		
-		setHeight("100%");
-		getContent().setHeightUndefined();
-		User u = new User();
-		 p = u.person;
-		sqh = new StudentQueryHelper(p);
-		queryBox(s);
-	}
+	
 	
 	
 	/**
-	 * Creates the panel for the query box
 	 * @param s: Query that appears in the querybox
-	 * @param ip: Changes the ip address of the server
+	 * @param database: the database that is being change to
 	 */
-	public TheQueryBox(String s, String ip) {
-		smc = new ServerManagementConnection(ip);
+	public TheGroupQueryBox(String s, String database) {
+		smc = new ServerManagementConnection();
 		queryBox(s);
 		content.setHeight("100%");
 		content.setWidth("100%");
@@ -71,7 +52,9 @@ public class TheQueryBox   extends Panel implements View {
 		getContent().setHeightUndefined();
 		User u = new User();
 		 p = u.person;
-		 sqh = new StudentQueryHelper(p);
+		 sqh = new StudentQueryHelper(database);
+		 
+		 
 
 	}
 	
@@ -83,14 +66,14 @@ public class TheQueryBox   extends Panel implements View {
 	
 	/**
 	 * Creates the query box
-	 * @param s : Query that appears in the querybox
+	 * @param s : The title
 	 */
 	public void queryBox(String s) {
 		content.removeAllComponents();
 
 		back = new Button("Back");
 
-		
+		area = new TextArea("The Query Box");
 		area.setValue(s);
 		area.setWidth("100%");
 		TextArea outputArea = new TextArea("Output Area");
@@ -121,13 +104,8 @@ public class TheQueryBox   extends Panel implements View {
 		
 		save.addClickListener(e -> {
 			String Query = area.getValue();
-			if(Query.isEmpty()) {
-				Notification.show("Cannot Save an empty Query,Please write your query");
-			}
-			else{
-				saveQuery sq = new saveQuery(Query);
+			saveQuery sq = new saveQuery(Query);
 			saveUI();
-			}
 
 
 
@@ -151,13 +129,9 @@ public class TheQueryBox   extends Panel implements View {
 			for(int i =  0; i < query.length;i++) {
 				String currQuery = query[i];
 				if(currQuery.isEmpty()) {
-					Notification.show("Cannot execute empty query,Please write your query");
 					continue;
 				}
 				
-				String[] check = currQuery.split(" ");
-				
-				System.out.println(check[0]);
 				
 				smc.addStudentHistoryQuery(p, currQuery);
 				HistoryTab.refresh.click();
@@ -216,10 +190,10 @@ public class TheQueryBox   extends Panel implements View {
 						}
 					}
 					
-					else if(check[0].toUpperCase().contains("SHOW") && check[1].toUpperCase().contains("TABLES") ) {
+					else if(currQuery.toUpperCase().equals("SHOW TABLES")) {
 						VerticalLayout vltemp = new VerticalLayout();
 						
-						StudentQueryHelper sqh = new StudentQueryHelper(p);
+						
 						Grid g;
 						try {
 							g = sqh.queryShowTable();
@@ -283,17 +257,13 @@ public class TheQueryBox   extends Panel implements View {
 	
 	
 	
-	/**
-	 * This create the saveUI
-	 */
 	public void saveUI() {
-		Button clear= new Button("Clear");
 		content.removeAllComponents();
 		saveQuery sq = new saveQuery();
 		String query = sq.returnQuery();
-		 
 		TextArea area = new TextArea("Do you want to save this Query?");
-		area.setWidth("100%"); area.setValue(query);
+		area.setWidth("100%");
+		area.setValue(query);
 	
 		
 		final HorizontalLayout hl = new HorizontalLayout();
@@ -318,12 +288,6 @@ public class TheQueryBox   extends Panel implements View {
 		content.addComponents(area,hl);
 	}
 	
-	/**
-	 * This adds the saved Query to the database
-	 * @param query: The query that is going to be saved
-	 * @param query_name: The name of the query that is going to be saved
-	 * @return True if it saved successfully, otherwise it returns false
-	 */
 	public boolean addToDatabase(String query,String query_name) {
 		User u = new User();
 		Person p = u.person;
@@ -337,12 +301,17 @@ public class TheQueryBox   extends Panel implements View {
 	}
 	
 	
-/**
- * This function is used by outside objects (like history tab) to add something to the queryBox
- * @param x: The string that we want to add to the queryBox
- */
 public static void addToQueryBox(String x) {
-		area.setValue(x);
+		String temp = area.getValue();
+		System.out.println(temp);
+		if(!temp.isEmpty()) {
+			temp = temp + "\n" + x + ";";
+			area.setValue(temp);
+		}
+		else {
+			temp = temp  + x + ";";
+			area.setValue(temp);
+		}
 		
 	}
 

@@ -26,15 +26,34 @@ public class welcomeUI extends HorizontalLayout implements View{
 		
 		Button localInfo = new Button("Terminal Info");
 		
-
+		Button Help_Docs= new Button(" SQL Help Docs");
+		
 		Button short_cut_keys= new  Button("Shortcuts");
 		
+		Button Copy_his= new Button("Copy history to clipboard");
 		
-		Button tutTest = new Button("Tut Test");
+		Button SavedQuery= new Button("Copy Saved Query to clipboard");
+		
+		Button Groups = new Button("Groups");
 		
 		
 		HorizontalLayout hl = new HorizontalLayout();
 		
+		Copy_his.addClickListener(e->{
+			removeAllComponents();
+			addComponent(new Export_history_UI());
+		});
+		
+		SavedQuery.addClickListener(e->{
+			removeAllComponents();
+			addComponent(new Export_history_UI());
+		});
+		
+		
+		Help_Docs.addClickListener(e->{
+			removeAllComponents();
+			addComponent(new SQL_help());
+		});
 		
 		short_cut_keys.addClickListener(e->{
 			removeAllComponents();
@@ -44,7 +63,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		
 		queryBox.addClickListener(e -> {
 			HorizontalSplitPanel hsp = new HorizontalSplitPanel();
-			hsp.addComponent(new TheQueryBox(""));
+			hsp.addComponent(new TheQueryBox(TheQueryBox.area.getValue()));
 			hsp.addComponent(new HistoryTab());
 			
 			removeAllComponents();
@@ -70,21 +89,37 @@ public class welcomeUI extends HorizontalLayout implements View{
 			removeAllComponents();
 			addComponent(new welcomeUI());
 		});
+		Export_history_UI.backUI.addClickListener(e6->{
+			removeAllComponents();
+			addComponent(new welcomeUI());
+		});
 		ShortcutKeysUI.backUI.addClickListener(e5->{
+			removeAllComponents();
+			addComponent(new welcomeUI());
+		});
+		SQL_help.backUI.addClickListener(e5->{
 			removeAllComponents();
 			addComponent(new welcomeUI());
 		});
 
 		
-		tutTest.addClickListener(e23->{
-			removeAllComponents();
-			addComponent(new TutTestUI());
-		});
+		
 		
 		TutTestUI.backUI.addClickListener(e32->{
 			removeAllComponents();
 			addComponent(new welcomeUI());
 		});
+		
+		Groups.addClickListener(e27->{
+			removeAllComponents();
+			addComponent(new GroupUI());
+		});
+		
+		GroupUI.back.addClickListener(e37->{
+			removeAllComponents();
+			addComponent(new welcomeUI());
+		});
+		
 		
 		
 		
@@ -96,7 +131,8 @@ public class welcomeUI extends HorizontalLayout implements View{
 		Panel historyPanel1 = new HistoryTab();
 
 		
-		layout.addComponents(label,queryBox,localInfo,short_cut_keys,tutTest);
+		layout.addComponents(label,localInfo,short_cut_keys,queryBox,Help_Docs,Groups,Copy_his,SavedQuery);
+
 		layout.setComponentAlignment(queryBox , Alignment.MIDDLE_LEFT);
 		layout.setComponentAlignment(label, Alignment.TOP_CENTER);
 		

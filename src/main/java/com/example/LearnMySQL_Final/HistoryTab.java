@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 import com.vaadin.navigator.View;
+import com.vaadin.shared.data.sort.SortDirection;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
@@ -18,6 +19,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Grid.Column;
 
 public class HistoryTab  extends Panel implements View {
 
@@ -26,6 +28,7 @@ public class HistoryTab  extends Panel implements View {
 
 	Button del,del1;
 	Button sel;
+	Button add;
 	HorizontalLayout hl;
 	LayoutHelper lh;
 	 Button search;
@@ -40,9 +43,10 @@ public class HistoryTab  extends Panel implements View {
 			content.setWidth("100%");
 			content.setHeight("100%");
 			setHeight("100%");
-
+			
+			
 			del1=new Button("Delete Row");
-
+			add=new Button("Save_To_Query");
 			del=new Button("Delete selected");
 	        sel=new Button("Add to query box");
 		
@@ -92,7 +96,6 @@ public class HistoryTab  extends Panel implements View {
 			triplet t2 = smc.getStudentHistoryQueryWithSearch(p, searchText);
 			if(t2.queryOk) {
 				
-
 				updateHistory(t2);
 
 					
@@ -105,22 +108,15 @@ public class HistoryTab  extends Panel implements View {
 			HistoryTabInit();
 		});
 			
-	
-
-
-		
 		setContent(content);
-
-		getContent().setHeightUndefined();
-
-		
-		
-		
+		getContent().setHeightUndefined();	
 		}
 	
-	
 	public void updateHistory(triplet t) {
+		User u = new User();
+		Person p = u.person;
 		ResultSet rs = t.rs;
+		
 		Grid<HistoryObject> grid = lh.ResultSetToHIstoryGrid(rs);
 		content.removeAllComponents();
 		content.addComponent(hl);
@@ -129,7 +125,7 @@ public class HistoryTab  extends Panel implements View {
 		 grid.addItemClickListener(e ->{
 	        	content.addComponent(del);
 	        	content.addComponent(sel);
-	        	
+	        	content.addComponent(add);
 	        	HistoryObject ho = e.getItem();
 	        	del.addClickListener(e1->{
 	        		System.out.println(ho.getHistoryID());
@@ -137,12 +133,34 @@ public class HistoryTab  extends Panel implements View {
 	        		search.click();
 	        	});
 	        	sel.addClickListener(e3->{
-	        		//setting the Query box to empty
-	        		//TheQueryBox.area.setValue("");
+	        	//setting the Query box to empty
+	        		TheQueryBox.area.setValue("");
 	        		TheQueryBox.addToQueryBox(ho.getQuery());
 	        	});
 	        	
+	        	
+	      //SAVING A QUERY FROM HISTORY TABLE TO SAVED TABLE............................
+	        	add.addClickListener(e3->{
+	        		content.removeAllComponents();
+	        		
+	        		final TextField text=new TextField();
+	        		text.setCaption("Type your QueryName here:");
+	                Button ex=new Button("Save");
+	        		content.removeComponent(del);
+	        		content.removeComponent(sel);
+	        		content.addComponent(text);
+	        		content.addComponent(ex);
+	        		ex.addClickListener(e4->{
+	        			smc. addStudentSavedQuery(p,text.getValue() ,ho.getQuery());
+	        			content.addComponent(hl);
+	        	    search.click();
+	        	
+	        		});
+	        		
+	        	});	
+	        	
 		 });
+
 	}
 	
 	
@@ -187,9 +205,6 @@ public class HistoryTab  extends Panel implements View {
 			saveTab();
 		});
 		
-		
-
-
 		setContent(content);
 
 		getContent().setHeightUndefined();
@@ -209,19 +224,22 @@ public class HistoryTab  extends Panel implements View {
 		    	System.out.println(ho.getQuery());
 	        	content.addComponent(del1);
 	        	content.addComponent(sel);
-	        	
 	        	del1.addClickListener(e2->{
 	        		System.out.println(ho.getSavedQueryID());
 	        		smc.deleteSaved_Query(ho.getSavedQueryID());
-	        		SaveTabButton.click();
+	        		search.click();
 	        	});
+	        	
+	        	
 	        	sel.addClickListener(e3->{
 	        		//TheQueryBox.area.setValue("");
 	        		System.out.println("~~~~~~~" + ho.getQuery());
 	        		TheQueryBox.addToQueryBox(ho.getQuery());
 	        	});
+	        	
 	        
 			});
+		 //grid.sort(HISTORY_DATE, SortDirection.DESCENDING);
 	}
 
 		
