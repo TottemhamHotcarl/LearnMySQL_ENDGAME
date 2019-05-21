@@ -113,7 +113,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		Panel historyPanel1 = new HistoryTab();
 
 		
-		layout.addComponents(label,queryBox,localInfo,short_cut_keys,Help_Docs,tutTest);
+		layout.addComponents(label,queryBox,localInfo,short_cut_keys,Help_Docs,Groups);
 
 		layout.setComponentAlignment(queryBox , Alignment.MIDDLE_LEFT);
 		layout.setComponentAlignment(label, Alignment.TOP_CENTER);
