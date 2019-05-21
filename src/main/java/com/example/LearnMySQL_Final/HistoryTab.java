@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
-=
+
 import com.vaadin.server.ClassResource;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
