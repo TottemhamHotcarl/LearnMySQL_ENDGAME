@@ -1,6 +1,8 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Random;
+
 import org.junit.Test;
 
 import com.example.LearnMySQL_Final.DescObject;
@@ -11,7 +13,10 @@ import com.example.LearnMySQL_Final.Person;
 public class Sprint4Test {
 	
 	DescObject DoTest = new DescObject("STUDENT_NO", "varchar(10)", "NOT NULL", "PRI", "a", "auto_increment");
+	Random rm = new Random();
+	
 	//Test for DescObject
+
 	
 	@Test public void DescObject_getField_Test() {
 		
@@ -89,9 +94,13 @@ public class Sprint4Test {
 		assertTrue(gsmc.getGroupMembers("27").queryOk);
 	}
 	
+	@Test public void GSMC_GetMember_False() {
+		assertFalse(gsmc.getGroupMembers("28").queryOk);
+	}
 	
 	@Test public void GSMC_addGroup_True() {
-		assertTrue(gsmc.addGroup(ptrue, "test Group"));
+		int t = rm.nextInt();
+		assertTrue(gsmc.addGroup(ptrue, "test Group"+t));
 	}
 	
 	
