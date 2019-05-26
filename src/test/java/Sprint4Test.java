@@ -99,7 +99,7 @@ public class Sprint4Test {
 		assertFalse(gsmc.getGroupMembers("28").queryOk);
 	}
 	
-	ServerManagementConnection smc = new ServerManagementConnection();
+	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
 	
 	@Test public void GSMC_addGroup_True() {
 		int t = rm.nextInt();
