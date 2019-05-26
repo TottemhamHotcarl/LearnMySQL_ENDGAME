@@ -99,11 +99,7 @@ public class Sprint4Test {
 	
 	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
 	
-	@Test public void GSMC_addGroup_True() {
-		int t = rm.nextInt();
-		smc.addStudentDatabase(new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString(t),"1"));
-		assertTrue(gsmc.addGroup(new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString(t),"1"), "test Group"+t));
-	}
+	
 	
 	
 	
