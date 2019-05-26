@@ -131,6 +131,7 @@
 						 <exclude>**/*Tab.class</exclude>
 						  <exclude>**/*Box*.class</exclude>
 						   <exclude>**/*Helper.class</exclude>
+						 <exclude>**/*Uploader.class</exclude>
 
 
                         </excludes>
