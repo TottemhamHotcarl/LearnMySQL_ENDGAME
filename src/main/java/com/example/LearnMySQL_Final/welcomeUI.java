@@ -76,15 +76,7 @@ public class welcomeUI extends HorizontalLayout implements View{
 		});
 
 		
-		tutTest.addClickListener(e23->{
-			removeAllComponents();
-			addComponent(new TutTestUI());
-		});
 		
-		TutTestUI.backUI.addClickListener(e32->{
-			removeAllComponents();
-			addComponent(new welcomeUI());
-		});
 		
 		
 		
