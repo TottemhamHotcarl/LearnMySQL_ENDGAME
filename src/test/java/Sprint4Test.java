@@ -100,7 +100,7 @@ public class Sprint4Test {
 	}
 	
 	@Test public void GSMC_addGroup_False() {
-		assertTrue(gsmc.addGroup(pfalse, "test Group"));
+		assertFalse(gsmc.addGroup(pfalse, "test Group"));
 	}
 	
 	
