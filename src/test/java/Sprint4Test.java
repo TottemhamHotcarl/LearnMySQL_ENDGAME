@@ -6,7 +6,7 @@ import com.example.LearnMySQL_Final.DescObject;
 
 public class Sprint4Test {
 	
-	DescObject DoTest = new DescObject("STUDENT_NO", "varchar(10)", "NOT NULL", "PRI", "", "auto_increment");
+	DescObject DoTest = new DescObject("STUDENT_NO", "varchar(10)", "NOT NULL", "PRI", "a", "auto_increment");
 	//Test for DescObject
 	
 	@Test public void DescObject_getField_Test() {
@@ -28,7 +28,7 @@ public class Sprint4Test {
 	}
 	
 	@Test public void DescObject_getDefault_Test() {
-		assertTrue(DoTest.getdefault().equals(""));
+		assertTrue(DoTest.getdefault().equals("a"));
 	}
 	
 	@Test public void DescObject_getExtra_Test() {
