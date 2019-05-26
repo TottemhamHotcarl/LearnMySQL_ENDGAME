@@ -28,7 +28,7 @@ public class Sprint1Test {
 		User ur = new User();
 		ur.setperson(p);
 		User ur2 = new User();
-		assertTrue(ur.equals(ur2));
+		assertTrue(ur2.person.getId().equals("1606558"));
 	}
 	
 
