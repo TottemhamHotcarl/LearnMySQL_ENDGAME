@@ -1,9 +1,12 @@
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.example.LearnMySQL_Final.DescObject;
 import com.example.LearnMySQL_Final.GroupObject;
+import com.example.LearnMySQL_Final.GroupServerManagementConnection;
+import com.example.LearnMySQL_Final.Person;
 
 public class Sprint4Test {
 	
@@ -68,5 +71,38 @@ public class Sprint4Test {
 		GroupObject Go = new GroupObject("34", "1606558", "Edoc", "d1606558");
 		assertTrue(GoTest.getID().equals(Go.getID()));
 	}
+	
+	// Test for Group Server Management 
+	
+	GroupServerManagementConnection gsmc = new GroupServerManagementConnection("127.0.0.1");
+	Person p = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606558","1");
+	Person ptrue = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","2000000","1");
+	Person pfalse = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606559","1");
+	
+	@Test public void GSMC_alreadyCreatedGroup_True() {
+		assertTrue(gsmc.alreadyCreatedGroup(p).queryOk);
+	}
+	
+	@Test public void GSMC_alreadyCreatedGroup_False() {
+		assertTrue(gsmc.alreadyCreatedGroup(pfalse).queryOk);
+	}
+	
+	@Test public void GSMC_GetMember_True() {
+		assertTrue(gsmc.getGroupMembers("27").queryOk);
+	}
+	
+	@Test public void GSMC_GetMember_False() {
+		assertFalse(gsmc.getGroupMembers("28").queryOk);
+	}
+	
+	@Test public void GSMC_addGroup_True() {
+		assertTrue(gsmc.addGroup(ptrue, "test Group"));
+	}
+	
+	@Test public void GSMC_addGroup_False() {
+		assertTrue(gsmc.addGroup(pfalse, "test Group"));
+	}
+	
+	
 	
 }
