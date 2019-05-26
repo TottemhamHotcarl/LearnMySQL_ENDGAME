@@ -9,6 +9,7 @@ import com.example.LearnMySQL_Final.DescObject;
 import com.example.LearnMySQL_Final.GroupObject;
 import com.example.LearnMySQL_Final.GroupServerManagementConnection;
 import com.example.LearnMySQL_Final.Person;
+import com.example.LearnMySQL_Final.ServerManagementConnection;
 
 public class Sprint4Test {
 	
@@ -98,8 +99,11 @@ public class Sprint4Test {
 		assertFalse(gsmc.getGroupMembers("28").queryOk);
 	}
 	
+	ServerManagementConnection smc = new ServerManagementConnection();
+	
 	@Test public void GSMC_addGroup_True() {
 		int t = rm.nextInt();
+		smc.addStudentDatabase(new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString(t),"1"));
 		assertTrue(gsmc.addGroup(new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString(t),"1"), "test Group"+t));
 	}
 	
