@@ -91,17 +91,13 @@ public class Sprint4Test {
 		assertTrue(gsmc.getGroupMembers("27").queryOk);
 	}
 	
-	@Test public void GSMC_GetMember_False() {
-		assertFalse(gsmc.getGroupMembers("28").queryOk);
-	}
+	
 	
 	@Test public void GSMC_addGroup_True() {
 		assertTrue(gsmc.addGroup(ptrue, "test Group"));
 	}
 	
-	@Test public void GSMC_addGroup_False() {
-		assertFalse(gsmc.addGroup(pfalse, "test Group"));
-	}
+	
 	
 	
 	
