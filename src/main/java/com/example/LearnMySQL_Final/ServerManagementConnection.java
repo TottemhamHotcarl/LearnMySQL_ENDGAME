@@ -10,8 +10,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 
+/**
+ * This class connects the app to the database
+ *
+ */
 public class ServerManagementConnection {
 	Connection con;
+	/**
+	 * This create a connection to the server database
+	 */
 	public ServerManagementConnection() {
 		try{  
 			//Class.forName("com.mysql.jdbc.Driver");  
@@ -22,6 +29,9 @@ public class ServerManagementConnection {
 			}
 	}
 	
+	/**
+	 * @param ip: connects to a different server database
+	 */
 	public ServerManagementConnection(String ip) {
 		try{  
 			//Class.forName("com.mysql.jdbc.Driver");  
@@ -46,6 +56,11 @@ public class ServerManagementConnection {
 	
 	
 
+	/**
+	 * Check if it is a students first time loginning
+	 * @param Student_no: the student number being check in the database
+	 * @return True if it the student first time. False if it not the students first time
+	 */
 	public boolean isFirstTime(String Student_no) {
 		
 		try {
@@ -66,13 +81,17 @@ public class ServerManagementConnection {
 			return false;
 	}
 	
+	/**
+	 * Adds a student to the STUDENT TABLE in the databases
+	 * @param p: A person object which stores the current user info
+	 * @return true if successful saved the student, otherwise false
+	 */
 	public boolean addStudentToStudentTableInDatabase(Person p) {
 		try {
 			Statement stmt=con.createStatement();
 			String Student_no = p.getId();
 			String Student_name = p.getName();
 			String Student_email = p.getEmail();
-			
 			String query = "INSERT INTO STUDENT (STUDENT_NO, STUDENT_NAME,STUDENT_EMAIL, STUDENT_DATABASE)" + "VALUES(?,?,?,?)";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setString (1, Student_no);
@@ -88,6 +107,11 @@ public class ServerManagementConnection {
 			return false;
 					}
 	}
+	/**
+	 * This creates the student databases and gives permission to it
+	 * @param p: A person object which stores the current user info
+	 * @return true if successful saved the student, otherwise false
+	 */
 	public boolean addStudentDatabase(Person p) {
 		try {
 			Statement stmt=con.createStatement();
@@ -126,6 +150,11 @@ public class ServerManagementConnection {
 	
 	
 	
+	/**
+	 * Get all the history of a particular student
+	 * @param p:A person object which stores the current user info
+	 * @return result set containing the students history
+	 */ 
 	public triplet getStudentHistoryQuery(Person p) {
 		ResultSet rs =null;
 
@@ -145,6 +174,12 @@ public class ServerManagementConnection {
 					}
 	}
 	
+	/**
+	 *  Get all the history of a particular student with a particular phrase in it
+	 * @param p: A person object which stores the current user info
+	 * @param search: The phrase that is being used to search with
+	 * @return If valid query: a triplet containing true, the resultset rs, and no error message. If not valid query: a triplet containing false, a null resultset, and the error message
+	 */
 	public triplet getStudentHistoryQueryWithSearch(Person p,String search) {
 		ResultSet rs =null;
 		try {
@@ -159,7 +194,7 @@ public class ServerManagementConnection {
 			rs = stmt.executeQuery(query2);
 			
 			return new triplet(true, rs, "");
-		}catch (Exception e) {
+		}catch (SQLException e) {
 			System.out.println(e);
 			return new triplet(false,rs,e.toString());
 					}
@@ -169,6 +204,12 @@ public class ServerManagementConnection {
 	
 	
 	
+	/**
+	 * Adds to student History table
+	 * @param p: A person object which stores the current user info
+	 * @param query: the query being saved
+	 * @return true if it was successful, false otherwise
+	 */
 	public boolean addStudentHistoryQuery(Person p, String query) {
 		try {
 			Statement stmt=con.createStatement();
@@ -199,6 +240,11 @@ public class ServerManagementConnection {
 	}
 	
 
+	/**
+	 * Delete history from HISTORY TABLE
+	 * @param HistoryID: The history_id that is stored on the database
+	 * @return true if it was successful, false otherwise
+	 */
 	public boolean deleteHistory(String HistoryID) {
 		try {
 			Statement stmt=con.createStatement();
@@ -221,6 +267,11 @@ public class ServerManagementConnection {
 	
 	
 	
+	/**
+	 * Delete saved_query from SAVED_QUERY Table
+	 * @param SAVED_QUERY_ID: the query id that is being deleted
+	 * @return true if it was successful, false otherwise
+	 */
 	public boolean deleteSaved_Query(String SAVED_QUERY_ID) {
 		try {
 			Statement stmt=con.createStatement();
@@ -243,6 +294,13 @@ public class ServerManagementConnection {
 	}
 	
 	
+	/**
+	 * save query in the database
+	 * @param p:  A person object which stores the current user info
+	 * @param queryName: The name of the query
+	 * @param query: The query being saved
+	 * @return true if it was successful, false otherwise
+	 */
 	public boolean addStudentSavedQuery(Person p, String queryName,String query) {
 		try {
 			Statement stmt=con.createStatement();
@@ -270,6 +328,11 @@ public class ServerManagementConnection {
 			return false;
 					}
 	}
+	/**
+	 * Gets student saved query
+	 * @param p:  A person object which stores the current user info
+	 * @return If valid query: a triplet containing true, the resultset rs, and no error message. If not valid query: a triplet containing false, a null resultset, and the error message
+	 */
 	public triplet getStudentSavedQuery(Person p) {
 		ResultSet rs =null;
 		try {
@@ -294,6 +357,12 @@ public class ServerManagementConnection {
 	
 	
 
+	/**
+	 *  Gets student saved query with search term
+	 * @param p: A person object which stores the current user info
+	 * @param search: the search term
+	 * @return If valid query: a triplet containing true, the resultset rs, and no error message. If not valid query: a triplet containing false, a null resultset, and the error message
+	 */
 	public triplet getStudentSavedQueryWithSearch(Person p,String search) {
 		ResultSet rs =null;
 		try {

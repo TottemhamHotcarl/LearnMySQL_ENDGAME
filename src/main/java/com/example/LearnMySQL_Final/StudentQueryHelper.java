@@ -13,10 +13,18 @@ import java.util.Map;
 
 import com.vaadin.ui.Grid;
 
+/**
+ * This allow queries to be run in the querybox
+ *
+ */
 public class StudentQueryHelper {
 
 	
 		Connection con;
+		/**
+		 * This connects the app to the students database
+		 * @param p: A person object which stores the current user info
+		 */
 		public StudentQueryHelper(Person p) {
 			if(!p.getId().equals("admin")) {
 				String user = "d" + p.getId();
@@ -43,6 +51,11 @@ public class StudentQueryHelper {
 		}
 		
 		// Constructor for testing with Travis-CI
+		/**
+		 * This connects the app to the students database as while as change the ip address
+		 * @param p: A person object which stores the current user info
+		 * @param ip: The ip we want to change to
+		 */
 		public StudentQueryHelper(Person p, String ip) {
 			if(!p.getId().equals("admin")) {
 				String user = "d" + p.getId();
@@ -59,8 +72,33 @@ public class StudentQueryHelper {
 		}
 		
 		
+		/**
+		 * This is the constructor when we connect to a group database
+		 * @param database: the database of the group we want to connect to
+		 */
+		public StudentQueryHelper( String database) {
+			
+				try{  
+					//Class.forName("com.mysql.jdbc.Driver");  
+					con=DriverManager.getConnection(  
+							
+					"jdbc:mysql://146.141.21.143:3306/" +database , database ,database);  
+				}catch(Exception e){
+					System.out.println("Pizza");
+					System.out.println(e);
+					}
+			}
+			
 		
 		
+		
+		
+		
+		/**
+		 * This run update query on the users databases
+		 * @param query: the query which is going to run on the user's databases
+		 * @return If valid query: Query OK, "number of row affected" rows affected. If invalid query: The error produced by the database
+		 */
 		public String queryUpdateRun(String query) {
 			if(!query.toUpperCase().contains("SELECT")) {
 				try {
@@ -78,6 +116,11 @@ public class StudentQueryHelper {
 			return "Something went wrong";
 		}
 		
+		/**
+		 * This just run select querys
+		 * @param query:  the query which is going to run on the user's databases
+		 * @return  If valid query: a triplet containing true, the resultset rs, and no error message. If not valid query: a triplet containing false, a null resultset, and the error message
+		 */
 		public triplet querySelectRun(String query) {
 			ResultSet rs = null;
 			
@@ -95,6 +138,11 @@ public class StudentQueryHelper {
 			
 		}
 		
+		/**
+		 * This run the show table query
+		 * @return a Grid that contains all the tables in the users databases.
+		 * @throws SQLException if there is a error
+		 */
 		public Grid queryShowTable() throws SQLException {
 			Grid<HashMap<String, String>> grid4 = null;
 			List<HashMap<String, String>> rows = new ArrayList<>();
