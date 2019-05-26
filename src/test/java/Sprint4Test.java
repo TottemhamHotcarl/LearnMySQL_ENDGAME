@@ -94,11 +94,13 @@ public class Sprint4Test {
 		assertTrue(gsmc.getGroupMembers("27").queryOk);
 	}
 	
-	
+	@Test public void GSMC_GetMember_False() {
+		assertFalse(gsmc.getGroupMembers("28").queryOk);
+	}
 	
 	@Test public void GSMC_addGroup_True() {
 		int t = rm.nextInt();
-		assertTrue(gsmc.addGroup(ptrue, "test Group"+t));
+		assertTrue(gsmc.addGroup(new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString(t),"1"), "test Group"+t));
 	}
 	
 	
