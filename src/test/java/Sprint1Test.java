@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import com.example.LearnMySQL_Final.Person;
 import com.example.LearnMySQL_Final.ServerManagementConnection;
+import com.example.LearnMySQL_Final.User;
 
 public class Sprint1Test {
 
