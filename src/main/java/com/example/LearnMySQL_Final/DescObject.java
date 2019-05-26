@@ -19,6 +19,7 @@ public class  DescObject {
 		this.nulla = nulla;
 		this.key = key;
 		this.extra = extra;
+		this.defaulta = defaulta;
 	}
 	
 	
