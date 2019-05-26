@@ -2,6 +2,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
+import java.util.Random;
 
 import org.junit.*;
 
@@ -18,15 +19,17 @@ import com.example.LearnMySQL_Final.triplet;
 public class Sprint2Test {
 	
 	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
-	Person p = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606558","1");
-	Person ptest = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606559","1");
 	
-		//add student to database
+	Random rm = new Random();
+	
+	Person p = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606558","1");
+	Person ptest = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString((rm.nextInt())),"1");
+	
+	//add student to database
 	@Test public void SMC_Add_Student_to_database() {
 		boolean t = smc.addStudentDatabase(ptest);
 		assertTrue(t);
 	}
-	
 	
 	// Test for User Story form History_Tab
 	@Test public void History_Tab_Get_History_Valid_Test() {
