@@ -23,7 +23,7 @@ public class Sprint2Test {
 	Random rm = new Random();
 	
 	Person p = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606558","1");
-	Person ptest = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString((rm.nextInt())),"1");
+	Person ptest = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString(rm.nextInt(200000)),"1");
 	
 	//add student to database
 	@Test public void SMC_Add_Student_to_database() {
