@@ -19,6 +19,7 @@ public class Sprint2Test {
 	
 	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
 	Person p = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606558","1");
+	Person ptest = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606559","1");
 	
 		//add student to database
 	@Test public void SMC_Add_Student_to_database() {
