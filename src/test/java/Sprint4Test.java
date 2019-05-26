@@ -3,6 +3,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.example.LearnMySQL_Final.DescObject;
+import com.example.LearnMySQL_Final.GroupObject;
 
 public class Sprint4Test {
 	
@@ -43,5 +44,29 @@ public class Sprint4Test {
 		assertTrue(DoTest.gettype().equals(Do.gettype()));
 	}
 	
+	
+	//test for GroupObject
+	
+	GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
+			
+	@Test public void GroupObject_getID_Test() {
+		assertTrue(GoTest.getID().equals("34"));
+	}	
+	@Test public void GroupObject_getAdmin_Test() {
+		assertTrue(GoTest.getAdmin().equals("1606558"));
+	}
+	@Test public void GroupObject_getName_Test() {
+		assertTrue(GoTest.getName().equals("Edoc"));
+	}
+	@Test public void GroupObject_getDatabase_Test() {
+		assertTrue(GoTest.getDatabase().equals("d1606558"));
+	}
+	
+	
+	@Test public void GroupObject_Const_Test() {
+		
+		GroupObject Go = new GroupObject("34", "1606558", "Edoc", "d1606558");
+		assertTrue(GoTest.getID().equals(Go.getID()));
+	}
 	
 }
