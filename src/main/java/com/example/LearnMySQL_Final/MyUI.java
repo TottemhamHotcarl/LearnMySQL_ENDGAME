@@ -18,6 +18,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -38,6 +39,8 @@ public class MyUI extends UI {
     	
     
     	Label wel = new Label("Welcome to LearnMySQL");
+    	wel.addStyleName(ValoTheme.TEXTAREA_HUGE);
+		wel.addStyleName(ValoTheme.TEXTAREA_ALIGN_CENTER);
     	Label label = new Label("");
     	label.setId("Error");
     	
