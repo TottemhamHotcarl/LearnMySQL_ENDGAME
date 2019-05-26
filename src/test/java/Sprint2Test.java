@@ -20,6 +20,13 @@ public class Sprint2Test {
 	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
 	Person p = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606558","1");
 	
+		//add student to database
+	@Test public void SMC_Add_Student_to_database() {
+		boolean t = smc.addStudentDatabase(ptest);
+		assertTrue(t);
+	}
+	
+	
 	// Test for User Story form History_Tab
 	@Test public void History_Tab_Get_History_Valid_Test() {
 		triplet t = smc.getStudentHistoryQuery(p);
