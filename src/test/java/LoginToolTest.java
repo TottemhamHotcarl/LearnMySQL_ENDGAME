@@ -33,9 +33,9 @@ public class LoginToolTest {
 	
 
 	@Test public void welcomeUI() {
-		com.example.LearnMySQL_Final.welcomeUI wu = new com.example.LearnMySQL_Final.welcomeUI();
-		com.example.LearnMySQL_Final.practiceUI wu2 = new com.example.LearnMySQL_Final.practiceUI();
-		com.example.LearnMySQL_Final.MyUI myui = new com.example.LearnMySQL_Final.MyUI();
+		//com.example.LearnMySQL_Final.welcomeUI wu = new com.example.LearnMySQL_Final.welcomeUI();
+		//com.example.LearnMySQL_Final.practiceUI wu2 = new com.example.LearnMySQL_Final.practiceUI();
+		//com.example.LearnMySQL_Final.MyUI myui = new com.example.LearnMySQL_Final.MyUI();
 		//com.example.LearnMySQL_Final.saveUI msyui = new com.example.LearnMySQL_Final.saveUI();
 		myui.checkFirstTimeLogin();
 		
