@@ -98,7 +98,7 @@ public class Sprint4Test {
 	
 	
 	@Test public void GroupObject_Const_Test() {
-		
+		GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
 		GroupObject Go = new GroupObject("34", "1606558", "Edoc", "d1606558");
 		assertTrue(GoTest.getID().equals(Go.getID()));
 	}
