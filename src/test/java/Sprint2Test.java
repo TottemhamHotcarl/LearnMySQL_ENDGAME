@@ -26,8 +26,13 @@ public class Sprint2Test {
 	Person ptest = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString(rm.nextInt(200000)),"1");
 	
 	//add student to database
-	@Test public void SMC_Add_Student_to_database() {
+	@Test public void SMC_Add_Students_database_to_Server() {
 		boolean t = smc.addStudentDatabase(ptest);
+		assertTrue(t);
+	}
+	
+	@Test public void SMC_Add_Student_to_database() {
+		boolean t = smc.addStudentToStudentTableInDatabase(ptest);
 		assertTrue(t);
 	}
 	
