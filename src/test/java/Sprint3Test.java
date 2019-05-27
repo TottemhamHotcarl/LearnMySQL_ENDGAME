@@ -99,6 +99,7 @@ public class Sprint3Test {
 		}
 		
 		@Test public void savedObject_getQueryName_Test() {
+			saveQuery so = new saveQuery();
 			assertTrue(homain.getQueryName().equals("SPECIAL SELECT"));
 		}
 		
