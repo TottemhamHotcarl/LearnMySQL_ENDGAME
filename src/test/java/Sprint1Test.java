@@ -12,28 +12,8 @@ public class Sprint1Test {
 
 	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
 	Person p = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606558","1");
-	Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
+	
 	Person testPerson2 = new Person("Test","Test","Test","Test@students.wits.ac.za","2","1");
-	
-	
-	//test for Person
-	@Test public void Person_getID_Test() {
-		assertTrue(p.getId().equals("1606558"));
-	}	
-	@Test public void Person_getFirstName_Test() {
-		assertTrue(p.getFirstname().equals("Carl"));
-	}	
-	@Test public void Person_getLastName_Test() {
-		assertTrue(p.getLastname().equals("Ginster"));
-	}
-	@Test public void Person_getName_Test() {
-		assertTrue(p.getName().equals("Carl Ginster"));
-	}
-	@Test public void Person_getEmail_Test() {
-		assertTrue(p.getEmail().equals("1606558@students.wits.ac.za"));
-	}
-	
-	
 	
 	
 	//Test for first time login
@@ -63,6 +43,47 @@ public class Sprint1Test {
 		assertTrue(ur2.person.getId().equals("1606558"));
 	}
 	
+	//test for Person
+	@Test public void Person_getID_Test() {
+		assertTrue(p.getId().equals("1606558"));
+	}	
+	@Test public void Person_getFirstName_Test() {
+		assertTrue(p.getFirstname().equals("Carl"));
+	}	
+	@Test public void Person_getLastName_Test() {
+		assertTrue(p.getLastname().equals("Ginster"));
+	}
+	@Test public void Person_getName_Test() {
+		assertTrue(p.getName().equals("Carl Ginster"));
+	}
+	@Test public void Person_getEmail_Test() {
+		assertTrue(p.getEmail().equals("1606558@students.wits.ac.za"));
+	}
+	@Test public void Person_setID_Test() {
+		Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
+		testPerson.setId("123456");
+		assertTrue(testPerson.getId().equals("123456"));
+	}	
+	@Test public void Person_setFirstName_Test() {
+		Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
+		testPerson.setFirstname("Bob");
+		assertTrue(testPerson.getFirstname().equals("bob"));
+	}	
+	@Test public void Person_setLastName_Test() {
+		Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
+		testPerson.setLastname("Ginster");
+		assertTrue(testPerson.getLastname().equals("Ginster"));
+	}
+	@Test public void Person_setName_Test() {
+		Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
+		testPerson.setName("Carl Ginster");
+		assertTrue(testPerson.getName().equals("Carl Ginster"));
+	}
+	@Test public void Person_setEmail_Test() {
+		Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
+		testPerson.setEmail("1606558@students.wits.ac.za");
+		assertTrue(testPerson.getEmail().equals("1606558@students.wits.ac.za"));
+	}
 	
 	
 	
