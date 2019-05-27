@@ -127,7 +127,12 @@
 			         	 <excludes>
 
                            <exclude>**/*Ldap.class</exclude>
-						
+				 <exclude>**/*UI.class</exclude>
+				 <exclude>**/*Tab.class</exclude>
+				  <exclude>**/*Box*.class</exclude>
+				   <exclude>**/*LayoutHelper.class</exclude>
+				   <exclude>**/*Uploader.class</exclude>
+				   <exclude>**/*Tool.class</exclude>
 						  
 
 
