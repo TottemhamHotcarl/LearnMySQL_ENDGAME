@@ -67,7 +67,7 @@ public class Sprint1Test {
 	@Test public void Person_setFirstName_Test() {
 		Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
 		testPerson.setFirstname("Bob");
-		assertTrue(testPerson.getFirstname().equals("bob"));
+		assertTrue(testPerson.getFirstname().equals("Bob"));
 	}	
 	@Test public void Person_setLastName_Test() {
 		Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
