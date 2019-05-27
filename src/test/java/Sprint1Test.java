@@ -84,6 +84,12 @@ public class Sprint1Test {
 		testPerson.setEmail("1606558@students.wits.ac.za");
 		assertTrue(testPerson.getEmail().equals("1606558@students.wits.ac.za"));
 	}
+	@Test public void Person_setAccess_Test() {
+		Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
+		testPerson.setAccessLevel("2");
+		assertTrue(testPerson.toString().equals("Person [name=" + "Test" + ", email=" + "Test" + ", id=" + "1" + ", access=" + "2" + "]"));
+	}
+	
 	
 	
 	
