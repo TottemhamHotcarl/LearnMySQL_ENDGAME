@@ -10,6 +10,7 @@ import com.example.LearnMySQL_Final.GroupObject;
 import com.example.LearnMySQL_Final.GroupServerManagementConnection;
 import com.example.LearnMySQL_Final.Person;
 import com.example.LearnMySQL_Final.ServerManagementConnection;
+import com.example.LearnMySQL_Final.triplet;
 
 public class Sprint4Test {
 	
@@ -115,7 +116,6 @@ public class Sprint4Test {
 	}
 	
 	
-	
 	@Test public void GSMC_GetMember_True() {
 		assertTrue(gsmc.getGroupMembers("27").queryOk);
 	}
@@ -124,6 +124,13 @@ public class Sprint4Test {
 	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
 	
 	
+	@Test public void GSMC_addGroup_Test() {
+		GroupObject go = new GroupObject("27","1606558","Super Group","d1606558");
+		Person ptest = new Person("Test Tesy","Test","Tesy","Testy@students.wits.ac.za",Integer.toString(rm.nextInt(200000)),"1");
+		smc.addStudentToStudentTableInDatabase(ptest);
+		boolean b = gsmc.addGroup(ptest, "Test Group");
+		assertTrue(b);
+	}
 	
 	
 	
