@@ -82,25 +82,7 @@ public class Person {
 		return "Person [name=" + name + ", email=" + email + ", id=" + id + ", access=" + access + "]";
 	}
 
-	/*public long persist(DatabaseHelper db) {
-		ContentValues cv = db.getFirstRow("select * from users where person_number=?",id);
-		if (cv==null){
-			return insert(db);
-		} else {
-			CVUtils.printCV(cv); 
-			return cv.getAsLong("id"); 
-		}
-	}*/
 	
-	/*public long insert(DatabaseHelper db){
-		ContentValues inserter=new ContentValues();
-		inserter.put("person_number",id);
-		inserter.put("firstname", firstname);
-		inserter.put("lastname", lastname);
-		inserter.put("usertype_id", 1);
-		long id = db.insert("users", inserter);
-		return id;
-	}*/
 	
 
 }
