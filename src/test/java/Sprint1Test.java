@@ -88,7 +88,7 @@ public class Sprint1Test {
 	@Test public void Person_setAccess_Test() {
 		Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
 		testPerson.setAccessLevel("2");
-		assertTrue(testPerson.toString().equals("Person [name=" + "Test" + ", email=" + "Test" + ", id=" + "1" + ", access=" + "2" + "]"));
+		assertTrue(testPerson.toString().equals("Person [name=" + "Test" + ", email=" + "Test@students.wits.ac.za" + ", id=" + "1" + ", access=" + "2" + "]"));
 	}
 	@Test public void myUI() {
 		UI MyUI = new com.example.LearnMySQL_Final.MyUI();
