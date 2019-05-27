@@ -1,112 +1,47 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.sql.SQLException;
-import java.util.Random;
+import org.junit.Test;
 
-import org.junit.*;
-
-import com.example.LearnMySQL_Final.History;
-import com.example.LearnMySQL_Final.HistoryObject;
 import com.example.LearnMySQL_Final.Person;
 import com.example.LearnMySQL_Final.ServerManagementConnection;
-import com.example.LearnMySQL_Final.StudentQueryHelper;
-import com.example.LearnMySQL_Final.triplet;
+import com.example.LearnMySQL_Final.User;
 
+public class Sprint1Test {
 
-
-
-public class Sprint2Test {
-	
 	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
-	
-	Random rm = new Random();
-	
 	Person p = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za","1606558","1");
-	Person ptest = new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString(rm.nextInt(200000)),"1");
+	Person testPerson = new Person("Test","Test","Test","Test@students.wits.ac.za","1","1");
+	Person testPerson2 = new Person("Test","Test","Test","Test@students.wits.ac.za","2","1");
 	
-	//add student to database
-	@Test public void SMC_Add_Student_to_database() {
-		boolean t = smc.addStudentDatabase(ptest);
-		assertTrue(t);
-	}
-	
-	// Test for User Story form History_Tab
-	@Test public void History_Tab_Get_History_Valid_Test() {
-		triplet t = smc.getStudentHistoryQuery(p);
-		assertTrue(t.queryOk);
-	}
-	
-	@Test public void History_Tab_Get_History_With_Search_Valid_Test() {
-		triplet t = smc.getStudentHistoryQueryWithSearch(p, "*");
-		assertTrue(t.queryOk);
+	@Test public void Student_Login_Interface_First_Time_login_True() {
+		boolean b= smc.isFirstTime("1606558");
+		assertTrue(b);
 	}
 	
 	
-	
-	@Test public void History_Tab_Add_History_Valid_Test() {
-		boolean t = smc.addStudentHistoryQuery(p, "Test");
-		assertTrue(t);
-	}
-	
-	@Test public void History_Tab_History_Delete_Test() {
-		boolean t = smc.deleteHistory("1");
-		assertTrue(t);
-	}
-	
-	// Test for User Story form Query_box
-	
-	StudentQueryHelper sqh = new StudentQueryHelper(p, "127.0.0.1");
-	
-	@Test public void The_Query_Box_Valid_Update_Query_Test() {
-		String t = sqh.queryUpdateRun("INSERT INTO TEST VALUES(2, 'hi')");
-		System.out.println(t);
-		assertTrue(t.equals("Query OK, 1 rows affected"));
-	}
-	
-	@Test public void The_Query_Box_InValid_Update_Query_Test() {
-		String t = sqh.queryUpdateRun("CREATE TEST4 (COLUMN_1 INT(6))");
-		System.out.println(t);
-		assertTrue(t.equals("You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TEST4 (COLUMN_1 INT(6))' at line 1"));
+	@Test public void Student_Login_Interface_First_Time_login_False() {
+		boolean b= smc.isFirstTime("1606443");
+		assertFalse(b);
 	}
 	
 	
-	//History Object Test
-	
-	@Test public void History_Object_Const_Test() {
-		HistoryObject ho = new HistoryObject("SELECT * FROM NOW", "1998-01-12", "12:01:90");
-		assertTrue(ho.getQuery().equals("SELECT * FROM NOW"));
+	// test for user
+	@Test public void User_Set_Person() {
+		User ur = new User();
+		ur.setperson(p);
+		User ur2 = new User();
+		assertTrue(ur2.person.getId().equals("1606558"));
 	}
 	
-	HistoryObject homain = new HistoryObject("SELECT * FROM NOW", "1998-01-12", "12:01:90");
-	
-	@Test public void History_Object_getQuery_Test() {
-		assertTrue(homain.getQuery().equals("SELECT * FROM NOW"));
-	}
-	
-	@Test public void History_Object_getDate_Test() {
-		assertTrue(homain.getDate().equals("1998-01-12"));
-	}
-	
-	@Test public void History_Object_getTime_Test() {
-		assertTrue(homain.getTime().equals("12:01:90"));
-	}
-	
-	@Test public void History_Object_setID_Test() {
-		homain.setHistoryID("1");
-		assertTrue(homain.getHistoryID().equals("1"));
-	}
-	
-	@Test public void History_Test() {
-		History h = new History("TEST", "TESTNAME");
-		assertTrue(h.QUERY.equals("TEST"));
+	@Test public void User_Set_Person_constructor() {
+		User ur = new User(p);
+		User ur2 = new User();
+		assertTrue(ur2.person.getId().equals("1606558"));
 	}
 	
 	
 	
 	
-	
-	
-	
-	
+
 }
