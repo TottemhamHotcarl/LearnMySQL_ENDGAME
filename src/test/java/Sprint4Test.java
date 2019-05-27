@@ -140,6 +140,15 @@ public class Sprint4Test {
 		assertTrue(b);
 	}
 	
+	@Test public void GSMC_addRemove_Test() {
+		GroupObject go = new GroupObject("27","1606558","Super Group","d1606558");
+		Person ptest = new Person("Test Tesy","Test","Tesy","Testy@students.wits.ac.za",Integer.toString(rm.nextInt(200000)),"1");
+		smc.addStudentToStudentTableInDatabase(ptest);
+		boolean b = gsmc.addMember(ptest.getId());
+		boolean b2 = gsmc.removeMember(ptest.getId());
+		assertTrue(b&&b2);
+	}
+	
 	
 	
 	
