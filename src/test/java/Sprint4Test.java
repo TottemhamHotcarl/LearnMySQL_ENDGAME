@@ -56,20 +56,45 @@ public class Sprint4Test {
 	
 	//test for GroupObject
 	
-	GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
+	
 			
 	@Test public void GroupObject_getID_Test() {
+		GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
 		assertTrue(GoTest.getID().equals("34"));
 	}	
 	@Test public void GroupObject_getAdmin_Test() {
+		GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
 		assertTrue(GoTest.getAdmin().equals("1606558"));
 	}
 	@Test public void GroupObject_getName_Test() {
+		GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
 		assertTrue(GoTest.getName().equals("Edoc"));
 	}
 	@Test public void GroupObject_getDatabase_Test() {
+		GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
 		assertTrue(GoTest.getDatabase().equals("d1606558"));
 	}
+	@Test public void GroupObject_setID_Test() {
+		GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
+		GoTest.setID("35");
+		assertTrue(GoTest.getID().equals("35"));
+	}	
+	@Test public void GroupObject_setAdmin_Test() {
+		GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
+		GoTest.setAdmin("12345");
+		assertTrue(GoTest.getAdmin().equals("12345"));
+	}
+	@Test public void GroupObject_setName_Test() {
+		GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
+		GoTest.setName("The others");
+		assertTrue(GoTest.getName().equals("The others"));
+	}
+	@Test public void GroupObject_setDatabase_Test() {
+		GroupObject GoTest = new GroupObject("34", "1606558", "Edoc", "d1606558");
+		GoTest.setDatabase("d12345");
+		assertTrue(GoTest.getDatabase().equals("d12345"));
+	}
+	
 	
 	
 	@Test public void GroupObject_Const_Test() {
@@ -95,11 +120,17 @@ public class Sprint4Test {
 		assertTrue(gsmc.getGroupMembers("27").queryOk);
 	}
 	
-	
+	@Test public void GSMC_GetMember_False() {
+		assertFalse(gsmc.getGroupMembers("28").queryOk);
+	}
 	
 	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
 	
-	
+	@Test public void GSMC_addGroup_True() {
+		int t = rm.nextInt();
+		smc.addStudentDatabase(new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString(t),"1"));
+		assertTrue(gsmc.addGroup(new Person("Carl Ginster","Carl","Ginster","1606558@students.wits.ac.za",Integer.toString(t),"1"), "test Group"+t));
+	}
 	
 	
 	
