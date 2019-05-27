@@ -122,7 +122,6 @@ public class Sprint4Test {
 	
 	
 	ServerManagementConnection smc = new ServerManagementConnection("127.0.0.1");
-	ServerManagementConnection smc2 = new ServerManagementConnection();
 	
 	
 	@Test public void GSMC_addGroup_Test() {
