@@ -1,5 +1,5 @@
 LearnMySQL_Final
-=============
+================
 
 ### Status
 [![Build Status](https://travis-ci.org/TottemhamHotcarl/LearnMySQL_ENDGAME.png)](https://travis-ci.org/TottemhamHotcarl/LearnMySQL_ENDGAME)
