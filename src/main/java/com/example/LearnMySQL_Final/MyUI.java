@@ -32,6 +32,8 @@ public class MyUI extends UI {
 
 	//Label label = new Label("");
 	
+	Person user = null;
+	
     @Override
     protected void init(VaadinRequest vaadinRequest) {
     	final VerticalLayout layout = new VerticalLayout();
@@ -72,11 +74,11 @@ public class MyUI extends UI {
         
         login.addClickListener(e -> {
         
-        String user = username.getValue();
+        String usernamevalue = username.getValue();
         String pass = password.getValue();
         
         boolean everythingOkay = true;
-        if(user.length() == 0) {
+        if(usernamevalue.length() == 0) {
         	username.setComponentError(new UserError("Enter username"));
         	everythingOkay = false;
         }
@@ -89,10 +91,11 @@ public class MyUI extends UI {
         else password.setComponentError(null);
         	
         if(everythingOkay) {
-            LoginTool lt = new LoginTool(user,pass);
+            LoginTool lt = new LoginTool(usernamevalue,pass);
             if(lt.verifyStudentDetails()) {
+            		user = lt.getPerson();
             		checkFirstTimeLogin();
-            		setContent(new welcomeUI());
+            		setContent(new welcomeUI(user));
             		
             }
             else {
@@ -112,8 +115,10 @@ public class MyUI extends UI {
     public void checkFirstTimeLogin() {
     	ServerManagementConnection smc = new ServerManagementConnection();
     	
-    	Person p = User.person;
+    	Person p = user;
     	System.out.println(p.toString());
+    	
+    	
     	if(smc.isFirstTime(p.getId())) {
     		System.out.println("is not first time");
     		return;

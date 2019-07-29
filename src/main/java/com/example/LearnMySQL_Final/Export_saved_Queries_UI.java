@@ -22,14 +22,17 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 public class Export_saved_Queries_UI extends Panel implements View  {
-	static Button backUI = new Button("Back");
-	public Export_saved_Queries_UI(){
-setWidth("100%");
+	 Button backUI = new Button("Back");
+	public Export_saved_Queries_UI(Person user,Button back24){
+		
+		backUI = back24;
+		
+		setWidth("100%");
 		
 		setHeight("100%");
-		User u = new User();
+		
 		ServerManagementConnection smc = new ServerManagementConnection();
-		triplet t = smc.getStudentSavedQuery(u.person);
+		triplet t = smc.getStudentSavedQuery(user);
 		
 		backUI.setClickShortcut(KeyCode.ESCAPE);
 		// Find the application directory
@@ -54,7 +57,7 @@ setWidth("100%");
 			con = DriverManager.getConnection(  
 					"jdbc:mysql://146.141.21.143:3306/SERVER","carl","carl");
 			 stmt=con.createStatement();
-			String Student_no = User.person.id;
+			String Student_no = user.id;
 			
 			
 

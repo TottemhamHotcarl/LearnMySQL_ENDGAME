@@ -45,18 +45,18 @@ public class HistoryTab  extends Panel implements View {
 	LayoutHelper lh;
 	 Button search;
 	 public Button SaveTabButton = new Button("save tab");
-	public static Button refresh;
+	public Button refresh;
 	 TextField searchBox;
 	 ServerManagementConnection smc =new ServerManagementConnection();
-	
+	Person user;
 	 
-	public HistoryTab() {
+	public HistoryTab(Person user) {
 		 content = new VerticalLayout();
 			content.setWidth("100%");
 			content.setHeight("100%");
 			setHeight("100%");
 			
-			
+			this.user = user;
 			del1=new Button("Delete Row");
 			add=new Button("Save_To_Query");
 			del=new Button("Delete selected");
@@ -123,8 +123,8 @@ public class HistoryTab  extends Panel implements View {
 
 		content.addComponent(hl);
 		lh = new LayoutHelper();
-		User u = new User();
-		Person p = u.person;
+		
+		Person p = user;
 		
 		
 		triplet t = smc.getStudentHistoryQuery(p);
@@ -169,8 +169,8 @@ public class HistoryTab  extends Panel implements View {
 		}
 	
 	public void updateHistory(triplet t) {
-		User u = new User();
-		Person p = u.person;
+		
+		Person p = user;
 		
 		
 		Grid<HistoryObject> grid = t.grid;
@@ -190,8 +190,8 @@ public class HistoryTab  extends Panel implements View {
 	        	});
 	        	sel.addClickListener(e3->{
 	        	//setting the Query box to empty
-	        		TheQueryBox.area.setValue("");
-	        		TheQueryBox.addToQueryBox(ho.getQuery());
+	        		//TheQueryBox.area.setValue("");
+	        		//TheQueryBox.addToQueryBox(ho.getQuery());
 	        	});
 	        	
 	        	
@@ -245,8 +245,8 @@ public class HistoryTab  extends Panel implements View {
 		content.addComponent(hl);
 
 		
-		User u = new User();
-		Person p = u.person;
+		
+		Person p = user;
 		triplet t = smc.getStudentSavedQuery(p);
 		//Grid<savedObject> grid = lh.ResultSetToSavedGrid(t.rs);
 		
@@ -299,7 +299,7 @@ public class HistoryTab  extends Panel implements View {
 	        	sel.addClickListener(e3->{
 	        		//TheQueryBox.area.setValue("");
 	        		System.out.println("~~~~~~~" + ho.getQuery());
-	        		TheQueryBox.addToQueryBox(ho.getQuery());
+	        		//TheQueryBox.addToQueryBox(ho.getQuery());
 	        	});
 	        	
 	        
