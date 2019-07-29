@@ -1,15 +1,15 @@
 package com.example.LearnMySQL_Final;
 
-import java.sql.ResultSet;
+import com.vaadin.ui.Grid;
 
 public class triplet {
 	public boolean queryOk;
-	public ResultSet rs;
+	public Grid grid;
 	public String error;
 	
-	public triplet(boolean ok, ResultSet rs, String error) {
+	public triplet(boolean ok, Grid rs, String error) {
 		queryOk = ok;
-		this.rs = rs;
+		this.grid = rs;
 		this.error = error;
 	}
 	

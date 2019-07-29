@@ -9,52 +9,43 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.vaadin.ui.Grid;
+
 
 /**
  * This class connects the app to the database
  *
  */
 public class ServerManagementConnection {
-	Connection con;
+	
+	LayoutHelper lh = new LayoutHelper();
+	
+	
+	
 	/**
 	 * This create a connection to the server database
 	 */
 	public ServerManagementConnection() {
-		try{  
-			//Class.forName("com.mysql.jdbc.Driver");  
-			con=DriverManager.getConnection(  
-			"jdbc:mysql://146.141.21.143:3306/SERVER","carl","carl");  
-		}catch(Exception e){
-			System.out.println(e);
-			}
+		
 	}
 	
 	/**
 	 * @param ip: connects to a different server database
 	 */
-	public ServerManagementConnection(String ip) {
-		try{  
-			//Class.forName("com.mysql.jdbc.Driver");  
-			con=DriverManager.getConnection(  
-			"jdbc:mysql://" + ip+":3306/SERVER","root","");  
-		}catch(Exception e){
-			System.out.println(e);
-			}
-	}
-	
 
 	
-	public void finalize(){
-		System.out.println("END");
+	public Connection getConnection() {
+		Connection conn;
 		try {
-			con.close();
-		}
-		catch(SQLException e) {
-			System.out.println(e);
-		}
+			conn=DriverManager.getConnection(  
+					"jdbc:mysql://146.141.21.143:3306/SERVER","carl","carl");
+					return conn;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		return null;
 	}
-	
-	
 
 	/**
 	 * Check if it is a students first time loginning
@@ -62,20 +53,35 @@ public class ServerManagementConnection {
 	 * @return True if it the student first time. False if it not the students first time
 	 */
 	public boolean isFirstTime(String Student_no) {
-		
+		Statement stmt = null;
+		ResultSet rs = null;
+		Connection con = null;
 		try {
-			Statement stmt=con.createStatement();  
 			
-			ResultSet rs=stmt.executeQuery("select * from STUDENT WHERE STUDENT_NO = " + Student_no);  
+			Class.forName("com.mysql.cj.jdbc.Driver");   
+			con=DriverManager.getConnection(  
+					"jdbc:mysql://146.141.21.143:3306/SERVER","carl","carl");
+	
+			stmt=con.createStatement();  
+			
+			rs=stmt.executeQuery("select * from STUDENT WHERE STUDENT_NO = " + Student_no);  
 			
 			if(rs.isBeforeFirst()) {
 				return true;
+			}else {
+				
+				return false;
 			}
 			
-			return false;
+			
 		}
 	catch(Exception e){
-		System.out.println(e);
+		System.out.println("error in ServerManagementConnection isFirstTime" + e);
+		}
+		finally {
+		    try { if (rs != null) rs.close(); } catch (Exception e) {};
+		    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+		    try { if (con != null) con.close(); } catch (Exception e) {};
 		}
 		
 			return false;
@@ -87,8 +93,13 @@ public class ServerManagementConnection {
 	 * @return true if successful saved the student, otherwise false
 	 */
 	public boolean addStudentToStudentTableInDatabase(Person p) {
+		Statement stmt = null;
+		
+		Connection con = null;
+		
 		try {
-			Statement stmt=con.createStatement();
+			con= getConnection();
+			 stmt=con.createStatement();
 			String Student_no = p.getId();
 			String Student_name = p.getName();
 			String Student_email = p.getEmail();
@@ -105,7 +116,10 @@ public class ServerManagementConnection {
 		}catch (Exception e) {
 			System.out.println(e);
 			return false;
-					}
+		}finally {
+		    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+		    try { if (con != null) con.close(); } catch (Exception e) {};
+		}
 	}
 	/**
 	 * This creates the student databases and gives permission to it
@@ -113,8 +127,13 @@ public class ServerManagementConnection {
 	 * @return true if successful saved the student, otherwise false
 	 */
 	public boolean addStudentDatabase(Person p) {
+		Statement stmt = null;
+		
+		Connection con = null;
+		
 		try {
-			Statement stmt=con.createStatement();
+			 con = getConnection();
+			 stmt=con.createStatement();
 			String Student_no = p.getId();
 			
 			String query = "CREATE DATABASE " + "d" + Student_no;
@@ -145,7 +164,12 @@ public class ServerManagementConnection {
 		}catch (Exception e) {
 			System.out.println(e);
 			return false;
-					}
+		}
+		finally {
+		    
+		    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+		    try { if (con != null) con.close(); } catch (Exception e) {};
+		}
 	}
 	
 	
@@ -157,21 +181,29 @@ public class ServerManagementConnection {
 	 */ 
 	public triplet getStudentHistoryQuery(Person p) {
 		ResultSet rs =null;
-
+		Statement stmt = null;
+		Connection con = null;
+		
 		try {
-			Statement stmt=con.createStatement();
+			con = getConnection();
+		    stmt=con.createStatement();
 			String Student_no = p.getId();
 			
 			
 			String query2 = "SELECT HISTORY_QUERY,HISTORY_DATE,HISTORY_TIME,HISTORY_ID FROM STUDENT_HISTORY WHERE STUDENT_NO =" + Student_no;
 		
 			rs = stmt.executeQuery(query2);
-			
-			return new triplet(true, rs, "");
+			Grid grid = lh.ResultSetToHIstoryGrid(rs);
+			return new triplet(true, grid, "");
 		}catch (Exception e) {
 			System.out.println(e);
-			return new triplet(false,rs,e.toString());
-					}
+			return new triplet(false,null,e.toString());
+		}
+		finally {
+			 try { if (rs != null) rs.close(); } catch (Exception e) {};
+			    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+			    try { if (con != null) con.close(); } catch (Exception e) {};
+		}
 	}
 	
 	/**
@@ -182,8 +214,11 @@ public class ServerManagementConnection {
 	 */
 	public triplet getStudentHistoryQueryWithSearch(Person p,String search) {
 		ResultSet rs =null;
+		Statement stmt = null;
+		Connection con = null;
 		try {
-			Statement stmt=con.createStatement();
+			con = getConnection();
+			stmt=con.createStatement();
 			String Student_no = p.getId();
 			
 			
@@ -192,12 +227,17 @@ public class ServerManagementConnection {
 			//System.out.println(query2);
 
 			rs = stmt.executeQuery(query2);
-			
-			return new triplet(true, rs, "");
+			Grid grid = lh.ResultSetToHIstoryGrid(rs);
+			return new triplet(true, grid, "");
 		}catch (SQLException e) {
 			System.out.println(e);
-			return new triplet(false,rs,e.toString());
-					}
+			return new triplet(false,null,e.toString());
+		}
+		finally {
+			    try { if (rs != null) rs.close(); } catch (Exception e) {};
+			    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+			    try { if (con != null) con.close(); } catch (Exception e) {};
+		}
 	}
 	
 	
@@ -211,8 +251,13 @@ public class ServerManagementConnection {
 	 * @return true if it was successful, false otherwise
 	 */
 	public boolean addStudentHistoryQuery(Person p, String query) {
+		
+		Statement stmt = null;
+		Connection con = null;
+		
 		try {
-			Statement stmt=con.createStatement();
+			con = getConnection();
+			stmt=con.createStatement();
 			String Student_no = p.getId();
 			
 			
@@ -236,7 +281,11 @@ public class ServerManagementConnection {
 		}catch (Exception e) {
 			System.out.println(e);
 			return false;
-					}
+		}
+		finally {
+		    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+		    try { if (con != null) con.close(); } catch (Exception e) {};
+		}
 	}
 	
 
@@ -246,8 +295,12 @@ public class ServerManagementConnection {
 	 * @return true if it was successful, false otherwise
 	 */
 	public boolean deleteHistory(String HistoryID) {
+		Statement stmt = null;
+		Connection con = null;
+		
 		try {
-			Statement stmt=con.createStatement();
+			con = getConnection();
+			stmt=con.createStatement();
 			String Query = "DELETE FROM STUDENT_HISTORY WHERE HISTORY_ID = " + HistoryID;
 			System.out.println(Query);
 			int rs = stmt.executeUpdate(Query);
@@ -260,6 +313,9 @@ public class ServerManagementConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
+		}finally {
+		    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+		    try { if (con != null) con.close(); } catch (Exception e) {};
 		}
 		
 		
@@ -273,8 +329,13 @@ public class ServerManagementConnection {
 	 * @return true if it was successful, false otherwise
 	 */
 	public boolean deleteSaved_Query(String SAVED_QUERY_ID) {
+		
+		Statement stmt = null;
+		Connection con = null;
+		
 		try {
-			Statement stmt=con.createStatement();
+			 con = getConnection();
+			 stmt=con.createStatement();
 			String Query = "DELETE FROM SAVED_QUERY WHERE SAVED_QUERY_ID= " +SAVED_QUERY_ID;
 			System.out.println(Query);
 			int rs = stmt.executeUpdate(Query);
@@ -289,6 +350,10 @@ public class ServerManagementConnection {
 			e.printStackTrace();
 			return false;
 		}
+		finally {
+		    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+		    try { if (con != null) con.close(); } catch (Exception e) {};
+		}
 		
 		
 	}
@@ -302,8 +367,11 @@ public class ServerManagementConnection {
 	 * @return true if it was successful, false otherwise
 	 */
 	public boolean addStudentSavedQuery(Person p, String queryName,String query) {
+		Statement stmt =null;
+		Connection con =null;
 		try {
-			Statement stmt=con.createStatement();
+			con = getConnection();
+			stmt=con.createStatement();
 			String Student_no = p.getId();
 			
 			
@@ -326,7 +394,11 @@ public class ServerManagementConnection {
 		}catch (Exception e) {
 			System.out.println(e);
 			return false;
-					}
+		}
+		finally {
+		    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+		    try { if (con != null) con.close(); } catch (Exception e) {};
+		}
 	}
 	/**
 	 * Gets student saved query
@@ -335,8 +407,11 @@ public class ServerManagementConnection {
 	 */
 	public triplet getStudentSavedQuery(Person p) {
 		ResultSet rs =null;
+		Statement stmt = null;
+		Connection con = null;
 		try {
-			Statement stmt=con.createStatement();
+			con = getConnection();
+			 stmt=con.createStatement();
 			String Student_no = p.getId();
 			
 			
@@ -347,12 +422,17 @@ public class ServerManagementConnection {
 
 
 			rs = stmt.executeQuery(query2);
-			
-			return new triplet(true, rs, "");
+			Grid grid = lh.ResultSetToSavedGrid(rs);
+			return new triplet(true, grid, "");
 		}catch (Exception e) {
 			System.out.println(e);
-			return new triplet(false,rs,e.toString());
-					}
+			return new triplet(false,null,e.toString());
+		}
+		finally {
+			try { if (rs != null) rs.close(); } catch (Exception e) {};
+		    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+		    try { if (con != null) con.close(); } catch (Exception e) {};
+		}
 	}
 	
 	
@@ -365,20 +445,28 @@ public class ServerManagementConnection {
 	 */
 	public triplet getStudentSavedQueryWithSearch(Person p,String search) {
 		ResultSet rs =null;
+		Statement stmt = null;
+		Connection con = null;
 		try {
-			Statement stmt=con.createStatement();
+			con = getConnection();
+			stmt=con.createStatement();
 			String Student_no = p.getId();
 			
 			
 			String query2 = "SELECT SAVED_QUERY, SAVED_QUERY_NAME, STUDENT_NO, SAVED_QUERY_ID FROM SAVED_QUERY WHERE STUDENT_NO = " + Student_no +  " and SAVED_QUERY LIKE '%" +search +"%'";
 			System.out.println(query2);
 			rs = stmt.executeQuery(query2);
-			
-			return new triplet(true, rs, "");
+			Grid grid = lh.ResultSetToSavedGrid(rs);
+			return new triplet(true, grid, "");
 		}catch (Exception e) {
 			System.out.println(e);
-			return new triplet(false,rs,e.toString());
-					}
+			return new triplet(false,null,e.toString());
+		}
+		finally {
+			try { if (rs != null) rs.close(); } catch (Exception e) {};
+		    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+		    try { if (con != null) con.close(); } catch (Exception e) {};
+		}
 	}
 	
 	

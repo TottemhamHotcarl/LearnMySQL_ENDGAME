@@ -20,34 +20,37 @@ import com.vaadin.ui.Grid;
 public class StudentQueryHelper {
 
 	
-		Connection con;
+		String user;
+		LayoutHelper lh = new LayoutHelper();
+	
+		public Connection getStudentConnection() {
+			Connection conn;
+			try {
+				conn=DriverManager.getConnection(  
+						"jdbc:mysql://146.141.21.143:3306/" +user ,user ,user);  
+						return conn;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}  
+			return null;
+		}
+		
+		
+		
 		/**
 		 * This connects the app to the students database
 		 * @param p: A person object which stores the current user info
+		 * 
 		 */
 		public StudentQueryHelper(Person p) {
-			if(!p.getId().equals("admin")) {
-				String user = "d" + p.getId();
-				try{  
-					//Class.forName("com.mysql.jdbc.Driver");  
-					con=DriverManager.getConnection(  
-					"jdbc:mysql://146.141.21.143:3306/" +user ,user ,user);  
-				}catch(Exception e){
-					System.out.println("Pizza");
-					System.out.println(e);
-					}
-			}
-			else if(p.getId().equals("admin")) {
-				String user = "carl";
-				try{  
-					//Class.forName("com.mysql.jdbc.Driver");  
-					con=DriverManager.getConnection(  
-					"jdbc:mysql://146.141.21.143:3306/" +"SERVER" ,user ,user);  
-				}catch(Exception e){
-					System.out.println("Pizza");
-					System.out.println(e);
-					}
-			}
+			
+			
+			user = "d" + p.getId();
+			
+			
+			
+			
 		}
 		
 		// Constructor for testing with Travis-CI
@@ -57,6 +60,7 @@ public class StudentQueryHelper {
 		 * @param ip: The ip we want to change to
 		 */
 		public StudentQueryHelper(Person p, String ip) {
+			Connection con = null;
 			if(!p.getId().equals("admin")) {
 				String user = "d" + p.getId();
 				try{  
@@ -66,7 +70,10 @@ public class StudentQueryHelper {
 				}catch(Exception e){
 					System.out.println("Pizza");
 					System.out.println(e);
-					}
+				}finally {
+				    try { if (con != null) con.close(); } catch (Exception e) {};
+				}
+				
 			}
 			
 		}
@@ -78,6 +85,7 @@ public class StudentQueryHelper {
 		 */
 		public StudentQueryHelper( String database) {
 			
+				Connection con = null;
 				try{  
 					//Class.forName("com.mysql.jdbc.Driver");  
 					con=DriverManager.getConnection(  
@@ -86,7 +94,11 @@ public class StudentQueryHelper {
 				}catch(Exception e){
 					System.out.println("Pizza");
 					System.out.println(e);
-					}
+				}finally {
+				    try { if (con != null) con.close(); } catch (Exception e) {};
+				}
+				
+				
 			}
 			
 		
@@ -100,17 +112,23 @@ public class StudentQueryHelper {
 		 * @return If valid query: Query OK, "number of row affected" rows affected. If invalid query: The error produced by the database
 		 */
 		public String queryUpdateRun(String query) {
+			Connection con = null;
+			Statement stmt = null;
 			if(!query.toUpperCase().contains("SELECT")) {
 				try {
-					Statement stmt=con.createStatement();
+					System.out.println(user);
+					con=getStudentConnection();  
+					 stmt=con.createStatement();
 					int rs = stmt.executeUpdate(query);
 					return "Query OK, " + rs + " rows affected";
-					
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					System.out.println(e);
+					System.out.println("error at queryUpdateRun in StudentQueryHelper + \n" + e);
 					return e.getMessage().toString();
 				} 
+				finally {
+				    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+				    try { if (con != null) con.close(); } catch (Exception e) {};
+				}
 				
 			}
 			return "Something went wrong";
@@ -123,49 +141,105 @@ public class StudentQueryHelper {
 		 */
 		public triplet querySelectRun(String query) {
 			ResultSet rs = null;
+			Connection con = null;
+			Statement stmt = null;
 			
 				try {
-					Statement stmt=con.createStatement();
+					con= getStudentConnection(); 
+					 stmt=con.createStatement();
 					 rs = stmt.executeQuery(query);
-					return new triplet(true, rs, "");
+					 Grid grid = lh.ResultSetToGrid(rs);
+					return new triplet(true, grid, "");
 					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					return new triplet(false, rs, e.getMessage().toString());
-				} 
+					return new triplet(false, null, e.getMessage().toString());
+				}
+				finally {
+					try { if (rs != null) rs.close(); } catch (Exception e) {};
+				    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+				    try { if (con != null) con.close(); } catch (Exception e) {};
+				}
+			
+		}
+		
+		
+		
+		public triplet queryDescRun(String query) {
+			ResultSet rs = null;
+			Connection con = null;
+			Statement stmt = null;
+			
+				try {
+					con= getStudentConnection(); 
+					 stmt=con.createStatement();
+					 rs = stmt.executeQuery(query);
+					 Grid grid = lh.ResultSetToGridForDesc(rs);
+					return new triplet(true, grid, "");
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					return new triplet(false, null, e.getMessage().toString());
+				}
+				finally {
+					try { if (rs != null) rs.close(); } catch (Exception e) {};
+				    try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+				    try { if (con != null) con.close(); } catch (Exception e) {};
+				}
 				
 			
 			
 		}
+		
+		
 		
 		/**
 		 * This run the show table query
 		 * @return a Grid that contains all the tables in the users databases.
 		 * @throws SQLException if there is a error
 		 */
-		public Grid queryShowTable() throws SQLException {
-			Grid<HashMap<String, String>> grid4 = null;
-			List<HashMap<String, String>> rows = new ArrayList<>();
-			DatabaseMetaData meta = con.getMetaData();
-			 ResultSet res = meta.getTables(null, null, null, 
-			         new String[] {"TABLE"});
-			      System.out.println("List of tables: "); 
+		public Grid queryShowTable()  {
+			
+			Connection con = null;
+			 ResultSet res = null;
+			 DatabaseMetaData meta = null;
+			
+			
+			try {
+				con=getStudentConnection(); 
+				
+				Grid<HashMap<String, String>> grid4 = null;
+				List<HashMap<String, String>> rows = new ArrayList<>();
+				
+				 meta = con.getMetaData();
+				 res = meta.getTables(null, null, null, 
+				         new String[] {"TABLE"});
+				 System.out.println("List of tables: "); 
 			      while (res.next()) {
 			         System.out.println(res.getString("TABLE_NAME"));
-			            	 HashMap<String, String> fakeBean = new HashMap<>();
-			            	fakeBean.put("TABLE_NAME", res.getString("TABLE_NAME"));
-			                 rows.add(fakeBean);
+	            	 HashMap<String, String> fakeBean = new HashMap<>();
+	            	 fakeBean.put("TABLE_NAME", res.getString("TABLE_NAME"));
+	                 rows.add(fakeBean);
 			            
 			          
 			      }
-			      grid4 = new Grid<>();
-			      grid4.setItems(rows);
-			      res.close();
-			      HashMap<String, String> q = rows.get(0);
-		            for (Map.Entry<String, String> entry : q.entrySet()) {
-		                grid4.addColumn(h -> h.get(entry.getKey())).setCaption(entry.getKey());
-		            }
-			      return grid4;
+				      grid4 = new Grid<>();
+				      grid4.setItems(rows);
+				      res.close();
+				      HashMap<String, String> q = rows.get(0);
+			            for (Map.Entry<String, String> entry : q.entrySet()) {
+			                grid4.addColumn(h -> h.get(entry.getKey())).setCaption(entry.getKey());
+			            }
+				      return grid4;
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
+			return null;
+			
 		}
 		
 

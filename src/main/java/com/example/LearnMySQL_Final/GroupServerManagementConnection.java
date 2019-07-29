@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.vaadin.ui.Grid;
+
 public class GroupServerManagementConnection {
 
 	Connection con;
@@ -89,7 +91,7 @@ public class GroupServerManagementConnection {
 				ResultSet rs = stmt.executeQuery("SELECT * FROM GROUPS WHERE GROUP_ID = " + id);
 				rs.next();
 				GroupObject go = new GroupObject(rs.getString("GROUP_ID"), rs.getString("GROUP_ADMIN"), rs.getString("GROUP_NAME"), rs.getString("GROUP_DATABASE"));
-				return new triplet(true, rs,"" );
+				return new triplet(true, null,"" );
 			}
 			return new triplet(false,null,"");
 		
@@ -102,7 +104,7 @@ public class GroupServerManagementConnection {
 	
 	}
 	
-	
+	LayoutHelper lh = new LayoutHelper();
 	
 	public triplet getGroupMembers(String Group_ID) {
 		Statement stmt;
@@ -112,9 +114,9 @@ public class GroupServerManagementConnection {
 			String query = "SELECT STUDENT_NO, STUDENT_EMAIL, STUDENT_NAME FROM STUDENT WHERE STUDENT_NO IN (SELECT STUDENT_NO FROM STUDENT_GROUP WHERE GROUP_ID = " + Group_ID + ")";
 			ResultSet rs = stmt.executeQuery(query);
 			
-			
+			Grid grid = lh.ResultSetToGrid(rs);
 
-				return new triplet(true, rs,"" );
+				return new triplet(true, grid,"" );
 			
 		
 		} catch (SQLException e) {

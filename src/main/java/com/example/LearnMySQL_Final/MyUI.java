@@ -111,8 +111,8 @@ public class MyUI extends UI {
     }
     public void checkFirstTimeLogin() {
     	ServerManagementConnection smc = new ServerManagementConnection();
-    	User u = new User();
-    	Person p = u.person;
+    	
+    	Person p = User.person;
     	System.out.println(p.toString());
     	if(smc.isFirstTime(p.getId())) {
     		System.out.println("is not first time");

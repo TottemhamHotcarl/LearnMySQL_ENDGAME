@@ -17,7 +17,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class welcomeUI extends HorizontalSplitPanel implements View{
+public class welcomeUI extends HorizontalLayout implements View{
 	public welcomeUI() {
 		removeAllComponents();
 		VerticalLayout layout = new VerticalLayout();
@@ -94,7 +94,7 @@ public class welcomeUI extends HorizontalSplitPanel implements View{
 			HorizontalSplitPanel hsp = new HorizontalSplitPanel();
 			hsp.addComponent(new TheQueryBox(TheQueryBox.area.getValue()));
 			hsp.addComponent(new HistoryTab());
-			
+			hsp.setWidth("100%");
 			removeAllComponents();
 			addComponent(hsp);
 

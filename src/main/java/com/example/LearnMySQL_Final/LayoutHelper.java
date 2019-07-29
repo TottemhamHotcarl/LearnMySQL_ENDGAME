@@ -62,6 +62,8 @@ public class LayoutHelper {
 	            grid3.addColumn(h -> h.get(entry.getKey())).setCaption(entry.getKey());
 	        }
 	        rs.close();
+	        grid3.setWidth("100%");
+	        grid3.setHeight("100%");
 	        return grid3;
         }
         return null;

@@ -1,20 +1,18 @@
 package com.example.LearnMySQL_Final;
 
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
+
 
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
 import com.vaadin.server.FileResource;
-import com.vaadin.server.Page;
+
 import com.vaadin.server.VaadinService;
-import com.vaadin.ui.Alignment;
+
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
+
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
@@ -63,7 +61,7 @@ public class TheQueryBox   extends Panel implements View {
 	 * @param s: Query that appears in the querybox
 	 * @param ip: Changes the ip address of the server
 	 */
-	public TheQueryBox(String s, String ip) {
+	/*public TheQueryBox(String s, String ip) {
 		smc = new ServerManagementConnection(ip);
 		queryBox(s);
 		content.setHeight("100%");
@@ -77,7 +75,7 @@ public class TheQueryBox   extends Panel implements View {
 		 p = u.person;
 		 sqh = new StudentQueryHelper(p);
 
-	}
+	}*/
 	
 	/**
 	 * This the construstor for the group querybox
@@ -186,6 +184,9 @@ public class TheQueryBox   extends Panel implements View {
 			String[] query = querys.split(";");
 			String output = "";
 			tableLayout.removeAllComponents();
+			
+			
+			
 			for(int i =  0; i < query.length;i++) {
 				String currQuery = query[i];
 				if(currQuery.isEmpty()) {
@@ -207,52 +208,41 @@ public class TheQueryBox   extends Panel implements View {
 				
 					if(currQuery.toUpperCase().contains("SELECT")) {
 
-						
 						triplet trp = sqh.querySelectRun(currQuery);
 						
 						if(trp.queryOk) {
 							
-							try {
-								Grid g = lh.ResultSetToGrid(trp.rs);
-								if(g != null) {
-									g.setWidth("100%");
-									VerticalLayout vltemp = new VerticalLayout();
-									vltemp.addComponents(outputtemp,g);
-									tableLayout.addComponent(vltemp);
-								}
-								else {
-									VerticalLayout vltemp = new VerticalLayout();
-									TextArea outputtemp2 = new TextArea();
-									outputtemp2.setReadOnly(true);
-									outputtemp2.setWidth("100%");
-									outputtemp2.setHeightUndefined();
-									outputtemp2.setValue("Empty set");
-									vltemp.addComponents(outputtemp,outputtemp2);
-									tableLayout.addComponent(vltemp);
-									
-								}
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
+							Grid g = trp.grid;
+							if(g != null) {
+								//there are enteries in table
+								g.setWidth("100%");
+								VerticalLayout vltemp = new VerticalLayout();
+								vltemp.addComponents(outputtemp,g);
+								tableLayout.addComponent(vltemp);
+							}
+							else {
+								//no entries in table
+								VerticalLayout vltemp = new VerticalLayout();
+								TextArea outputtemp2 = new TextArea();
+								outputtemp2.setReadOnly(true);
+								outputtemp2.setWidth("100%");
+								outputtemp2.setHeightUndefined();
+								outputtemp2.setValue("Empty set");
+								vltemp.addComponents(outputtemp,outputtemp2);
+								tableLayout.addComponent(vltemp);
 							}
 							
 						}
 						else if(!trp.queryOk) {
+							//error in query given
 							VerticalLayout vltemp = new VerticalLayout();
-							
 							TextArea outputtemp2 = new TextArea();
 							outputtemp2.setReadOnly(true);
 							outputtemp2.setWidth("100%");
 							outputtemp2.setHeightUndefined();
 							outputtemp2.setValue(trp.error);
-													
-							
 							vltemp.addComponents(outputtemp,outputtemp2);
 							tableLayout.addComponent(vltemp);
-							
-							
-							
-							
 						}
 					}
 					
@@ -260,32 +250,27 @@ public class TheQueryBox   extends Panel implements View {
 					else if(currQuery.toUpperCase().contains("DESC")) {
 
 						
-						triplet trp = sqh.querySelectRun(currQuery);
+						triplet trp = sqh.queryDescRun(currQuery);
 						
 						if(trp.queryOk) {
 							
-							try {
-								Grid g = lh.ResultSetToGridForDesc(trp.rs);
-								if(g != null) {
-									g.setWidth("100%");
-									VerticalLayout vltemp = new VerticalLayout();
-									vltemp.addComponents(outputtemp,g);
-									tableLayout.addComponent(vltemp);
-								}
-								else {
-									VerticalLayout vltemp = new VerticalLayout();
-									TextArea outputtemp2 = new TextArea();
-									outputtemp2.setReadOnly(true);
-									outputtemp2.setWidth("100%");
-									outputtemp2.setHeightUndefined();
-									outputtemp2.setValue("Empty set");
-									vltemp.addComponents(outputtemp,outputtemp2);
-									tableLayout.addComponent(vltemp);
-									
-								}
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
+							Grid g = trp.grid;
+							if(g != null) {
+								g.setWidth("100%");
+								VerticalLayout vltemp = new VerticalLayout();
+								vltemp.addComponents(outputtemp,g);
+								tableLayout.addComponent(vltemp);
+							}
+							else {
+								VerticalLayout vltemp = new VerticalLayout();
+								TextArea outputtemp2 = new TextArea();
+								outputtemp2.setReadOnly(true);
+								outputtemp2.setWidth("100%");
+								outputtemp2.setHeightUndefined();
+								outputtemp2.setValue("Empty set");
+								vltemp.addComponents(outputtemp,outputtemp2);
+								tableLayout.addComponent(vltemp);
+								
 							}
 							
 						}
@@ -309,19 +294,14 @@ public class TheQueryBox   extends Panel implements View {
 					}
 					
 
-					else if(check[0].toUpperCase().contains("SHOW") && check[1].toUpperCase().contains("TABLES") ) {
+					else if(currQuery.toUpperCase().contains("SHOW") && currQuery.toUpperCase().contains("TABLES") && !currQuery.toUpperCase().contains("SELECT") ) {
 						VerticalLayout vltemp = new VerticalLayout();
 						
 						StudentQueryHelper sqh = new StudentQueryHelper(p);
 						Grid g;
-						try {
-							g = sqh.queryShowTable();
-							vltemp.addComponents(outputtemp,g);
-							tableLayout.addComponent(vltemp);
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						g = sqh.queryShowTable();
+						vltemp.addComponents(outputtemp,g);
+						tableLayout.addComponent(vltemp);
 
 					}
 					
@@ -361,15 +341,13 @@ public class TheQueryBox   extends Panel implements View {
 		layout.setExpandRatio(execute, .5f);
 		layout.setExpandRatio(save, .5f);
 		layout.setExpandRatio(clear,.5f);
-		//layout.setExpandRatio(back,.5f);
+		
 		layout.setSizeFull();
 		tableLayout.setWidth("100%");
 		tableLayout.setSizeFull();
 		upload.setWidth("100%");
 		content.addComponents(back,area,layout,upload,tableLayout);
-		/*setExpandRatio(area, .4f);
-		setExpandRatio(layout, .1f);
-		setExpandRatio(outputArea, .4f);*/
+		
 		
 	}
 	
@@ -418,8 +396,7 @@ public class TheQueryBox   extends Panel implements View {
 	 * @return True if it saved successfully, otherwise it returns false
 	 */
 	public boolean addToDatabase(String query,String query_name) {
-		User u = new User();
-		Person p = u.person;
+		Person p = User.person;
 		ServerManagementConnection smc = new ServerManagementConnection();
 		if(smc.addStudentSavedQuery(p, query_name,query)) {
 			return true;

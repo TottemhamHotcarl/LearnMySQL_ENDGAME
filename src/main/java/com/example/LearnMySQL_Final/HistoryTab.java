@@ -171,9 +171,9 @@ public class HistoryTab  extends Panel implements View {
 	public void updateHistory(triplet t) {
 		User u = new User();
 		Person p = u.person;
-		ResultSet rs = t.rs;
 		
-		Grid<HistoryObject> grid = lh.ResultSetToHIstoryGrid(rs);
+		
+		Grid<HistoryObject> grid = t.grid;
 		content.removeAllComponents();
 		content.addComponent(hl);
 		content.addComponent(grid);
@@ -207,7 +207,7 @@ public class HistoryTab  extends Panel implements View {
 	        		content.addComponent(text);
 	        		content.addComponent(ex);
 	        		ex.addClickListener(e4->{
-	        			smc. addStudentSavedQuery(p,text.getValue() ,ho.getQuery());
+	        			smc.addStudentSavedQuery(p,text.getValue() ,ho.getQuery());
 	        			content.addComponent(hl);
 	        	    search.click();
 	        	
@@ -278,8 +278,8 @@ public class HistoryTab  extends Panel implements View {
 	
 	
 	public void updateSave(triplet t) {
-		ResultSet rs = t.rs;
-		Grid<savedObject> grid = lh.ResultSetToSavedGrid(rs);
+		
+		Grid<savedObject> grid = t.grid;
 		content.removeAllComponents();
 		content.addComponent(hl);
 		content.addComponent(grid);

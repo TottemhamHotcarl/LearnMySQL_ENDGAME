@@ -240,14 +240,9 @@ public class GroupUI  extends Panel implements View{
 			TempBack.setIcon(resource); 
 		 
 		 content.addComponent(TempBack);
-		 try {
-				Grid<HashMap<String, String>> t2 = lh.ResultSetToGrid(t.rs);
-				t2.setWidth("100%");
-				content.addComponent(t2);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		 Grid<HashMap<String, String>> t2 = t.grid;
+		t2.setWidth("100%");
+		content.addComponent(t2);
 		
 	} 
 		 
