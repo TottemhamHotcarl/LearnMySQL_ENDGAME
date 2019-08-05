@@ -21,36 +21,56 @@ import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class TheQueryBox   extends Panel implements View {
+
+
+public class TheQueryBox extends Panel implements View {
 	
 	
 	VerticalLayout content = new VerticalLayout();
-	static TextArea area = new TextArea("The Query Box");
+	TextArea area = new TextArea("The Query Box");
 	
 	LayoutHelper lh = new LayoutHelper();
 
-	public static Button back = new Button("back");
+	public Button back = new Button("back");
 	
 	ServerManagementConnection smc  = new ServerManagementConnection();
 	StudentQueryHelper sqh;
-	
+	Button refresh;
 
 	Person p;
 	/**
 	 * Creates the panel for the query box
 	 * @param s : Query that appears in the querybox
 	 */
-	public TheQueryBox(String s) {
-		
+	public TheQueryBox(String s, Person user, Button back24, TextArea area, Button refresh24) {
+		this.area = area;
+		back = back24;
 		content.setHeight("100%");
 		content.setWidth("100%");
 		content.setSizeFull();
 		setContent(content);
 		
-		setHeight("100%");
+		refresh = refresh24;
+		
+		
+		setHeight("100%"); 
 		getContent().setHeightUndefined();
-		User u = new User();
-		 p = u.person;
+		
+		 p = user;
+		sqh = new StudentQueryHelper(p);
+		queryBox(s);
+	}
+	public TheQueryBox(String s, Person user, Button back24){
+		back = back24;
+		content.setHeight("100%");
+		content.setWidth("100%");
+		content.setSizeFull();
+		setContent(content);
+		
+		setHeight("100%"); 
+		getContent().setHeightUndefined();
+		
+		 p = user;
 		sqh = new StudentQueryHelper(p);
 		queryBox(s);
 	}
@@ -83,7 +103,7 @@ public class TheQueryBox   extends Panel implements View {
 	 * @param ip
 	 * @param database
 	 */
-	public TheQueryBox(String s, String ip,String database) {
+	public TheQueryBox(String s, String ip,String database,Person user) {
 		smc = new ServerManagementConnection();
 		queryBox(s);
 		content.setHeight("100%");
@@ -93,8 +113,8 @@ public class TheQueryBox   extends Panel implements View {
 		
 		setHeight("100%");
 		getContent().setHeightUndefined();
-		User u = new User();
-		 p = u.person;
+		
+		 p = user;
 		 sqh = new StudentQueryHelper(database);
 
 	}
@@ -112,19 +132,8 @@ public class TheQueryBox   extends Panel implements View {
 	public void queryBox(String s) {
 		content.removeAllComponents();
 		
-		// Find the application directory
-		String basepath = VaadinService.getCurrent()
-		                  .getBaseDirectory().getAbsolutePath();
-
-		// Image as a file resource
-		FileResource resource = new FileResource(new File(basepath +
-		                        "/WEB-INF/images/back.png"));
 		
-
 		
-		back.setStyleName(ValoTheme.BUTTON_LINK);
-		back.setIcon(resource);
-
 		
 		area.setValue(s);
 		area.setWidth("100%");
@@ -201,7 +210,7 @@ public class TheQueryBox   extends Panel implements View {
 				}
 				
 				smc.addStudentHistoryQuery(p, currQuery);
-				HistoryTab.refresh.click();
+				refresh.click();
 				
 				TextField outputtemp = lh.GetOutputHeading(currQuery);
 
@@ -396,7 +405,7 @@ public class TheQueryBox   extends Panel implements View {
 	 * @return True if it saved successfully, otherwise it returns false
 	 */
 	public boolean addToDatabase(String query,String query_name) {
-		Person p = User.person;
+		Person p = this.p;
 		ServerManagementConnection smc = new ServerManagementConnection();
 		if(smc.addStudentSavedQuery(p, query_name,query)) {
 			return true;
@@ -411,10 +420,10 @@ public class TheQueryBox   extends Panel implements View {
  * This function is used by outside objects (like history tab) to add something to the queryBox
  * @param x: The string that we want to add to the queryBox
  */
-public static void addToQueryBox(String x) {
+/*public static void addToQueryBox(String x) {
 		area.setValue(x);
 		
-	}
+	}*/
 
 	
 	

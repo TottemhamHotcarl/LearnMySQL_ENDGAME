@@ -23,27 +23,15 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class Export_history_UI extends Panel implements View {
 	
-	static Button backUI = new Button("Back");
+	 Button backUI = new Button("Back");
 	
-	public Export_history_UI(){
+	public Export_history_UI(Person user, Button back24){
 		setWidth("100%");
 		setHeight("100%");
-		User u = new User();
 		
 		
-		backUI.setClickShortcut(KeyCode.ESCAPE);
-		// Find the application directory
-		String basepath = VaadinService.getCurrent()
-		                  .getBaseDirectory().getAbsolutePath();
-
-		// Image as a file resource
-		FileResource resource = new FileResource(new File(basepath +
-		                        "/WEB-INF/images/back.png"));
 		
-
-		
-		backUI.setStyleName(ValoTheme.BUTTON_LINK);
-		backUI.setIcon(resource);
+		backUI = back24;
 
 
 		
@@ -57,7 +45,7 @@ public class Export_history_UI extends Panel implements View {
 			con = DriverManager.getConnection(  
 					"jdbc:mysql://146.141.21.143:3306/SERVER","carl","carl");
 		    stmt=con.createStatement();
-			String Student_no = User.person.id;
+			String Student_no = user.id;
 			
 			
 			String query2 = "SELECT HISTORY_QUERY,HISTORY_DATE,HISTORY_TIME,HISTORY_ID FROM STUDENT_HISTORY WHERE STUDENT_NO =" + Student_no;

@@ -26,21 +26,21 @@ import com.vaadin.ui.themes.ValoTheme;
 
 public class GroupUI  extends Panel implements View{
 	
-	Button newGroup = new Button("New Group");
+	/*Button newGroup = new Button("New Group");
 	static TextArea area;
 	LayoutHelper lh = new LayoutHelper();
 	public static Button back = new Button("back");
 	VerticalLayout content = new VerticalLayout();
 	GroupServerManagementConnection gsmc;
-	User u = new User();
-	Person p = u.person;
+	
+	Person p ;
 	GroupObject go = new GroupObject();
 	
 
-	public GroupUI() {
+	public GroupUI(Person user) {
 		// setting up a panel
 		gsmc = new GroupServerManagementConnection();
-	
+		p = user;
 			content.setHeight("100%");
 			content.setWidth("100%");
 			content.setSizeFull();
@@ -246,29 +246,26 @@ public class GroupUI  extends Panel implements View{
 		
 	} 
 		 
-	public void queryBox() {
+	/*public void queryBox() {
 		content.removeAllComponents();
 		System.out.println(go.getDatabase());
 		
 		
 		HorizontalSplitPanel hsp = new HorizontalSplitPanel();
 
-		hsp.addComponent(new TheQueryBox(TheQueryBox.area.getValue(),"", go.getDatabase()));
+		hsp.addComponent(new TheQueryBox(TheQueryBox.area.getValue(),"", go.getDatabase(),p));
 
-		hsp.addComponent(new HistoryTab());
+		hsp.addComponent(new HistoryTab(p));
 		
 		
 		content.addComponent(hsp);
 		//setContent(new TheGroupQueryBox("",go.getDatabase()));
 		
 
-		TheQueryBox.back.addClickListener(e423->{
-			content.removeAllComponents();
-			groupUIInit();
-		});
 		
 		
-		}
+		
+		}*/
 
 	
 	

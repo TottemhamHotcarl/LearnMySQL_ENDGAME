@@ -16,14 +16,12 @@ public class LoginTool {
 		Person u = ldap.getUser(username);
 		if(username.equals("admin") && password.equals( "admin")) {
 			p = new Person("admin","admin", "admin","admin", "admin", "1");
-			User me = new User(p);
 			return true;
 		}
 		else if(u == null) {
 			return false;
 		}
 		else if(u != null){
-			User me = new User(u);
 			this.p = u;
 			return true;
 		}

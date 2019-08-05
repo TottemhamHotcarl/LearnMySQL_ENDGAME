@@ -45,18 +45,26 @@ public class HistoryTab  extends Panel implements View {
 	LayoutHelper lh;
 	 Button search;
 	 public Button SaveTabButton = new Button("save tab");
-	public static Button refresh;
+	public Button refresh;
 	 TextField searchBox;
 	 ServerManagementConnection smc =new ServerManagementConnection();
-	
+	Person user;
 	 
-	public HistoryTab() {
+	TextArea area;
+	
+	boolean queryBox = false;
+	
+	
+	public HistoryTab(Person user) {
+		
+		
+		
 		 content = new VerticalLayout();
 			content.setWidth("100%");
 			content.setHeight("100%");
 			setHeight("100%");
 			
-			
+			this.user = user;
 			del1=new Button("Delete Row");
 			add=new Button("Save_To_Query");
 			del=new Button("Delete selected");
@@ -68,6 +76,61 @@ public class HistoryTab  extends Panel implements View {
 				search = new Button("search");
 				search.setDescription("Searches through your history");
 				refresh = new Button("refresh");
+				refresh.setDescription("Refreshes your search");
+				//search.setId("search");
+				
+				// Find the application directory
+				String basepath = VaadinService.getCurrent()
+				                  .getBaseDirectory().getAbsolutePath();
+
+				// Image as a file resource
+				FileResource resource = new FileResource(new File(basepath +
+				                        "/WEB-INF/images/mag.png"));
+				FileResource resource2 = new FileResource(new File(basepath +
+                        "/WEB-INF/images/refresh.png"));
+				
+				FileResource resource3 = new FileResource(new File(basepath +
+                        "/WEB-INF/images/flop.png"));
+				
+				search.setStyleName(ValoTheme.BUTTON_LINK);
+				search.setIcon(resource);
+				
+				refresh.setStyleName(ValoTheme.BUTTON_LINK);
+				refresh.setIcon(resource2);
+				
+				
+				SaveTabButton.setStyleName(ValoTheme.BUTTON_LINK);
+				SaveTabButton.setIcon(resource3);
+				
+				hl.addComponents(searchBox,search,refresh,SaveTabButton);
+				
+		
+		HistoryTabInit();
+		
+	}
+	
+	
+
+	public HistoryTab(Person user, TextArea area, Button refresh24) {
+		queryBox = true;
+		  this.area = area;
+		 content = new VerticalLayout();
+			content.setWidth("100%");
+			content.setHeight("100%");
+			setHeight("100%");
+			
+			this.user = user;
+			del1=new Button("Delete Row");
+			add=new Button("Save_To_Query");
+			del=new Button("Delete selected");
+	        sel=new Button("Add to query box");
+		
+			 hl = new HorizontalLayout();
+			 
+			 searchBox = new TextField();
+				search = new Button("search");
+				search.setDescription("Searches through your history");
+				this.refresh = refresh24;
 				refresh.setDescription("Refreshes your search");
 				//search.setId("search");
 				
@@ -123,8 +186,8 @@ public class HistoryTab  extends Panel implements View {
 
 		content.addComponent(hl);
 		lh = new LayoutHelper();
-		User u = new User();
-		Person p = u.person;
+		
+		Person p = user;
 		
 		
 		triplet t = smc.getStudentHistoryQuery(p);
@@ -169,8 +232,8 @@ public class HistoryTab  extends Panel implements View {
 		}
 	
 	public void updateHistory(triplet t) {
-		User u = new User();
-		Person p = u.person;
+		
+		Person p = user;
 		
 		
 		Grid<HistoryObject> grid = t.grid;
@@ -180,7 +243,9 @@ public class HistoryTab  extends Panel implements View {
 		
 		 grid.addItemClickListener(e ->{
 	        	content.addComponent(del);
-	        	content.addComponent(sel);
+	        	if(queryBox) {
+	        		content.addComponent(sel);
+	        	}
 	        	content.addComponent(add);
 	        	HistoryObject ho = e.getItem();
 	        	del.addClickListener(e1->{
@@ -190,8 +255,8 @@ public class HistoryTab  extends Panel implements View {
 	        	});
 	        	sel.addClickListener(e3->{
 	        	//setting the Query box to empty
-	        		TheQueryBox.area.setValue("");
-	        		TheQueryBox.addToQueryBox(ho.getQuery());
+	        		area.setValue("");
+	        		area.setValue(ho.getQuery());
 	        	});
 	        	
 	        	
@@ -245,8 +310,8 @@ public class HistoryTab  extends Panel implements View {
 		content.addComponent(hl);
 
 		
-		User u = new User();
-		Person p = u.person;
+		
+		Person p = user;
 		triplet t = smc.getStudentSavedQuery(p);
 		//Grid<savedObject> grid = lh.ResultSetToSavedGrid(t.rs);
 		
@@ -288,7 +353,9 @@ public class HistoryTab  extends Panel implements View {
 	        	savedObject ho = e.getItem();
 		    	System.out.println(ho.getQuery());
 	        	content.addComponent(del1);
-	        	content.addComponent(sel);
+	        	if(queryBox) {
+	        		content.addComponent(sel);
+	        	}
 	        	del1.addClickListener(e2->{
 	        		System.out.println(ho.getSavedQueryID());
 	        		smc.deleteSaved_Query(ho.getSavedQueryID());
@@ -297,9 +364,9 @@ public class HistoryTab  extends Panel implements View {
 	        	
 	        	
 	        	sel.addClickListener(e3->{
-	        		//TheQueryBox.area.setValue("");
+	        		area.setValue("");
 	        		System.out.println("~~~~~~~" + ho.getQuery());
-	        		TheQueryBox.addToQueryBox(ho.getQuery());
+	        		area.setValue(ho.getQuery());
 	        	});
 	        	
 	        

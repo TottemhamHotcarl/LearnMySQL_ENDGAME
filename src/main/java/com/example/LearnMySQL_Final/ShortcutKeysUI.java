@@ -15,10 +15,10 @@ import com.vaadin.ui.themes.ValoTheme;
 
 
 public class ShortcutKeysUI extends Panel implements View {
-	static Button backUI =new Button("Back");
+	Button backUI =new Button("Back");
 	
-	public ShortcutKeysUI(){
-		
+	public ShortcutKeysUI(Button back24){
+		backUI = back24;
 		// Find the application directory
 		String basepath = VaadinService.getCurrent()
 		                  .getBaseDirectory().getAbsolutePath();
@@ -34,7 +34,7 @@ public class ShortcutKeysUI extends Panel implements View {
 		
 		
 		setHeight("100%");
-		User u = new User();
+		
 		String s = "Note the following shortcuts for the Query Box interface:\n \n"
 				+ "Execute Code: F1\n"
 				+ "Clear the InPut Area: F3\n"
